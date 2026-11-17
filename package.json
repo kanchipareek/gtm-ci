@@ -1,0 +1,9 @@
+{
+  "name": "gtm-ci",
+  "private": true,
+  "description": "Decision rules for the champion tracker, shared by the Play and the offline runner.",
+  "devDependencies": {
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
