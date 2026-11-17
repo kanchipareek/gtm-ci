@@ -345,7 +345,8 @@ Gate rules, all measured on the full 30-case set (base vs head):
 
 ## 8. Budget
 
-- Deepline: start with the 25 free signup credits ($2.50). Worst case if every cap is hit is about 38 credits (1.1 = 2, 1.5 = 5, 3.5 = 10, 4.1 = 2 x 10, 4.2 under 1), so at most about 13 credits ($1.30) bought. The owner buys credits herself, only if the free ones run out, and only after she says yes. Real use is a **[Hypothesis]** until task 1.2 shows prices.
+- Deepline: start with the 25 free signup credits ($2.50). Worst case if every cap is hit is about 38 credits (1.1 = 2, 1.5 = 5, 3.5 = 10, 4.1 = 2 x 10, 4.2 under 1), so at most about 13 credits ($1.30) bought. The owner buys credits herself, only if the free ones run out, and only after she says yes.
+- Company lookup, from task 1.2 (`docs/tools.md`, `deepline` 0.3.537, 17 Nov 2026): `leadmagic_search_companies` is 0.15 credits per result on managed access. One domain lookup is described as one company row, so the sum uses one result per company. The task prompt's formula is 0.15 × 10 live companies × about 5 runs = 7.5 credits ($0.75 at $0.10 per credit, F15). Spec section 5.C and the 17 Nov cut use 5 live companies, so the estimate this repo uses is 0.15 × 5 × 5 = 3.75 credits ($0.375). That is lookups only. It sits inside the caps above. It does not add 3.75 on top of the 38, and it does not include email or compute. A miss is not priced here, because `describe` does not say a miss is free.
 - GitHub Actions: free on a public repo. A private repo uses free minutes.
 - Everything else (Python, Node, tsx, pytest) is free.
 
