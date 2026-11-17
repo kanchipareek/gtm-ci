@@ -1,6 +1,6 @@
 import deepline from 'deepline';
 
-import { FREE_MAIL_DOMAINS, decide, writeBrief } from './rules.ts';
+import { decide, writeBrief } from './rules.ts';
 import type { CompanySnapshot, EmailSnapshot, JobChangeEvent } from './rules.ts';
 
 // The answer key stays out of this file. The scorer joins on case_id later.
@@ -56,12 +56,6 @@ function companyHost(domain: string | null | undefined): string {
     return '';
   }
   return domain.trim().toLowerCase().replace(/^@/, '');
-}
-
-// A free-mail host is not a company. Subdomains count, matching the rules,
-// so we do not pay for a domain decide() will reject as missing_domain.
-function isFreeMail(domain: string): boolean {
-  return FREE_MAIL_DOMAINS.some((free) => domain === free || domain.endsWith('.' + free));
 }
 
 function firstSet(primary: string | null | undefined, fallback: string | null | undefined): string | null {
@@ -158,12 +152,18 @@ export default async function (input: PlayInput) {
   const rows = [];
 
   for (const event of input.events) {
-    const domain = companyHost(event.new_domain);
-    const company = domain === '' || isFreeMail(domain) ? null : await lookupCompany(domain);
     const email = mockEmail(event);
     // PlayEvent has the same decision fields as JobChangeEvent, plus the mock email.
     const ruleEvent: JobChangeEvent = event;
-    const decision = decide(ruleEvent, company, email, seenPersonIds);
+    // The free checks (champion, domain, same company, duplicate, age, title)
+    // run before the company checks in decide. decide never alerts with a null
+    // company, so seenPersonIds is not changed by this first call.
+    let decision = decide(ruleEvent, null, email, seenPersonIds);
+    let company: CompanySnapshot | null = null;
+    if (decision.reason === 'company_not_found') {
+      company = await lookupCompany(companyHost(event.new_domain));
+      decision = decide(ruleEvent, company, email, seenPersonIds);
+    }
 
     rows.push({
       case_id: event.case_id,
