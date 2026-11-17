@@ -94,7 +94,18 @@ Other describes, not picked: `peopledatalabs_enrich_company` lists `employee_cou
 It is the cheapest described tool that names both an employee count and a country code: 0.15 credits per result, fields `linkedin_employee_count` and `hq_country_code`.
 The free lookup is 0 credits, but it has no country field, and the free corpus describes `employee_count` as a size-bucket upper bound.
 
-The Play should read `linkedin_employee_count` and `hq_country_code`. This task did not call the tool, so those fields have no sample value yet. The schema does not say the code is `US` / `CA` / `GB`; it only names the field `hq_country_code`.
+The Play should read `linkedin_employee_count` and `hq_country_code`.
+
+The first live call (task 1.5) returned those names. Samples are in `docs/spike/play_receipts.json`, and the same numbers are on `result.rows` in `docs/spike/play_run_output.json`:
+
+| domain | linkedin_employee_count | hq_country_code | hq_country |
+|---|---|---|---|
+| asana.com | 4400 | US | United States |
+| shopify.com | 29663 | CA | Canada |
+
+`hq_country_code` is the short code. `hq_country` is the full name. Shopify's `employee_max` in that receipt is 0 and `employee_range` is `10001+`, while `linkedin_employee_count` is 29663. The size rule uses the count.
+
+The Play reads the execute result at `fields.companies.values`, then those two fields. That path worked: the row employees and country match the table above. The receipt envelope is a different object. It stores the row at `toolResponse.rawV2.companies`, labels the list `toolResponse.raw.companies`, and lists an extractor path `result.data.companies`.
 
 ## Estimate
 
