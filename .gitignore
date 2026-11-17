@@ -1,0 +1,31 @@
+# secrets
+.env
+.env.*
+!.env.example
+.env.deepline
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# node and deepline
+node_modules/
+.deepline/
+.inline.play.ts
+
+# scorer output (commit a result file only on purpose, see TASKS.md 2.5)
+results/*
+!results/README.md
+
+# local-only files with real personal details (task 4.5)
+local/
+
+# editors and os
+.vscode/
+.DS_Store
+Thumbs.db
