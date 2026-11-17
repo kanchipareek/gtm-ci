@@ -159,7 +159,7 @@ Steps, in order:
 3. **Rules.** `decide(event, company, email, seenPersonIds)` from `plays/rules.ts`.
 4. **Brief.** A fixed template from `rules.ts`, for example: "Maya was a champion at Old Co. She is now VP Revenue Operations at Northwind Example (about 300 people, US). Reach out because a past champion now owns the budget at an ICP account." It makes no model call.
 
-Config: `export const config = { name: 'champion-tracker', description: ..., billing: { maxCreditsPerRun: 20 } }`.
+Config: `export const config = { name: 'champion-tracker', description: ..., billing: { maxCreditsPerRun: 10 } }`.
 
 Output, one row per event:
 
@@ -222,7 +222,7 @@ The draft of the 30 rows lives in `data/fixtures_draft.jsonl` and `data/fixtures
 
 **People are synthetic.** Names use the surname `Testcase`, and the mock emails use the local part `synthetic.<id>`. No real person's data is used.
 
-**Companies.** Use fictional names on reserved example domains (`*.example`, `example.com`, `example.org`, as set by RFC 2606) for the offline set. Use a separate small file, `fixtures/live_companies.json`, with up to 10 real public company domains (businesses only, no people) for the live job. **[Decision]** This keeps every offline answer stable and stops a mock email from looking like a real person's address.
+**Companies.** Use fictional names on reserved example domains (`*.example`, `example.com`, `example.org`, as set by RFC 2606) for the offline set. Use a separate small file, `fixtures/live_companies.json`, with 5 real public company domains (businesses only, no people) for the live job. **[Decision]** This keeps every offline answer stable and stops a mock email from looking like a real person's address.
 
 **Split (20 development / 10 holdout).** The Play runner always runs all 30 cases in one pass, so in-run state such as `duplicate_person` still works. `split` is for reporting and for any later optimize-style loop: tune on development, accept on holdout, and do not retune after looking at holdout failures. The pull request gate scores the full set, then also reports each split.
 
@@ -270,7 +270,7 @@ Default `ci/thresholds.json`:
   "missed_alerts_max_increase": 0,
   "false_alerts_max_increase_per_trap": 0,
   "pass_to_fail_max": 0,
-  "live_max_credits": 20
+  "live_max_credits": 10
 }
 ```
 
@@ -296,7 +296,7 @@ Gate rules, all measured on the full 30-case set (base vs head):
 
 ### 5.F Cost guards
 
-- `billing.maxCreditsPerRun: 20` in the Play config, and `--max-credits` on every live run (F10). Say plainly in the README that it is not an all-in ceiling.
+- `billing.maxCreditsPerRun: 10` in the Play config, and `--max-credits` on every live run (F10). Say plainly in the README that it is not an all-in ceiling.
 - `staleAfterSeconds: 604800` on the company lookup, so unchanged domains are not paid for twice (F11). Prove it in task 4.1 with real `billing usage` numbers, or write down that it did not work.
 - Offline mode by default. Tests, local runs, and the gate cost 0 credits.
 - A local spend log, `docs/spend.md`: every live run gets a line with the date, the run id, the credits from `billing usage`, and why it ran.
@@ -333,11 +333,11 @@ Gate rules, all measured on the full 30-case set (base vs head):
 **Day 5, Sun 22 Nov: demo and write-up**
 - Exit: the loosened-rule pull request is red, the README limits are written, and the recording plan and post draft are saved, not posted.
 
-**Cut list, if behind (in this order):**
-1. Task 4.5 (the real email proof).
-2. Task 3.5 (the live CI job), which becomes a manual live run from the laptop.
-3. Task 4.3 (the full live run), which drops to 5 companies.
-4. Task 3.2 (the test-set-change label), which becomes a warning line in the comment only.
+**Budget cuts already made (17 Nov, owner decision):** task 4.5 skipped, live runs capped at 10 credits, 5 live companies, task 4.3 records the task 4.1 run instead of a new run, and credits are bought only if the 25 free ones run out.
+
+**Cut list, if still behind (in this order):**
+1. Task 3.5 (the live CI job), which becomes a manual live run from the laptop.
+2. Task 3.2 (the test-set-change label), which becomes a warning line in the comment only.
 
 **Never cut:** the offline base-vs-head gate, the 30 fixtures with answers written before the code, or the honest limits section.
 
@@ -345,7 +345,7 @@ Gate rules, all measured on the full 30-case set (base vs head):
 
 ## 8. Budget
 
-- Deepline: $10 to $20 at most. The owner buys credits herself, and only after she sees the task 1.2 prices. Expected use (a **[Hypothesis]** until task 1.2): 10 company lookups × a few runs, plus caching, plus the spike, which is well under 100 credits ($10).
+- Deepline: start with the 25 free signup credits ($2.50). Worst case if every cap is hit is about 38 credits (1.1 = 2, 1.5 = 5, 3.5 = 10, 4.1 = 2 x 10, 4.2 under 1), so at most about 13 credits ($1.30) bought. The owner buys credits herself, only if the free ones run out, and only after she says yes. Real use is a **[Hypothesis]** until task 1.2 shows prices.
 - GitHub Actions: free on a public repo. A private repo uses free minutes.
 - Everything else (Python, Node, tsx, pytest) is free.
 

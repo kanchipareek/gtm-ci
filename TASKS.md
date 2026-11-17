@@ -12,10 +12,15 @@ Commands are for PowerShell in the VS Code terminal. Activate the venv first: `.
 
 From spec §7, in this order, and only if you are behind:
 
-1. Real email proof (task 4.5).
-2. Live CI job (task 3.5), which becomes a manual live run from the laptop.
-3. Full live run (task 4.3), which drops to 5 companies.
-4. The test-set-change label (task 3.2), which becomes a warning line in the comment only.
+Already cut on 17 Nov to save money (owner decision, tight budget):
+- Task 4.5 (real email proof) is skipped. docs/cost.md says "Live email finding is built but not proven in this repo."
+- Every live run is capped at 10 credits (`live_max_credits: 10`, `maxCreditsPerRun: 10`), and `fixtures/live_companies.json` has 5 real companies, not 10.
+- Task 4.3 makes no new run. It records the second run from task 4.1.
+- Credits are bought only if the 25 free signup credits run out, and only after the owner says yes.
+
+If still behind:
+1. Live CI job (task 3.5), which becomes a manual live run from the laptop.
+2. The test-set-change label (task 3.2), which becomes a warning line in the comment only.
 
 Never cut: the offline base-vs-head gate (tasks 3.1, 3.3, 3.4), the 30 fixtures with answers written before the code (task 2.2), or the honest limits section (task 5.2).
 
@@ -33,7 +38,7 @@ Never cut: the offline base-vs-head gate (tasks 3.1, 3.3, 3.4), the 30 fixtures 
 
 ## Live runs that spend credits
 
-Only these tasks run Deepline for real: 1.1, 1.2 (`describe` and `search` only, which should be free, so check), 1.5, 3.5, 4.1, 4.2, 4.3, 4.5. Each one sets `--max-credits` and adds a line to `docs/spend.md`.
+Only these tasks run Deepline for real: 1.1, 1.2 (`describe` and `search` only, which should be free, so check), 1.5, 3.5, 4.1, 4.2. Worst case if every cap is hit: 1.1 = 2, 1.5 = 5, 3.5 = 10, 4.1 = 2 x 10, 4.2 = under 1, so about 38 credits. The account starts with 25 free credits. Each one sets `--max-credits` and adds a line to `docs/spend.md`.
 
 ---
 
@@ -201,7 +206,7 @@ Follow @docs/spec.md sections 3 (F3, F4, F10, F11, F19), 5.A and 5.F, and @docs/
 Goal: write the Play. It imports ./rules (same folder, spec F19).
 
 - Input: { events: JobChangeEvent[], email_mode: "mock" | "live" }.
-- export const config = { name: 'champion-tracker', description: '...', billing: { maxCreditsPerRun: 20 } }. Literal values only.
+- export const config = { name: 'champion-tracker', description: '...', billing: { maxCreditsPerRun: 10 } }. Literal values only.
 - For each event, in order:
   1. If new_domain is empty or in FREE_MAIL_DOMAINS, company = null. Otherwise call deepline.tools.execute with the tool id from docs/tools.md, a stable id like "company_" + domain, a description, and staleAfterSeconds: 604800.
   2. Email: if email_mode is "mock", use the mock email copied from the golden row's input_mock_email and input_mock_email_status (you may attach them on the event as mock_email). If "live", throw an error for now that says live email is only allowed in task 4.5. Synthetic people must never reach an email tool. Never pass expected_*, grading_notes, notes, trap, or split into the Play.
@@ -582,7 +587,7 @@ Goal: the live-eval job and the plays-check job.
 
 - plays-check: on same-repo pull requests only, install deepline@<pinned version>, run deepline plays check plays/champion-tracker.play.ts with DEEPLINE_API_KEY from secrets.
 - live-eval: if: contains(github.event.pull_request.labels.*.name, 'live-eval') and the PR is from the same repo. Runs python -m scorer --mode live --yes --fixtures fixtures/live_companies.json --max-credits <live_max_credits from ci/thresholds.json>.
-- fixtures/live_companies.json: up to 10 real public company domains (businesses only), each with one synthetic person, mock email mode, and the snapshot we expect for employee count and country.
+- fixtures/live_companies.json: 5 real public company domains (businesses only), each with one synthetic person, mock email mode, and the snapshot we expect for employee count and country.
 - scorer/drift.py: compares live company fields with the snapshot and counts how many differ. Tests use fake data.
 - The live job adds a "Live run" section to the comment: run id, credits (or "unknown"), and drift count. It fails only if the run failed or credits > cap.
 
@@ -670,11 +675,11 @@ When you finish, run pytest. Explain why the cap is not an all-in ceiling. Answe
 
 ### 4.3 - one full live run and its record
 
-**Goal:** One capped live run on all live companies, committed as a result, so the README can quote real cost and drift numbers.
+**Goal:** Commit the second live run from task 4.1 as the recorded result, so the README can quote real cost and drift numbers. No new paid run (budget cut, 17 Nov).
 
 **Files:** `results/live_<date>.json`, `results/live_<date>.md` (committed on purpose), `docs/spend.md`, `docs/cost.md`.
 
-**Cut:** 3rd on the cut list. If cut, use 5 companies.
+**Cut:** already trimmed. Reuses the 4.1 run, 5 companies.
 
 **Prompt:**
 
@@ -683,10 +688,10 @@ Follow @docs/spec.md sections 4 (Q8), 5.F and 6, and @.cursor/rules/project.mdc.
 
 Goal: one recorded live run.
 
-1. After I say yes, run python -m scorer --mode live --fixtures fixtures/live_companies.json --max-credits <cap> --label live_<date>.
+1. Do not start a new live run. Take the second run from task 4.1 (its saved output and run id) and write it as results/live_<date>.json and results/live_<date>.md with the scorer's report code.
 2. Commit the two result files on purpose (force-add, since results/ is gitignored).
 3. docs/cost.md: credits for the whole run, credits per company, drift count, and compute time if billing usage shows it (spec Q8), otherwise "not shown".
-4. Total spend so far from docs/spend.md, against the $10 to $20 budget.
+4. Total spend so far from docs/spend.md, against the 25 free credits.
 
 When you finish, explain the real cost per company and what it would mean for 1,000 contacts, clearly marked as a rough sum and not a quote. Answer the Understand it questions. Append a few lines to @docs/LEARNING.md. Commit with a short lowercase message, no prefix and no emoji.
 ```
@@ -732,13 +737,13 @@ When you finish, explain anything that broke and the fix. Answer the Understand 
 - Did your prediction for pull request 2 match? If not, why not?
 - What does the guard protect in pull request 3?
 
-### 4.5 - real email path (optional)
+### 4.5 - real email path (SKIPPED, budget cut on 17 Nov)
 
 **Goal:** The live email step works once, on one consenting real person (you), or we write down that it is not proven.
 
 **Files:** `plays/champion-tracker.play.ts`, `docs/cost.md`, `docs/spend.md`.
 
-**Cut:** 1st on the cut list.
+**Cut:** yes, skipped. Only do the last line of the prompt: write the "not proven" sentence in docs/cost.md.
 
 **Prompt:**
 
