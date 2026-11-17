@@ -1,0 +1,2213 @@
+{
+  "schemaVersion": 1,
+  "kind": "run_overview",
+  "run": {
+    "id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "playName": "hello-company",
+    "status": "completed",
+    "runUrl": "https://code.deepline.com/dashboard/plays/hello-company?runId=play%2Fhello-company%2Frun%2F20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "acceptedAt": 1794903310848,
+    "updatedAt": 1794903315210,
+    "startedAt": 1794903312432,
+    "finishedAt": 1794903315210,
+    "sandboxProvider": "modal",
+    "durationMs": 2778,
+    "activity": null,
+    "work": {
+      "scope": "terminal_attempt",
+      "logicalCalls": 0,
+      "providerRequests": 0
+    },
+    "performance": {
+      "scope": "terminal_attempt",
+      "attempt": 1,
+      "invocationSeq": 1,
+      "segmentId": "fe13b456-6033-497a-99b7-597345164d57",
+      "process": {
+        "cpuUserMs": 410,
+        "cpuSystemMs": 30,
+        "rssBytes": 143699968,
+        "maxRssBytes": 160632832,
+        "heapUsedBytes": 17473544,
+        "externalBytes": 3459309
+      },
+      "counters": {
+        "logicalCalls": 0,
+        "providerRequests": 0,
+        "provider429s": 0
+      },
+      "phases": {
+        "rowAdmission": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "providerAdmission": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "externalExecution": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "providerResidence": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "fixtureDelay": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "transportSlotWait": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "fetchToHeaders": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bodyRead": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "eventLoopLag": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptSettlement": {
+          "count": 1,
+          "totalMs": 139,
+          "maxMs": 139,
+          "ewmaMs": 139,
+          "p50Ms": 139,
+          "p90Ms": 139,
+          "p99Ms": 139,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptClaim": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptHydrationGateWait": {
+          "count": 1,
+          "totalMs": 1,
+          "maxMs": 1,
+          "ewmaMs": 1,
+          "p50Ms": 1,
+          "p90Ms": 1,
+          "p99Ms": 1,
+          "histogram": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptCompletionQueue": {
+          "count": 1,
+          "totalMs": 12,
+          "maxMs": 12,
+          "ewmaMs": 12,
+          "p50Ms": 12,
+          "p90Ms": 12,
+          "p99Ms": 12,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptCompletionFlight": {
+          "count": 1,
+          "totalMs": 140,
+          "maxMs": 140,
+          "ewmaMs": 140,
+          "p50Ms": 140,
+          "p90Ms": 140,
+          "p99Ms": 140,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptCompletionReadBack": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "rowPersistence": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "dispatchQueueWait": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "rowResolverGap": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "toolCallLogicalWall": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "resultDelivery": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "deliveryWrap": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "deliveryPublishWait": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "deliveryResolve": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "flightSerialize": {
+          "count": 1,
+          "totalMs": 1,
+          "maxMs": 1,
+          "ewmaMs": 1,
+          "p50Ms": 1,
+          "p90Ms": 1,
+          "p99Ms": 1,
+          "histogram": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "flightTransport": {
+          "count": 1,
+          "totalMs": 138,
+          "maxMs": 138,
+          "ewmaMs": 138,
+          "p50Ms": 138,
+          "p90Ms": 138,
+          "p99Ms": 138,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "flightDecode": {
+          "count": 1,
+          "totalMs": 1,
+          "maxMs": 1,
+          "ewmaMs": 1,
+          "p50Ms": 1,
+          "p90Ms": 1,
+          "p99Ms": 1,
+          "histogram": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayAuthLaunch": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayAuthVerify": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayBodyParse": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayBodyInflate": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayPoolWait": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayReceiptValuePersist": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayCallback": {
+          "count": 3,
+          "totalMs": 48,
+          "maxMs": 29,
+          "ewmaMs": 16.520000000000003,
+          "p50Ms": 20,
+          "p90Ms": 29,
+          "p99Ms": 29,
+          "histogram": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayRoundTrip": {
+          "count": 3,
+          "totalMs": 334,
+          "maxMs": 123,
+          "ewmaMs": 116.44000000000003,
+          "p50Ms": 96,
+          "p90Ms": 121.6,
+          "p99Ms": 123,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayRequestSerialize": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayRequestPack": {
+          "count": 3,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "rows": {
+        "mapCount": 0,
+        "maxIndividualMapActiveRowPeak": 0
+      },
+      "memoryAdmission": {
+        "toolResponseBody": {
+          "turns": 0,
+          "measuredTurns": 0,
+          "decodedUtf8BytesTotal": 0,
+          "decodedUtf8BytesMax": 0,
+          "permitBytesPeak": 0,
+          "queuedTurns": 0,
+          "budgetRefusals": 0,
+          "progressAdmissions": 0,
+          "unpricedAdmissions": 0
+        }
+      }
+    }
+  },
+  "steps": [
+    {
+      "id": "echo",
+      "kind": "step",
+      "status": "unknown",
+      "execution": {
+        "kind": "unknown"
+      },
+      "label": "Unknown"
+    }
+  ],
+  "failures": {
+    "steps": []
+  },
+  "errorDetails": {
+    "coverage": "unknown",
+    "reported": [],
+    "steps": [],
+    "getMore": "actions.getLogsCmd"
+  },
+  "rowOutcomes": {
+    "completedRows": 0,
+    "failedRows": 0,
+    "totalRows": 0,
+    "hasRowFailures": false
+  },
+  "warnings": [],
+  "datasets": [],
+  "result": {
+    "echo": {
+      "checked_at": "2026-11-17T08:15:14.856Z",
+      "domain": "example.com"
+    },
+    "ok": true
+  },
+  "resultState": "available",
+  "actions": {
+    "getRunCmd": "deepline runs get play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "getFullRunCmd": "deepline runs get play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 --full",
+    "getBillingCmd": "deepline billing usage --run-id play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "getLogsCmd": "deepline runs logs play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 --limit 100",
+    "getReceiptCmd": "deepline runs logs 'play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047' --kind receipt.completed --payloads"
+  },
+  "diagnostics": {
+    "runId": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "name": "hello-company",
+    "playName": "hello-company",
+    "apiVersion": 1,
+    "status": "completed",
+    "outcome": "executed",
+    "errors": [],
+    "health": null,
+    "snapshot": {
+      "runId": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+      "status": "completed",
+      "createdAt": 1794903310848,
+      "startedAt": 1794903312432,
+      "finishedAt": 1794903315210,
+      "durationMs": 2778,
+      "updatedAt": 1794903315210,
+      "logs": [],
+      "totalLogCount": 0,
+      "activeArtifactTableNamespace": null,
+      "resultTableNamespace": null,
+      "datasets": [],
+      "activities": [],
+      "activeActivity": null,
+      "nodeStates": [
+        {
+          "nodeId": "echo",
+          "status": "completed",
+          "error": null,
+          "artifactTableNamespace": null,
+          "progress": {
+            "artifactTableNamespace": null,
+            "startedAt": 1794903314746,
+            "completedAt": 1794903315010,
+            "updatedAt": 1794903315196
+          },
+          "startedAt": 1794903314746,
+          "completedAt": 1794903315010,
+          "updatedAt": 1794903315010
+        }
+      ],
+      "activeNodeId": null,
+      "rowOutcomes": {
+        "completedRows": 0,
+        "failedRows": 0,
+        "totalRows": 0,
+        "hasRowFailures": false
+      },
+      "calls": {
+        "logicalCalls": 0,
+        "providerRequests": 0,
+        "provider429s": 0,
+        "confirmed": true
+      },
+      "activity": null,
+      "logsUnavailable": true
+    },
+    "rowOutcomes": {
+      "completedRows": 0,
+      "failedRows": 0,
+      "totalRows": 0,
+      "hasRowFailures": false
+    },
+    "steps": [
+      {
+        "nodeId": "echo",
+        "status": "completed",
+        "error": null,
+        "artifactTableNamespace": null,
+        "progress": {
+          "artifactTableNamespace": null,
+          "startedAt": 1794903314746,
+          "completedAt": 1794903315010,
+          "updatedAt": 1794903315196
+        },
+        "startedAt": 1794903314746,
+        "completedAt": 1794903315010,
+        "updatedAt": 1794903315010
+      }
+    ],
+    "progress": {
+      "status": "completed",
+      "updatedAt": 1794903315210,
+      "activeNodeId": null,
+      "activeArtifactTableNamespace": null,
+      "nodeStates": [
+        {
+          "nodeId": "echo",
+          "status": "completed",
+          "error": null,
+          "artifactTableNamespace": null,
+          "progress": {
+            "artifactTableNamespace": null,
+            "startedAt": 1794903314746,
+            "completedAt": 1794903315010,
+            "updatedAt": 1794903315196
+          },
+          "startedAt": 1794903314746,
+          "completedAt": 1794903315010,
+          "updatedAt": 1794903315010
+        }
+      ],
+      "logs": [],
+      "resultTableNamespace": null,
+      "total": 1,
+      "executed": 1,
+      "reused": 0,
+      "skipped": 0,
+      "pending": 0,
+      "failed": 0
+    },
+    "result": {
+      "_metadata": {
+        "runtimeCounters": {
+          "logicalCalls": 0,
+          "provider429s": 0,
+          "providerRequests": 0
+        },
+        "runtimeResources": {
+          "concurrencyShed": {
+            "count": 0,
+            "delayMsEwma": null
+          },
+          "gateway": {
+            "authSession": {
+              "coalesced": 0,
+              "hit": 3,
+              "miss": 0,
+              "unknown": 0
+            },
+            "requestBody": {
+              "count": 3,
+              "rawBytes": 1837,
+              "wireBytes": 1837
+            },
+            "successfulFlights": {
+              "other": {
+                "bodyDecode": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "count": 0,
+                "headers": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "roundTrip": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "serverTotal": null
+              },
+              "receiptClaim": {
+                "bodyDecode": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "count": 0,
+                "headers": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "roundTrip": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "serverTotal": null
+              },
+              "receiptCompletion": {
+                "bodyDecode": {
+                  "count": 2,
+                  "maxMs": 1,
+                  "totalMs": 2
+                },
+                "count": 2,
+                "headers": {
+                  "count": 2,
+                  "maxMs": 122,
+                  "totalMs": 226
+                },
+                "roundTrip": {
+                  "count": 2,
+                  "maxMs": 123,
+                  "totalMs": 228
+                },
+                "serverTotal": {
+                  "count": 2,
+                  "maxMs": 29,
+                  "totalMs": 45
+                }
+              },
+              "receiptRead": {
+                "bodyDecode": {
+                  "count": 1,
+                  "maxMs": 1,
+                  "totalMs": 1
+                },
+                "count": 1,
+                "headers": {
+                  "count": 1,
+                  "maxMs": 89,
+                  "totalMs": 89
+                },
+                "roundTrip": {
+                  "count": 1,
+                  "maxMs": 90,
+                  "totalMs": 90
+                },
+                "serverTotal": {
+                  "count": 1,
+                  "maxMs": 3,
+                  "totalMs": 3
+                }
+              },
+              "rowUpdates": {
+                "bodyDecode": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "count": 0,
+                "headers": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "roundTrip": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "serverTotal": null
+              }
+            }
+          },
+          "mapAdmission": {},
+          "memory": {
+            "admissionHolds": 0,
+            "admittedRowReserveBytesAtObservedPeak": null,
+            "baselineAtObservedPeakBytes": null,
+            "baselineBytes": null,
+            "bytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 0,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            },
+            "calibrationFactor": 3,
+            "calibrationSamples": 0,
+            "categoryCalibrationSamples": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 0,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            },
+            "categoryFactors": {
+              "eventBuffer": 3,
+              "hydrationReadBack": 1.1,
+              "mapCellMetadata": 3,
+              "materializedRows": 1,
+              "providerBody": 3,
+              "receiptCompletionBuffer": 1.1,
+              "toolInputSnapshot": 3,
+              "transportInFlight": 1.1
+            },
+            "externalPressureSignals": 0,
+            "ledgerBytesAtObservedPeak": null,
+            "liveBytes": 0,
+            "liveEntries": 1,
+            "livePeakBytes": 1048576,
+            "memoryPressureEvents": 0,
+            "observationAtObservedPeak": null,
+            "observedCollectedPeakBytes": null,
+            "observedLiveBytes": null,
+            "ownerPeakBytesByCategoryP90": {
+              "eventBuffer": null,
+              "hydrationReadBack": null,
+              "mapCellMetadata": null,
+              "materializedRows": null,
+              "providerBody": null,
+              "receiptCompletionBuffer": null,
+              "toolInputSnapshot": null,
+              "transportInFlight": null
+            },
+            "ownerPeakBytesP50": null,
+            "ownerPeakBytesP90": null,
+            "ownerPeakSamples": 0,
+            "ownersActive": 0,
+            "ownersSettled": 0,
+            "peakBytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 1048576,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 645,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 645
+            },
+            "predictedAtObservedPeakBytes": null,
+            "predictedBytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 0,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            },
+            "predictedLiveBytes": 0,
+            "predictedLivePeakBytes": 1153434,
+            "predictedPeakBytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 1153434,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            }
+          },
+          "memoryAdmission": {
+            "toolResponseBody": {
+              "budgetRefusals": 0,
+              "decodedUtf8BytesMax": 0,
+              "decodedUtf8BytesTotal": 0,
+              "measuredTurns": 0,
+              "permitBytesPeak": 0,
+              "progressAdmissions": 0,
+              "queuedTurns": 0,
+              "turns": 0,
+              "unpricedAdmissions": 0
+            }
+          },
+          "phases": {
+            "bodyRead": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "deliveryPublishWait": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "deliveryResolve": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "deliveryWrap": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "dispatchQueueWait": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "eventLoopLag": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "externalExecution": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "fetchToHeaders": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "fixtureDelay": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "flightDecode": {
+              "buckets": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 1,
+              "maxMs": 1,
+              "p50Ms": 1,
+              "p90Ms": 1,
+              "p99Ms": 1,
+              "totalMs": 1
+            },
+            "flightSerialize": {
+              "buckets": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 1,
+              "maxMs": 1,
+              "p50Ms": 1,
+              "p90Ms": 1,
+              "p99Ms": 1,
+              "totalMs": 1
+            },
+            "flightTransport": {
+              "buckets": [
+                [
+                  8,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 138,
+              "maxMs": 138,
+              "p50Ms": 138,
+              "p90Ms": 138,
+              "p99Ms": 138,
+              "totalMs": 138
+            },
+            "gatewayAuthLaunch": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayAuthVerify": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayBodyInflate": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayBodyParse": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayCallback": {
+              "buckets": [
+                [
+                  2,
+                  1
+                ],
+                [
+                  5,
+                  2
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 16.520000000000003,
+              "maxMs": 29,
+              "p50Ms": 20,
+              "p90Ms": 29,
+              "p99Ms": 29,
+              "totalMs": 48
+            },
+            "gatewayPoolWait": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayReceiptValuePersist": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayRequestPack": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayRequestSerialize": {
+              "buckets": [
+                [
+                  0,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayRoundTrip": {
+              "buckets": [
+                [
+                  7,
+                  3
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 116.44000000000003,
+              "maxMs": 123,
+              "p50Ms": 96,
+              "p90Ms": 121.6,
+              "p99Ms": 123,
+              "totalMs": 334
+            },
+            "providerAdmission": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "providerResidence": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "receiptClaim": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "receiptCompletionFlight": {
+              "buckets": [
+                [
+                  8,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 140,
+              "maxMs": 140,
+              "p50Ms": 140,
+              "p90Ms": 140,
+              "p99Ms": 140,
+              "totalMs": 140
+            },
+            "receiptCompletionQueue": {
+              "buckets": [
+                [
+                  4,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 12,
+              "maxMs": 12,
+              "p50Ms": 12,
+              "p90Ms": 12,
+              "p99Ms": 12,
+              "totalMs": 12
+            },
+            "receiptCompletionReadBack": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "receiptHydrationGateWait": {
+              "buckets": [
+                [
+                  1,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 1,
+              "maxMs": 1,
+              "p50Ms": 1,
+              "p90Ms": 1,
+              "p99Ms": 1,
+              "totalMs": 1
+            },
+            "receiptSettlement": {
+              "buckets": [
+                [
+                  8,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 139,
+              "maxMs": 139,
+              "p50Ms": 139,
+              "p90Ms": 139,
+              "p99Ms": 139,
+              "totalMs": 139
+            },
+            "resultDelivery": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "rowAdmission": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "rowPersistence": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "rowResolverGap": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "toolCallLogicalWall": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "transportSlotWait": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            }
+          },
+          "process": {
+            "cpuSystemMs": 30,
+            "cpuUserMs": 410,
+            "externalBytes": 3459309,
+            "heapUsedBytes": 17473544,
+            "maxRssBytes": 160632832,
+            "rssBytes": 143699968
+          },
+          "processCpuWindow": {
+            "cpuSystemMs": 0,
+            "cpuUserMs": 20,
+            "elapsedMs": 526.29554,
+            "sampledAtEpochMs": 1794903315122,
+            "scope": "process_during_governor_lifetime",
+            "startedAtEpochMs": 1794903314596
+          },
+          "providerAttribution": {},
+          "providers": {},
+          "resultEgress": {
+            "batches": 1,
+            "bytes": 645,
+            "existingWinners": 0,
+            "legacyAcknowledgements": 0,
+            "livePublicationResults": 1,
+            "liveResultReuses": 0,
+            "maxBatchBytes": 645,
+            "missingAcknowledgements": 0,
+            "nonterminalAcknowledgements": 0,
+            "readBackMissing": 0,
+            "readBackRecovered": 0,
+            "readBacks": 0,
+            "receipts": 1,
+            "writerPeakBufferedBytes": 645,
+            "writerPeakBufferedItems": 1,
+            "writerPeakInFlightBatches": 1,
+            "writerPeakQueued": 1
+          },
+          "rows": {
+            "acquired": 0,
+            "admissionWaitMsEwma": null,
+            "estimatedBytes": 0
+          },
+          "sheetFlush": {
+            "acquired": 0,
+            "bytes": 0,
+            "latencyMsEwma": null
+          },
+          "tools": {
+            "acquired": 0,
+            "admissionWaitMsEwma": null
+          }
+        },
+        "sandboxProvider": "modal"
+      },
+      "echo": {
+        "checked_at": "2026-11-17T08:15:14.856Z",
+        "domain": "example.com"
+      },
+      "ok": true
+    },
+    "resultView": {
+      "scalars": [],
+      "byStep": [],
+      "tables": [],
+      "topLevelOutputTable": {
+        "sqlSchemaName": "storage",
+        "sqlTableName": "_deepline_step_receipts",
+        "sqlQualifiedTableName": "\"storage\".\"_deepline_step_receipts\"",
+        "sqlQuery": "select convert_from(k, 'UTF8') as receipt_key, case status when 0 then 'pending' when 1 then 'running' when 2 then 'completed' when 3 then 'failed' when 4 then 'skipped' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = 'play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047' and NOT (starts_with(convert_from(k, 'UTF8'), 'ctxv2:') AND (starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-sheet-write-intent%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-begin%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-page%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-seal%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-run-guard%22%2C'))) order by updated_at asc, receipt_key asc limit 20",
+        "queryCommand": "deepline db query --sql 'select convert_from(k, '\\''UTF8'\\'') as receipt_key, case status when 0 then '\\''pending'\\'' when 1 then '\\''running'\\'' when 2 then '\\''completed'\\'' when 3 then '\\''failed'\\'' when 4 then '\\''skipped'\\'' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = '\\''play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047'\\'' and NOT (starts_with(convert_from(k, '\\''UTF8'\\''), '\\''ctxv2:'\\'') AND (starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-sheet-write-intent%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-begin%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-page%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-seal%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-run-guard%22%2C'\\''))) order by updated_at asc, receipt_key asc limit 20' --max-rows 20",
+        "cliCommand": "deepline db query --sql 'select convert_from(k, '\\''UTF8'\\'') as receipt_key, case status when 0 then '\\''pending'\\'' when 1 then '\\''running'\\'' when 2 then '\\''completed'\\'' when 3 then '\\''failed'\\'' when 4 then '\\''skipped'\\'' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = '\\''play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047'\\'' and NOT (starts_with(convert_from(k, '\\''UTF8'\\''), '\\''ctxv2:'\\'') AND (starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-sheet-write-intent%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-begin%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-page%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-seal%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-run-guard%22%2C'\\''))) order by updated_at asc, receipt_key asc limit 20' --max-rows 20",
+        "api": {
+          "method": "POST",
+          "path": "/api/v2/db/query",
+          "body": {
+            "sql": "select convert_from(k, 'UTF8') as receipt_key, case status when 0 then 'pending' when 1 then 'running' when 2 then 'completed' when 3 then 'failed' when 4 then 'skipped' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = 'play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047' and NOT (starts_with(convert_from(k, 'UTF8'), 'ctxv2:') AND (starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-sheet-write-intent%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-begin%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-page%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-seal%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-run-guard%22%2C'))) order by updated_at asc, receipt_key asc limit 20",
+            "max_rows": 20
+          }
+        },
+        "note": "This debug table stores top-level ctx.step / ctx.tools.execute outputs for the run. Prefer `deepline runs get --full`; query this table only for deep debugging."
+      },
+      "datasetAccess": null,
+      "render": {
+        "sections": [
+          {
+            "title": "execution statistics",
+            "lines": [
+              "top-level outputs: deepline runs get play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 --full"
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "label": "inspect top-level outputs",
+            "command": "deepline db query --sql 'select convert_from(k, '\\''UTF8'\\'') as receipt_key, case status when 0 then '\\''pending'\\'' when 1 then '\\''running'\\'' when 2 then '\\''completed'\\'' when 3 then '\\''failed'\\'' when 4 then '\\''skipped'\\'' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = '\\''play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047'\\'' and NOT (starts_with(convert_from(k, '\\''UTF8'\\''), '\\''ctxv2:'\\'') AND (starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-sheet-write-intent%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-begin%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-page%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-seal%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-run-guard%22%2C'\\''))) order by updated_at asc, receipt_key asc limit 20' --max-rows 20"
+          },
+          {
+            "label": "status JSON",
+            "command": "deepline runs get play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047"
+          },
+          {
+            "label": "full debug JSON",
+            "command": "deepline runs get play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 --full"
+          }
+        ]
+      }
+    },
+    "contract": {
+      "staticPipeline": {
+        "inputFields": [],
+        "hasInlineData": true,
+        "fields": [],
+        "returnFields": [
+          {
+            "name": "ok",
+            "isDataset": false
+          },
+          {
+            "name": "echo",
+            "isDataset": false
+          }
+        ],
+        "stages": [
+          {
+            "type": "step_suite",
+            "field": "echo",
+            "steps": [
+              {
+                "type": "code",
+                "field": "echo",
+                "sourceRange": {
+                  "sourcePath": "hello-company.play.ts",
+                  "startLine": 13,
+                  "endLine": 16,
+                  "startColumn": 5,
+                  "endColumn": 7
+                },
+                "callDepth": 0,
+                "callPath": [
+                  "hello-company"
+                ]
+              }
+            ],
+            "sourceRange": {
+              "sourcePath": "hello-company.play.ts",
+              "startLine": 11,
+              "endLine": 18,
+              "startColumn": 22,
+              "endColumn": 4
+            },
+            "callDepth": 0,
+            "callPath": [
+              "hello-company"
+            ]
+          },
+          {
+            "type": "run_javascript",
+            "alias": "lines_20_20",
+            "description": "Lines 20-20",
+            "sourceRange": {
+              "sourcePath": "hello-company.play.ts",
+              "startLine": 20,
+              "startColumn": 3,
+              "endLine": 20,
+              "endColumn": 29
+            },
+            "callDepth": 0,
+            "callPath": [
+              "hello-company"
+            ]
+          }
+        ],
+        "substeps": [],
+        "sheetContractErrors": [],
+        "sheetContract": null
+      }
+    },
+    "billing": {
+      "runId": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+      "totalCalls": 0,
+      "totalCredits": 0,
+      "totalDeeplineCostUsd": 0,
+      "providerEvents": 0,
+      "computeEvents": 0,
+      "breakdown": {
+        "providers": [],
+        "runtime": {
+          "provider": "compute",
+          "totalCalls": 0,
+          "totalCredits": 0,
+          "totalDeeplineCostUsd": 0
+        },
+        "eventsSource": {
+          "kind": "deepline_usage_events",
+          "totalCalls": 0,
+          "api": {
+            "method": "GET",
+            "path": "/api/v2/usage/events?run_id=play%2Fhello-company%2Frun%2F20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047&limit=500"
+          }
+        }
+      }
+    },
+    "wait": null,
+    "activity": null,
+    "run": {
+      "runId": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+      "name": "hello-company",
+      "playName": "hello-company",
+      "status": "completed",
+      "acceptedAt": 1794903310848,
+      "updatedAt": 1794903315210,
+      "updateTime": "2026-11-17T08:15:15.210Z",
+      "startedAt": 1794903312432,
+      "startTime": "2026-11-17T08:15:12.432Z",
+      "completedAt": 1794903315210,
+      "finishedAt": 1794903315210,
+      "closeTime": "2026-11-17T08:15:15.210Z",
+      "durationMs": 2778
+    },
+    "timeline": [],
+    "childRuns": [],
+    "childRunProjection": {
+      "kind": "async_child_runs",
+      "returnedCount": 0,
+      "complete": true,
+      "counts": {
+        "total": 0,
+        "queued": 0,
+        "active": 0,
+        "waiting": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "cancelled": 0,
+        "unknown": 0
+      },
+      "launches": []
+    },
+    "outputs": {
+      "echo": {
+        "kind": "value",
+        "path": "result.echo",
+        "value": {
+          "checked_at": "2026-11-17T08:15:14.856Z",
+          "domain": "example.com"
+        }
+      },
+      "ok": {
+        "kind": "value",
+        "path": "result.ok",
+        "value": true
+      }
+    },
+    "dashboardUrl": "https://code.deepline.com/dashboard/plays/hello-company"
+  },
+  "command_context": {
+    "active_organization": {
+      "org_id": "jh7b92yk2exs007pz9g4st9k7s8jdfs9",
+      "org_name": "removed"
+    },
+    "auth_scope": "global",
+    "metadata_source": "host_env"
+  },
+  "notices": [
+    "[play activity] play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 Active: hello-company. The command will keep watching; if no new evidence arrives, check again in ~5 minutes with 'deepline runs get play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 --full'."
+  ]
+}
