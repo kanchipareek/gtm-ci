@@ -1,0 +1,127 @@
+{
+  "org_id": "jh7b92yk2exs007pz9g4st9k7s8jdfs9",
+  "balance": 25,
+  "balance_display": "25 Deepline Credits",
+  "rough_usd_balance": 2.5,
+  "balance_updated_at": "2026-11-17T07:50:24.058Z",
+  "plan": {
+    "public_name": "Deepline Usage",
+    "usd_per_credit": 0.1
+  },
+  "managed_usd_per_email": 0.006,
+  "has_payment_method": false,
+  "payment_method": null,
+  "usage": {
+    "month_spent_credits": 0,
+    "rough_usd_spent": 0,
+    "last_30_days_usage_credits": 0,
+    "rough_usd_last_30_days_usage": 0,
+    "temporary_hold_credits": 0,
+    "temporary_hold_credits_truncated": false,
+    "rough_usd_temporary_holds": 0,
+    "period_start_at": "2026-10-18T08:17:53.385Z",
+    "period_end_at": "2026-11-17T08:17:53.385Z"
+  },
+  "run": {
+    "run_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "spent_credits": 0,
+    "rough_usd_spent": 0,
+    "event_count": 1
+  },
+  "quota": {
+    "enabled": false,
+    "monthly_credits_limit": null,
+    "monthly_rough_usd_limit": null,
+    "remaining_credits": null,
+    "remaining_rough_usd": null,
+    "updated_at": null
+  },
+  "autobill": {
+    "available": true,
+    "enabled": false,
+    "reason": null,
+    "threshold_credits": null,
+    "refill_to_credits": null,
+    "rolling_limit_cents": null
+  },
+  "recent": {
+    "run_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+    "total": 1,
+    "total_is_exact": true,
+    "total_lower_bound": 1,
+    "offset": 0,
+    "limit": 10,
+    "next_offset": 1,
+    "next_cursor": null,
+    "has_more": false,
+    "incomplete": false,
+    "entries": [
+      {
+        "id": "k977ab01e26dywt9rzb543ptf18jdsxm",
+        "provider": "compute",
+        "operation": "workflow_run",
+        "status": "completed",
+        "request_id": "compute:play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+        "run_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+        "play_run_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+        "workflow_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+        "billing_run_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+        "execution_run_id": "play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047",
+        "included_in_run_id": null,
+        "billing_scope": "root_run",
+        "step_block_id": null,
+        "step_alias": null,
+        "auth_type": "workflow",
+        "user_id": "js749trgapcm6ynm92rpb0ypxh8jd77x",
+        "api_key_id": null,
+        "credits": 0,
+        "billing_mode": "post_deduct",
+        "pricing_model": "provider_usage",
+        "pricing_basis": "usage",
+        "pricing_unit_amount": null,
+        "outcome": "hit",
+        "policy_id": "compute:workflow_run",
+        "provider_units": 3,
+        "batch_count": null,
+        "total_results": null,
+        "delta": 0,
+        "reason": "operation_attempt",
+        "stripe_session_id": null,
+        "metadata": null,
+        "billing_note": null,
+        "charge_state": "free",
+        "charge_finality": "final",
+        "rough_usd_cost": 0,
+        "created_at": "2026-11-17T08:15:15.966Z"
+      }
+    ],
+    "is_truncated": false
+  },
+  "next": {
+    "page": null
+  },
+  "render": {
+    "sections": [
+      {
+        "title": "billing usage",
+        "lines": [
+          "Balance: 25",
+          "Last 30 days usage: 0",
+          "Monthly usage cap: off",
+          "Run spend: 0 Deepline Credits",
+          "Matching activity: 1",
+          "Recent activity:",
+          "Compute Workflow Run | 0 cr, final | completed | outcome=hit | priced_by=usage | run=play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 | play_run=play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 | billing_run=play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 | workflow=play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 | request=compute:play/hello-company/run/20261117t081507-848-56853e24-caller-861f90f9670f5684e9c9329c87f23ccccc4f988137d7433a4127a2942e911047 | 2026-11-17T08:15:15.966Z"
+        ]
+      }
+    ]
+  },
+  "command_context": {
+    "active_organization": {
+      "org_id": "jh7b92yk2exs007pz9g4st9k7s8jdfs9",
+      "org_name": "removed"
+    },
+    "auth_scope": "global",
+    "metadata_source": "host_env"
+  }
+}
