@@ -62,6 +62,8 @@ The CLI help text does not name `result`. `--full` includes it. Spec Q1 should r
 
 `deepline plays check`, `deepline plays run --dry-run`, and the real `deepline plays run` all finished in Windows PowerShell with exit code 0.
 
+`--run-id-file` also wrote `docs/spike/run_id.json.submission.json`. That file is the bundle the CLI uploaded, not the result. It is not kept.
+
 PowerShell `>` on this laptop writes UTF-16 LE. `docs/spike/run_output.json` started with the bytes `FF FE`. Fix: read that file as Unicode and write it back as UTF-8 with no byte-order mark. The later `runs get` and `billing usage` files were written the same way, with .NET `UTF8Encoding` and no mark, instead of `>`.
 
 This task did not reinstall the CLI, so it does not answer whether a fresh install needs `--allow-scripts=esbuild`.

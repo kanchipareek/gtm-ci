@@ -17,6 +17,7 @@ dist/
 node_modules/
 .deepline/
 .inline.play.ts
+*.submission.json
 
 # scorer output (commit a result file only on purpose, see TASKS.md 2.5)
 results/*
