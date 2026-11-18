@@ -1,0 +1,7 @@
+{
+  "false_alerts_max_increase": 0,
+  "missed_alerts_max_increase": 0,
+  "false_alerts_max_increase_per_trap": 0,
+  "pass_to_fail_max": 0,
+  "live_max_credits": 10
+}
