@@ -1,12 +1,19 @@
 import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { decide, writeBrief } from "../plays/rules.ts";
 import type { CompanySnapshot, EmailSnapshot, JobChangeEvent } from "../plays/rules.ts";
 
 // This runner reads case_id and the input_* fields only.
 // It must never read expected_*, grading_notes, notes, trap, or split.
 // Those columns are the answer key and the review notes. Reading them would
 // let this file copy the label instead of deciding. The scorer joins on case_id later.
+//
+// The second argument is the plays folder whose rules.ts to import.
+// Day 3 scores base/plays and head/plays with this same script. Without the
+// folder, both sides would load whichever rules.ts sits next to the script,
+// and the diff would always be empty. When the argument is omitted, that
+// nearby folder is used, so the older one-argument command still works.
 
 type InputRow = {
   case_id: string;
@@ -25,6 +32,16 @@ type InputRow = {
   input_company_country: string | null;
   input_mock_email: string | null;
   input_mock_email_status: string | null;
+};
+
+type RulesModule = {
+  decide: (
+    event: JobChangeEvent,
+    company: CompanySnapshot | null,
+    email: EmailSnapshot | null,
+    seenPersonIds: Set<string>,
+  ) => { alert: boolean; status: string; reason: string };
+  writeBrief: (event: JobChangeEvent, company: CompanySnapshot | null) => string;
 };
 
 function eventFromRow(row: InputRow): JobChangeEvent {
@@ -58,12 +75,34 @@ function emailFromRow(row: InputRow): EmailSnapshot {
   };
 }
 
-function main(): void {
-  const fixturePath = process.argv[2];
-  if (!fixturePath) {
-    process.stderr.write("usage: npx tsx scripts/offline_run.ts <events.jsonl>\n");
+function defaultPlaysDir(): string {
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  return path.resolve(here, "../plays");
+}
+
+async function loadRules(playsDir: string): Promise<RulesModule> {
+  const rulesFile = path.join(playsDir, "rules.ts");
+  try {
+    // A file URL so the folder can sit outside this repo (base/ vs head/).
+    return (await import(pathToFileURL(rulesFile).href)) as RulesModule;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    process.stderr.write(`could not import rules from ${rulesFile}: ${message}\n`);
     process.exit(1);
   }
+}
+
+async function main(): Promise<void> {
+  const fixturePath = process.argv[2];
+  if (!fixturePath) {
+    process.stderr.write(
+      "usage: npx tsx scripts/offline_run.ts <events.jsonl> [plays_dir]\n",
+    );
+    process.exit(1);
+  }
+
+  const playsDir = process.argv[3] ? path.resolve(process.argv[3]) : defaultPlaysDir();
+  const rules = await loadRules(playsDir);
 
   const text = readFileSync(fixturePath, "utf8");
   const seenPersonIds = new Set<string>();
@@ -77,7 +116,7 @@ function main(): void {
     const event = eventFromRow(row);
     const company = companyFromRow(row);
     const email = emailFromRow(row);
-    const decision = decide(event, company, email, seenPersonIds);
+    const decision = rules.decide(event, company, email, seenPersonIds);
 
     results.push({
       case_id: event.case_id,
@@ -90,11 +129,15 @@ function main(): void {
         employees: company.employees,
         country: company.country,
       },
-      brief: decision.alert ? writeBrief(event, company) : "",
+      brief: decision.alert ? rules.writeBrief(event, company) : "",
     });
   }
 
   process.stdout.write(`${JSON.stringify(results)}\n`);
 }
 
-main();
+main().catch((err: unknown) => {
+  const message = err instanceof Error ? err.message : String(err);
+  process.stderr.write(`${message}\n`);
+  process.exit(1);
+});
