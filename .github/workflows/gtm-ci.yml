@@ -1,0 +1,131 @@
+# Offline gate for every pull request. It costs 0 credits and needs no key.
+# Deepline's own workflow (spec F13) only checks that a Play file is valid code.
+# This job scores the Play's output. It does not install the deepline CLI and
+# it does not call Deepline. The live job is a later task.
+
+name: gtm-ci
+
+on:
+  pull_request:
+
+# contents: read is enough to check out both commits.
+# pull-requests: write is for the comment. Task 3.4 posts it. This job
+# only leaves the placeholder, but the token has to allow the write now.
+# actions: write is for the results artifact. Naming any permission turns
+# the others off, and the upload step cannot store a file without this one.
+permissions:
+  contents: read
+  pull-requests: write
+  actions: write
+
+jobs:
+  offline-gate:
+    name: offline-gate
+    # GitHub's hosted Linux runner. The laptop is Windows. The check runs
+    # here so every pull request is scored on the same machine.
+    # A public repo does not spend Actions minutes. A private repo uses
+    # the account's free minutes (spec Q9). The owner picks which.
+    runs-on: ubuntu-latest
+    steps:
+      # The pull request's own commit, in head/. head.sha is that commit.
+      # The default checkout is GitHub's synthetic merge of base into the
+      # pull request, which is not the proposed tree. The head repo is set
+      # so a fork pull request still checks out the fork's commit.
+      # Only this copy's fixtures, scorer, and scripts are used below.
+      - name: Check out the pull request head
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: head
+
+      # base.sha is the tip of the branch the pull request targets, usually
+      # main, at the time of this event. That tree is the "before".
+      # The gate uses this copy for plays/ only. An old scorer or an old
+      # answer key in this folder is not what grades the pull request.
+      - name: Check out the base commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+
+      # Node 22 runs the offline runner (npx tsx). It does not run Deepline.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # The scorer is Python 3.11, the same version as the laptop.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # tsx is a dev dependency. npm ci installs the lockfile, including it,
+      # into head/node_modules. The offline runner is started from head/.
+      - name: Install Node packages
+        working-directory: head
+        run: npm ci
+
+      # Editable install of the head scorer. Later steps run python -m scorer
+      # from head/, and the package root is this checkout, so results land
+      # in head/results and the default fixtures file is head/fixtures.
+      - name: Install the scorer
+        run: pip install -e head/
+
+      # Score the base plays with the head scorer and the head fixtures.
+      # The working directory is head/, so the default fixtures path is
+      # head/fixtures/events.jsonl. ../base/plays is the only base input.
+      # Both sides have to be graded by the same scorer. If base used its
+      # own old scorer, a pull request could change the grader instead of
+      # the rules and still look green.
+      - name: Score the base plays
+        id: score-base
+        working-directory: head
+        run: python -m scorer --mode offline --label base --plays ../base/plays
+
+      # The same command on the pull request's own plays/. This is the "after".
+      - name: Score the head plays
+        id: score-head
+        working-directory: head
+        run: python -m scorer --mode offline --label head --plays plays
+
+      # Hash fixtures/ and ci/thresholds.json on both checkouts. Exit 1 when
+      # they differ and the pull request has no test-set-change label.
+      # A changed answer key would make the two scores above agree, so the
+      # compare step would not see it. Labels come from the event. An empty
+      # list is fine: the guard then treats the pull request as unlabelled.
+      - name: Guard the test set
+        id: guard
+        working-directory: head
+        env:
+          PR_LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: python -m scorer.guard ../base . --labels "$PR_LABELS"
+
+      # Write head/results/comment.md and exit 1 when a threshold breaks.
+      # success() || failure() keeps this step running after a guard failure,
+      # so the comment file exists for a red pull request. A cancelled job
+      # skips it. The score outcomes skip it when a score step failed,
+      # because there is no pair of result files to compare. Exit 1 fails
+      # the job. There is no continue-on-error.
+      - name: Compare base and head
+        if: ${{ (success() || failure()) && steps.score-base.outcome == 'success' && steps.score-head.outcome == 'success' }}
+        working-directory: head
+        run: python -m scorer.compare results/base.json results/head.json --out results/comment.md
+
+      # Keep the score files and the comment. always() so a failing guard
+      # or compare still uploads them. The folder is head/results because
+      # that is the scorer package root, not the runner's top directory.
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results
+          path: head/results/
+
+      # Task 3.4 replaces this echo with scripts/post_comment.py.
+      # always() so the comment is posted even when guard or compare exits 1.
+      # This step does not post anything yet.
+      - name: Post the pull request comment
+        if: always()
+        run: echo "placeholder. task 3.4 posts head/results/comment.md"
