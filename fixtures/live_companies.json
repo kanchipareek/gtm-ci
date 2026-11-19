@@ -1,0 +1,125 @@
+{
+  "email_mode": "mock",
+  "companies": [
+    {
+      "case_id": "c01",
+      "domain": "asana.com",
+      "snapshot": {
+        "employees": 4400,
+        "country": "US"
+      },
+      "snapshot_source": "docs/spike/NOTES.md linkedin_employee_count and hq_country_code, 17 Nov 2026",
+      "event": {
+        "person_id": "c01",
+        "full_name": "Avery Testcase",
+        "was_champion": true,
+        "old_company": "Northwind Example",
+        "old_title": "Head of Revenue Operations",
+        "new_company": "Asana",
+        "new_domain": "asana.com",
+        "new_title": "VP Sales",
+        "start_date": "2026-11-01",
+        "event_date": "2026-11-15",
+        "country_hint": "US",
+        "email": "synthetic.c01@asana.com",
+        "email_status": "found"
+      }
+    },
+    {
+      "case_id": "c02",
+      "domain": "shopify.com",
+      "snapshot": {
+        "employees": 29663,
+        "country": "CA"
+      },
+      "snapshot_source": "docs/spike/NOTES.md linkedin_employee_count and hq_country_code, 17 Nov 2026",
+      "event": {
+        "person_id": "c02",
+        "full_name": "Blake Testcase",
+        "was_champion": true,
+        "old_company": "Contoso Example",
+        "old_title": "Director of Sales",
+        "new_company": "Shopify",
+        "new_domain": "shopify.com",
+        "new_title": "VP Sales",
+        "start_date": "2026-11-01",
+        "event_date": "2026-11-15",
+        "country_hint": "CA",
+        "email": "synthetic.c02@shopify.com",
+        "email_status": "found"
+      }
+    },
+    {
+      "case_id": "c03",
+      "domain": "hubspot.com",
+      "snapshot": {
+        "employees": 9016,
+        "country": "US"
+      },
+      "snapshot_source": "Fortune company profile, headcount as of 30 Jun 2026, headquarters United States. Filing headcount, not a LeadMagic linkedin_employee_count.",
+      "event": {
+        "person_id": "c03",
+        "full_name": "Casey Testcase",
+        "was_champion": true,
+        "old_company": "Fabrikam Example",
+        "old_title": "Head of Sales",
+        "new_company": "HubSpot",
+        "new_domain": "hubspot.com",
+        "new_title": "VP Sales",
+        "start_date": "2026-11-01",
+        "event_date": "2026-11-15",
+        "country_hint": "US",
+        "email": "synthetic.c03@hubspot.com",
+        "email_status": "found"
+      }
+    },
+    {
+      "case_id": "c04",
+      "domain": "figma.com",
+      "snapshot": {
+        "employees": 1886,
+        "country": "US"
+      },
+      "snapshot_source": "Figma Form 10-K for the year ended 31 Dec 2025, headquarters San Francisco, United States. Filing headcount, not a LeadMagic linkedin_employee_count.",
+      "event": {
+        "person_id": "c04",
+        "full_name": "Drew Testcase",
+        "was_champion": true,
+        "old_company": "Adventure Works Example",
+        "old_title": "VP Marketing",
+        "new_company": "Figma",
+        "new_domain": "figma.com",
+        "new_title": "VP Sales",
+        "start_date": "2026-11-01",
+        "event_date": "2026-11-15",
+        "country_hint": "US",
+        "email": "synthetic.c04@figma.com",
+        "email_status": "found"
+      }
+    },
+    {
+      "case_id": "c05",
+      "domain": "twilio.com",
+      "snapshot": {
+        "employees": 5625,
+        "country": "US"
+      },
+      "snapshot_source": "Twilio Q3 2026 earnings exhibit, employees as of 30 Sep 2026, headquarters San Francisco, United States. Filing headcount, not a LeadMagic linkedin_employee_count.",
+      "event": {
+        "person_id": "c05",
+        "full_name": "Emery Testcase",
+        "was_champion": true,
+        "old_company": "Litware Example",
+        "old_title": "Head of Marketing",
+        "new_company": "Twilio",
+        "new_domain": "twilio.com",
+        "new_title": "VP Sales",
+        "start_date": "2026-11-01",
+        "event_date": "2026-11-15",
+        "country_hint": "US",
+        "email": "synthetic.c05@twilio.com",
+        "email_status": "found"
+      }
+    }
+  ]
+}
