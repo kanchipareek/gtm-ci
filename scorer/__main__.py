@@ -51,6 +51,12 @@ def main(argv=None):
     else:
         ran = run_live(args.fixtures, args.max_credits)
 
+    # A refused call has no rows. A score of those missing rows would
+    # look like a finished run that alerted on nobody.
+    if ran.get("status") == "refused_by_cap":
+        print("Live run refused by the credit cap")
+        return 1
+
     # Five real companies have no expected_alert. Drift is the check.
     # An alert mismatch does not fail this command. The workflow fails
     # the job later, and only when the bill is over the cap.

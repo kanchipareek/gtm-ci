@@ -14,6 +14,7 @@ import pytest
 
 from scorer.run import (
     credits_from_usage,
+    is_cap_refusal,
     play_input_from_fixtures,
     rows_from_run_output,
     run_offline,
@@ -23,6 +24,8 @@ ROOT = Path(__file__).resolve().parent.parent
 FIXTURE = ROOT / "tests" / "fixtures" / "mini_events.jsonl"
 PLAY_OUTPUT = ROOT / "docs" / "spike" / "play_run_output.json"
 BILLING = ROOT / "docs" / "spike" / "play_billing_usage.json"
+CAP_OUTPUT = ROOT / "docs" / "cap" / "run_output.json"
+CAP_BILLING = ROOT / "docs" / "cap" / "billing_usage.json"
 
 ALERT_BRIEF = (
     "Maya was a champion at Old Co. "
@@ -152,3 +155,56 @@ def test_play_input_drops_the_answer_key():
             assert not key.startswith("expected_")
             assert not key.startswith("input_")
             assert key not in HIDDEN
+
+
+def test_saved_refusal_is_not_scored(tmp_path, monkeypatch, capsys):
+    payload = json.loads(CAP_OUTPUT.read_text(encoding="utf-8"))
+    usage = json.loads(CAP_BILLING.read_text(encoding="utf-8"))
+
+    # The refusal is a code on the overview, not a row the rules returned.
+    reported = payload["errorDetails"]["reported"]
+    assert reported[0]["code"] == "RUN_BILLING_CAP_EXCEEDED"
+    assert "capped at 0.01" in reported[0]["message"]
+    assert "this call needs 1.46" in reported[0]["message"]
+    assert payload["run"]["status"] == "failed"
+    assert payload["resultState"] == "not_returned"
+    assert is_cap_refusal(payload) is True
+    assert is_cap_refusal(json.loads(PLAY_OUTPUT.read_text(encoding="utf-8"))) is False
+    with pytest.raises(RuntimeError, match="result.rows"):
+        rows_from_run_output(payload)
+
+    credits = credits_from_usage(usage)
+    assert credits == 0
+
+    def fake_live(fixtures_path, max_credits):
+        assert max_credits == 0.01
+        assert is_cap_refusal(payload)
+        return {
+            "status": "refused_by_cap",
+            "cap": max_credits,
+            "credits_spent": credits,
+        }
+
+    monkeypatch.setattr("scorer.__main__.run_live", fake_live)
+    monkeypatch.setattr("scorer.__main__.RESULTS_DIR", tmp_path)
+    from scorer.__main__ import main
+
+    code = main(
+        [
+            "--mode",
+            "live",
+            "--yes",
+            "--label",
+            "cap",
+            "--max-credits",
+            "0.01",
+            "--fixtures",
+            str(FIXTURE),
+        ]
+    )
+    assert code == 1
+    printed = capsys.readouterr().out
+    assert "Live run refused by the credit cap" in printed
+    assert "correct alerts" not in printed
+    assert not (tmp_path / "cap.json").exists()
+    assert not (tmp_path / "cap.md").exists()
