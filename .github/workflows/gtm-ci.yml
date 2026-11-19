@@ -10,6 +10,7 @@ name: gtm-ci
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
 
 # contents: read is enough to check out both commits.
 # pull-requests: write lets this job's GITHUB_TOKEN create and edit the
