@@ -9,8 +9,8 @@ on:
   pull_request:
 
 # contents: read is enough to check out both commits.
-# pull-requests: write is for the comment. Task 3.4 posts it. This job
-# only leaves the placeholder, but the token has to allow the write now.
+# pull-requests: write lets this job's GITHUB_TOKEN create and edit the
+# one pull request comment. A personal token is not used.
 # actions: write is for the results artifact. Naming any permission turns
 # the others off, and the upload step cannot store a file without this one.
 permissions:
@@ -123,9 +123,18 @@ jobs:
           name: results
           path: head/results/
 
-      # Task 3.4 replaces this echo with scripts/post_comment.py.
+      # List the pull request comments, edit the one that starts with
+      # <!-- gtm-ci -->, or create it if this is the first run.
       # always() so the comment is posted even when guard or compare exits 1.
-      # This step does not post anything yet.
+      # A red pull request is when the reviewer needs the numbers.
+      # GITHUB_REPOSITORY is already set by the runner. It is the repo that
+      # owns the pull request, so the comment lands on the base repo.
+      # gh is already installed on the runner. The token is an env var, not
+      # a command argument, so the log does not print it.
       - name: Post the pull request comment
         if: always()
-        run: echo "placeholder. task 3.4 posts head/results/comment.md"
+        working-directory: head
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python scripts/post_comment.py results/comment.md
