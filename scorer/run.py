@@ -1,12 +1,14 @@
 """Run the champion-tracker rules offline, or the real Play on Deepline.
 
-Both functions return the same shape: rows, mode, and credits_spent.
-The scorer joins on case_id and reads credits_spent. It does not grow a
-second path for "where did these rows come from".
+Both functions return rows, mode, and credits_spent. The scorer joins
+on case_id and reads credits_spent. It does not grow a second path for
+"where did these rows come from".
 
 Offline credits_spent is 0 because this mode never calls Deepline.
 Live credits_spent is run.spent_credits from `deepline billing usage`.
 If that number is missing, the value is "unknown". It is never 0 by guess.
+Live also returns run_id, from the run-id file or from run.id. That id
+is how the comment names the run. It is not a credit number.
 """
 
 import json
@@ -15,6 +17,11 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+from scorer.drift import (
+    is_live_companies_file,
+    load_live_companies,
+    play_events_from_companies,
+)
 from scorer.fixtures import load_fixtures
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -100,22 +107,29 @@ def run_live(fixtures_or_input_path, max_credits):
         completed = _run(command)
         output = _parse_json(completed.stdout, command)
         rows = rows_from_run_output(output)
-        credits = _credits_for_run(_read_run_id(run_id_path, output))
+        run_id = _read_run_id(run_id_path, output)
+        credits = _credits_for_run(run_id)
 
     return {
         "rows": rows,
         "mode": "live",
         "credits_spent": credits,
+        "run_id": run_id if isinstance(run_id, str) and run_id.strip() else None,
     }
 
 
 def play_input_from_fixtures(fixtures_path):
-    """Build the Play input from golden rows.
+    """Build the Play input from golden rows, or from the live company file.
 
-    Each event is case_id, the Play's input fields, and email plus
+    Each golden event is case_id, the Play's input fields, and email plus
     email_status copied from input_mock_email and input_mock_email_status.
     expected_*, grading_notes, notes, trap, and split are left out.
+    The live company file keeps its snapshot out of the input. The Play
+    looks that company up, and drift compares the result with the snapshot.
     """
+    if is_live_companies_file(fixtures_path):
+        companies = load_live_companies(fixtures_path)
+        return {"email_mode": "mock", "events": play_events_from_companies(companies)}
     rows = load_fixtures(fixtures_path)
     events = [_event_from_row(row) for row in rows]
     return {"email_mode": "mock", "events": events}

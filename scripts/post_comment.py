@@ -22,6 +22,10 @@ from pathlib import Path
 # start with it, so a later push does not edit their comment.
 MARKER = "<!-- gtm-ci -->"
 
+# The live job appends this heading. The gate writes a fresh comment, so
+# an update has to copy the heading and everything under it back on.
+LIVE_HEADING = "## Live run"
+
 
 def find_marked_comment(comments):
     """Return the first comment whose body starts with the marker, or None.
@@ -36,6 +40,41 @@ def find_marked_comment(comments):
         body = comment.get("body")
         if isinstance(body, str) and body.startswith(MARKER):
             return comment
+    return None
+
+
+def keep_live_section(new_body, old_body):
+    """Return the new comment with the old Live run section still at the end.
+
+    The gate writes a fresh file that has no live block. Replacing the
+    pull request comment with that file would drop the last live run.
+    The old section is copied as it was written. A new body that already
+    has the heading is left alone, so a second section is not added.
+    """
+    if _live_section(new_body) is not None:
+        return new_body
+    section = _live_section(old_body)
+    if section is None:
+        return new_body
+    body = new_body
+    if not body.endswith("\n"):
+        body += "\n"
+    if not body.endswith("\n\n"):
+        body += "\n"
+    return body + section
+
+
+def _live_section(body):
+    """The Live run block, from its heading line through the end, or None."""
+    if not isinstance(body, str) or body == "":
+        return None
+    lines = body.splitlines(keepends=True)
+    for index, line in enumerate(lines):
+        if line.rstrip("\r\n") == LIVE_HEADING:
+            section = "".join(lines[index:])
+            if not section.endswith("\n"):
+                section += "\n"
+            return section
     return None
 
 
@@ -95,6 +134,9 @@ def main(argv=None):
             if comment_id is None:
                 print("the marked comment has no id")
                 return 1
+            # The file is the new gate text. The comment on GitHub may
+            # already end with a Live run block from an earlier live job.
+            body = keep_live_section(body, found.get("body"))
             update_comment(repo, comment_id, body)
             print(f"updated comment {comment_id}")
     except (RuntimeError, ValueError) as exc:
