@@ -29,6 +29,15 @@ jobs:
     # here so every pull request is scored on the same machine.
     # A public repo does not spend Actions minutes. A private repo uses
     # the account's free minutes (spec Q9). The owner picks which.
+    # opened, synchronize, and reopened always run. A label edit runs
+    # only for live-eval or test-set-change. Those two are the labels
+    # this workflow reads. Any other label must not start a run.
+    if: >-
+      ${{
+        (github.event.action != 'labeled' && github.event.action != 'unlabeled') ||
+        github.event.label.name == 'live-eval' ||
+        github.event.label.name == 'test-set-change'
+      }}
     runs-on: ubuntu-latest
     steps:
       # The pull request's own commit, in head/. head.sha is that commit.
@@ -149,7 +158,17 @@ jobs:
     # fork. github.repository is this repo. They match only for a branch
     # that already lives here. Spec F13 skips forks the same way.
     # The check is free (spec F5) and it does not run the Play.
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    # Same label filter as offline-gate, so an unrelated label does not
+    # install the CLI. A fork is still skipped.
+    if: >-
+      ${{
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        (
+          (github.event.action != 'labeled' && github.event.action != 'unlabeled') ||
+          github.event.label.name == 'live-eval' ||
+          github.event.label.name == 'test-set-change'
+        )
+      }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out the pull request head
@@ -180,8 +199,20 @@ jobs:
     # After the gate, so the comment file already exists and this job can
     # append to it. !cancelled() still runs when the gate failed. Alert
     # counts are not this job's pass rule.
+    # The label filter matches the other jobs. Removing live-eval still
+    # skips this job, because the pull request no longer has that label.
     needs: offline-gate
-    if: "${{ !cancelled() && contains(github.event.pull_request.labels.*.name, 'live-eval') && github.event.pull_request.head.repo.full_name == github.repository }}"
+    if: >-
+      ${{
+        !cancelled() &&
+        contains(github.event.pull_request.labels.*.name, 'live-eval') &&
+        github.event.pull_request.head.repo.full_name == github.repository &&
+        (
+          (github.event.action != 'labeled' && github.event.action != 'unlabeled') ||
+          github.event.label.name == 'live-eval' ||
+          github.event.label.name == 'test-set-change'
+        )
+      }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out the pull request head
