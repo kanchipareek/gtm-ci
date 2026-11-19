@@ -1,0 +1,2535 @@
+{
+  "schemaVersion": 1,
+  "kind": "run_overview",
+  "run": {
+    "id": "play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+    "playName": "champion-tracker",
+    "status": "failed",
+    "runUrl": "https://code.deepline.com/dashboard/plays/champion-tracker?runId=play%2Fchampion-tracker%2Frun%2F20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+    "acceptedAt": 1795082811492,
+    "updatedAt": 1795082816757,
+    "startedAt": 1795082812732,
+    "finishedAt": 1795082816719,
+    "sandboxProvider": "modal",
+    "durationMs": 3987,
+    "error": "ToolExecutionError: tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+    "activity": null,
+    "performance": {
+      "scope": "terminal_attempt",
+      "attempt": 1,
+      "invocationSeq": 1,
+      "segmentId": "204495b7-4739-4392-bc29-ab94f634df15",
+      "process": {
+        "cpuUserMs": 1140,
+        "cpuSystemMs": 30,
+        "rssBytes": 139071488,
+        "maxRssBytes": 149917696,
+        "heapUsedBytes": 20598280,
+        "externalBytes": 3741574
+      },
+      "counters": {
+        "logicalCalls": 1,
+        "providerRequests": 1,
+        "provider429s": 0
+      },
+      "phases": {
+        "rowAdmission": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "providerAdmission": {
+          "count": 1,
+          "totalMs": 44,
+          "maxMs": 44,
+          "ewmaMs": 44,
+          "p50Ms": 44,
+          "p90Ms": 44,
+          "p99Ms": 44,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "externalExecution": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "providerResidence": {
+          "count": 1,
+          "totalMs": 407,
+          "maxMs": 407,
+          "ewmaMs": 407,
+          "p50Ms": 384,
+          "p90Ms": 407,
+          "p99Ms": 407,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "fixtureDelay": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "transportSlotWait": {
+          "count": 1,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "fetchToHeaders": {
+          "count": 1,
+          "totalMs": 402,
+          "maxMs": 402,
+          "ewmaMs": 402,
+          "p50Ms": 384,
+          "p90Ms": 402,
+          "p99Ms": 402,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "bodyRead": {
+          "count": 1,
+          "totalMs": 3,
+          "maxMs": 3,
+          "ewmaMs": 3,
+          "p50Ms": 3,
+          "p90Ms": 3,
+          "p99Ms": 3,
+          "histogram": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "eventLoopLag": {
+          "count": 2,
+          "totalMs": 2,
+          "maxMs": 1,
+          "ewmaMs": 1,
+          "p50Ms": 1,
+          "p90Ms": 1,
+          "p99Ms": 1,
+          "histogram": [
+            0,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptSettlement": {
+          "count": 3,
+          "totalMs": 193,
+          "maxMs": 74,
+          "ewmaMs": 56.400000000000006,
+          "p50Ms": 74,
+          "p90Ms": 74,
+          "p99Ms": 74,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptClaim": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptHydrationGateWait": {
+          "count": 7,
+          "totalMs": 4,
+          "maxMs": 2,
+          "ewmaMs": 0.8842880000000004,
+          "p50Ms": 0.875,
+          "p90Ms": 2,
+          "p99Ms": 2,
+          "histogram": [
+            4,
+            2,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptCompletionQueue": {
+          "count": 6,
+          "totalMs": 66,
+          "maxMs": 11,
+          "ewmaMs": 11,
+          "p50Ms": 11,
+          "p90Ms": 11,
+          "p99Ms": 11,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptCompletionFlight": {
+          "count": 6,
+          "totalMs": 386,
+          "maxMs": 74,
+          "ewmaMs": 62.480000000000004,
+          "p50Ms": 74,
+          "p90Ms": 74,
+          "p99Ms": 74,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "receiptCompletionReadBack": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "rowPersistence": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "dispatchQueueWait": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "rowResolverGap": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "toolCallLogicalWall": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "resultDelivery": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "deliveryWrap": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "deliveryPublishWait": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "deliveryResolve": {
+          "count": 0,
+          "totalMs": 0,
+          "maxMs": null,
+          "ewmaMs": null,
+          "p50Ms": null,
+          "p90Ms": null,
+          "p99Ms": null,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "flightSerialize": {
+          "count": 6,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "flightTransport": {
+          "count": 6,
+          "totalMs": 386,
+          "maxMs": 74,
+          "ewmaMs": 62.480000000000004,
+          "p50Ms": 74,
+          "p90Ms": 74,
+          "p99Ms": 74,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "flightDecode": {
+          "count": 6,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayAuthLaunch": {
+          "count": 9,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayAuthVerify": {
+          "count": 9,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayBodyParse": {
+          "count": 9,
+          "totalMs": 1,
+          "maxMs": 1,
+          "ewmaMs": 0.12800000000000003,
+          "p50Ms": 0.5625,
+          "p90Ms": 1,
+          "p99Ms": 1,
+          "histogram": [
+            8,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayBodyInflate": {
+          "count": 9,
+          "totalMs": 1,
+          "maxMs": 1,
+          "ewmaMs": 0.12800000000000003,
+          "p50Ms": 0.5625,
+          "p90Ms": 1,
+          "p99Ms": 1,
+          "histogram": [
+            8,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayPoolWait": {
+          "count": 9,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayReceiptValuePersist": {
+          "count": 9,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayCallback": {
+          "count": 9,
+          "totalMs": 91,
+          "maxMs": 22,
+          "ewmaMs": 9.690869760000002,
+          "p50Ms": 7.6,
+          "p90Ms": 22,
+          "p99Ms": 22,
+          "histogram": [
+            0,
+            0,
+            0,
+            5,
+            2,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayRoundTrip": {
+          "count": 9,
+          "totalMs": 468,
+          "maxMs": 164,
+          "ewmaMs": 59.92257536000001,
+          "p50Ms": 41.6,
+          "p90Ms": 140.79999999999995,
+          "p99Ms": 164,
+          "histogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            5,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayRequestSerialize": {
+          "count": 9,
+          "totalMs": 0,
+          "maxMs": 0,
+          "ewmaMs": 0,
+          "p50Ms": 0,
+          "p90Ms": 0,
+          "p99Ms": 0,
+          "histogram": [
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "gatewayRequestPack": {
+          "count": 9,
+          "totalMs": 22,
+          "maxMs": 19,
+          "ewmaMs": 1.7788518400000006,
+          "p50Ms": 0.9,
+          "p90Ms": 17.599999999999994,
+          "p99Ms": 19,
+          "histogram": [
+            5,
+            3,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "rows": {
+        "mapCount": 0,
+        "maxIndividualMapActiveRowPeak": 0
+      },
+      "memoryAdmission": {
+        "toolResponseBody": {
+          "turns": 1,
+          "measuredTurns": 1,
+          "decodedUtf8BytesTotal": 1401,
+          "decodedUtf8BytesMax": 1401,
+          "permitBytesPeak": 1401,
+          "queuedTurns": 0,
+          "budgetRefusals": 0,
+          "progressAdmissions": 1,
+          "unpricedAdmissions": 0
+        }
+      }
+    }
+  },
+  "steps": [
+    {
+      "id": "loop:loop_154_181",
+      "kind": "step",
+      "status": "unknown",
+      "execution": {
+        "kind": "unknown"
+      },
+      "label": "Unknown"
+    }
+  ],
+  "failures": {
+    "steps": []
+  },
+  "errorDetails": {
+    "coverage": "unknown",
+    "reported": [
+      {
+        "category": "billing",
+        "cause": "tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+        "code": "RUN_BILLING_CAP_EXCEEDED",
+        "message": "tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+        "origin": "deepline",
+        "phase": "billing",
+        "retryable": false
+      }
+    ],
+    "run": "ToolExecutionError: tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+    "steps": [],
+    "getMore": "actions.getLogsCmd"
+  },
+  "rowOutcomes": {
+    "completedRows": 0,
+    "failedRows": 0,
+    "totalRows": 0,
+    "hasRowFailures": false
+  },
+  "warnings": [],
+  "datasets": [],
+  "resultState": "not_returned",
+  "actions": {
+    "getFailedLogsCmd": "deepline runs logs play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --failed",
+    "rerunCmd": "deepline plays run 'plays\\champion-tracker.play.ts' --input '{\"email_mode\":\"mock\",\"events\":[{\"person_id\":\"c01\",\"full_name\":\"Avery Testcase\",\"was_champion\":true,\"old_company\":\"Northwind Example\",\"old_title\":\"Head of Revenue Operations\",\"new_company\":\"Asana\",\"new_domain\":\"asana.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c01@asana.com\",\"email_status\":\"found\",\"case_id\":\"c01\"},{\"person_id\":\"c02\",\"full_name\":\"Blake Testcase\",\"was_champion\":true,\"old_company\":\"Contoso Example\",\"old_title\":\"Director of Sales\",\"new_company\":\"Shopify\",\"new_domain\":\"shopify.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"CA\",\"email\":\"synthetic.c02@shopify.com\",\"email_status\":\"found\",\"case_id\":\"c02\"},{\"person_id\":\"c03\",\"full_name\":\"Casey Testcase\",\"was_champion\":true,\"old_company\":\"Fabrikam Example\",\"old_title\":\"Head of Sales\",\"new_company\":\"HubSpot\",\"new_domain\":\"hubspot.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c03@hubspot.com\",\"email_status\":\"found\",\"case_id\":\"c03\"},{\"person_id\":\"c04\",\"full_name\":\"Drew Testcase\",\"was_champion\":true,\"old_company\":\"Adventure Works Example\",\"old_title\":\"VP Marketing\",\"new_company\":\"Figma\",\"new_domain\":\"figma.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c04@figma.com\",\"email_status\":\"found\",\"case_id\":\"c04\"},{\"person_id\":\"c05\",\"full_name\":\"Emery Testcase\",\"was_champion\":true,\"old_company\":\"Litware Example\",\"old_title\":\"Head of Marketing\",\"new_company\":\"Twilio\",\"new_domain\":\"twilio.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c05@twilio.com\",\"email_status\":\"found\",\"case_id\":\"c05\"}]}' --max-credits 0.01 --full --json",
+    "getRunCmd": "deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+    "getFullRunCmd": "deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --full",
+    "getBillingCmd": "deepline billing usage --run-id play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+    "getLogsCmd": "deepline runs logs play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --failed",
+    "getReceiptCmd": "deepline runs logs 'play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e' --kind receipt.completed --payloads"
+  },
+  "diagnostics": {
+    "runId": "play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+    "name": "champion-tracker",
+    "playName": "champion-tracker",
+    "apiVersion": 1,
+    "status": "failed",
+    "outcome": "failed",
+    "error": "ToolExecutionError: tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)\n    at zn (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:130522)\n    at Xy (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:136600)\n    at rg (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:147150)\n    at /opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1495:30420\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at EF (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:112:37487)\n    at rT.callToolExecutionAPI (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1495:3733)\n    at rT.executeDirectToolCall (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1491:93170)\n    at Object.dispatch (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1491:200417)\n    at Object.call (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:489730)",
+    "errors": [
+      {
+        "category": "billing",
+        "cause": "tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+        "code": "RUN_BILLING_CAP_EXCEEDED",
+        "message": "tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+        "origin": "deepline",
+        "phase": "billing",
+        "retryable": false
+      }
+    ],
+    "health": null,
+    "snapshot": {
+      "runId": "play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+      "status": "failed",
+      "createdAt": 1795082811492,
+      "startedAt": 1795082812732,
+      "finishedAt": 1795082816719,
+      "durationMs": 3987,
+      "updatedAt": 1795082816757,
+      "logs": [],
+      "totalLogCount": 0,
+      "activeArtifactTableNamespace": null,
+      "resultTableNamespace": null,
+      "datasets": [],
+      "activities": [],
+      "activeActivity": null,
+      "nodeStates": [
+        {
+          "nodeId": "run_javascript:lines_147_152",
+          "status": "completed",
+          "error": null,
+          "artifactTableNamespace": null,
+          "progress": {
+            "artifactTableNamespace": null,
+            "startedAt": 1795082812736,
+            "completedAt": 1795082816479,
+            "updatedAt": 1795082816479
+          },
+          "startedAt": 1795082812736,
+          "completedAt": 1795082816479,
+          "updatedAt": 1795082816479
+        }
+      ],
+      "activeNodeId": null,
+      "rowOutcomes": {
+        "completedRows": 0,
+        "failedRows": 0,
+        "totalRows": 0,
+        "hasRowFailures": false
+      },
+      "calls": {
+        "logicalCalls": 1,
+        "providerRequests": 1,
+        "provider429s": 0,
+        "confirmed": true,
+        "reusableResultCalls": 3
+      },
+      "activity": null,
+      "logsUnavailable": true
+    },
+    "rowOutcomes": {
+      "completedRows": 0,
+      "failedRows": 0,
+      "totalRows": 0,
+      "hasRowFailures": false
+    },
+    "steps": [
+      {
+        "nodeId": "run_javascript:lines_147_152",
+        "status": "completed",
+        "error": null,
+        "artifactTableNamespace": null,
+        "progress": {
+          "artifactTableNamespace": null,
+          "startedAt": 1795082812736,
+          "completedAt": 1795082816479,
+          "updatedAt": 1795082816479
+        },
+        "startedAt": 1795082812736,
+        "completedAt": 1795082816479,
+        "updatedAt": 1795082816479
+      }
+    ],
+    "progress": {
+      "status": "failed",
+      "updatedAt": 1795082816757,
+      "activeNodeId": null,
+      "activeArtifactTableNamespace": null,
+      "nodeStates": [
+        {
+          "nodeId": "run_javascript:lines_147_152",
+          "status": "completed",
+          "error": null,
+          "artifactTableNamespace": null,
+          "progress": {
+            "artifactTableNamespace": null,
+            "startedAt": 1795082812736,
+            "completedAt": 1795082816479,
+            "updatedAt": 1795082816479
+          },
+          "startedAt": 1795082812736,
+          "completedAt": 1795082816479,
+          "updatedAt": 1795082816479
+        }
+      ],
+      "logs": [],
+      "resultTableNamespace": null,
+      "error": "ToolExecutionError: tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)\n    at zn (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:130522)\n    at Xy (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:136600)\n    at rg (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:147150)\n    at /opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1495:30420\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at EF (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:112:37487)\n    at rT.callToolExecutionAPI (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1495:3733)\n    at rT.executeDirectToolCall (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1491:93170)\n    at Object.dispatch (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1491:200417)\n    at Object.call (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:489730)"
+    },
+    "result": {
+      "checkpointBytes": 128,
+      "checkpointDisposition": "omitted_terminal_replay",
+      "error": "ToolExecutionError: tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)\n    at zn (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:130522)\n    at Xy (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:136600)\n    at rg (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:147150)\n    at /opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1495:30420\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at EF (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:112:37487)\n    at rT.callToolExecutionAPI (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1495:3733)\n    at rT.executeDirectToolCall (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1491:93170)\n    at Object.dispatch (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:1491:200417)\n    at Object.call (/opt/deepline/runner/b994635575c47974d1b55d07e9220f4dc3a14a342f55a2d4a5834267eb958d2c/play-runner.cjs:111:489730)",
+      "errors": [
+        {
+          "category": "billing",
+          "cause": "tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+          "code": "RUN_BILLING_CAP_EXCEEDED",
+          "message": "tool leadmagic_search_companies 402 attempt 1/1: Deepline billing cap exceeded. Run halted before marking remaining rows processed. code=RUN_BILLING_CAP_EXCEEDED. Per-run billing cap exceeded: this play run is capped at 0.01 credits, 0 already spent, 0.01 remaining, and this call needs 1.46. (provider call 407ms)",
+          "origin": "deepline",
+          "phase": "billing",
+          "retryable": false
+        }
+      ],
+      "inserted": 0,
+      "logs": [],
+      "skipped": 0,
+      "stats": {
+        "rowsProcessed": 0,
+        "runtimeLogBuffer": {
+          "omittedContexts": 0,
+          "omittedLines": 0,
+          "retainedBytes": 5228,
+          "retainedContextBytes": 0,
+          "retainedLines": 10
+        },
+        "runtimeResources": {
+          "concurrencyShed": {
+            "count": 0,
+            "delayMsEwma": null
+          },
+          "executeRoute": {
+            "chargeOpen": {
+              "capPreflightMs": 0,
+              "count": 1,
+              "eligibilityMs": 58,
+              "openMutationMs": 72.301,
+              "retryWaitMs": 0
+            },
+            "chargeOpenMs": 130.798,
+            "count": 1,
+            "executeMs": 0,
+            "fixtureLoadMs": 0,
+            "gateway": {
+              "authLaunchMs": 4,
+              "authVerifyMs": 0,
+              "bodyParseMs": 0,
+              "count": 1,
+              "dispatchCallbackMs": 0,
+              "dispatchPoolMs": 0,
+              "upstreamBodyMs": 0,
+              "upstreamHeadersMs": 341
+            },
+            "totalMs": 241.558
+          },
+          "gateway": {
+            "authSession": {
+              "coalesced": 0,
+              "hit": 9,
+              "miss": 0,
+              "unknown": 0
+            },
+            "requestBody": {
+              "count": 9,
+              "rawBytes": 111387,
+              "wireBytes": 17880
+            },
+            "successfulFlights": {
+              "other": {
+                "bodyDecode": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "count": 0,
+                "headers": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "roundTrip": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "serverTotal": null
+              },
+              "receiptClaim": {
+                "bodyDecode": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "count": 0,
+                "headers": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "roundTrip": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "serverTotal": null
+              },
+              "receiptCompletion": {
+                "bodyDecode": {
+                  "count": 5,
+                  "maxMs": 56,
+                  "totalMs": 59
+                },
+                "count": 5,
+                "headers": {
+                  "count": 5,
+                  "maxMs": 108,
+                  "totalMs": 245
+                },
+                "roundTrip": {
+                  "count": 5,
+                  "maxMs": 164,
+                  "totalMs": 304
+                },
+                "serverTotal": {
+                  "count": 5,
+                  "maxMs": 23,
+                  "totalMs": 70
+                }
+              },
+              "receiptRead": {
+                "bodyDecode": {
+                  "count": 4,
+                  "maxMs": 23,
+                  "totalMs": 62
+                },
+                "count": 4,
+                "headers": {
+                  "count": 4,
+                  "maxMs": 41,
+                  "totalMs": 102
+                },
+                "roundTrip": {
+                  "count": 4,
+                  "maxMs": 61,
+                  "totalMs": 164
+                },
+                "serverTotal": {
+                  "count": 4,
+                  "maxMs": 7,
+                  "totalMs": 22
+                }
+              },
+              "rowUpdates": {
+                "bodyDecode": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "count": 0,
+                "headers": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "roundTrip": {
+                  "count": 0,
+                  "maxMs": null,
+                  "totalMs": 0
+                },
+                "serverTotal": null
+              }
+            }
+          },
+          "mapAdmission": {},
+          "memory": {
+            "admissionHolds": 0,
+            "admittedRowReserveBytesAtObservedPeak": null,
+            "baselineAtObservedPeakBytes": null,
+            "baselineBytes": null,
+            "bytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 0,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            },
+            "calibrationFactor": 3,
+            "calibrationSamples": 0,
+            "categoryCalibrationSamples": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 0,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            },
+            "categoryFactors": {
+              "eventBuffer": 3,
+              "hydrationReadBack": 1.1,
+              "mapCellMetadata": 3,
+              "materializedRows": 1,
+              "providerBody": 3,
+              "receiptCompletionBuffer": 1.1,
+              "toolInputSnapshot": 3,
+              "transportInFlight": 1.1
+            },
+            "externalPressureSignals": 0,
+            "ledgerBytesAtObservedPeak": null,
+            "liveBytes": 0,
+            "liveEntries": 1,
+            "livePeakBytes": 3145728,
+            "memoryPressureEvents": 0,
+            "observationAtObservedPeak": null,
+            "observedCollectedPeakBytes": null,
+            "observedLiveBytes": null,
+            "ownerPeakBytesByCategoryP90": {
+              "eventBuffer": null,
+              "hydrationReadBack": null,
+              "mapCellMetadata": null,
+              "materializedRows": null,
+              "providerBody": null,
+              "receiptCompletionBuffer": null,
+              "toolInputSnapshot": null,
+              "transportInFlight": null
+            },
+            "ownerPeakBytesP50": null,
+            "ownerPeakBytesP90": null,
+            "ownerPeakSamples": 0,
+            "ownersActive": 0,
+            "ownersSettled": 0,
+            "peakBytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 3145728,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 1401,
+              "receiptCompletionBuffer": 39912,
+              "toolInputSnapshot": 30,
+              "transportInFlight": 39912
+            },
+            "predictedAtObservedPeakBytes": null,
+            "predictedBytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 0,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            },
+            "predictedLiveBytes": 0,
+            "predictedLivePeakBytes": 3460301,
+            "predictedPeakBytesByCategory": {
+              "eventBuffer": 0,
+              "hydrationReadBack": 3460301,
+              "mapCellMetadata": 0,
+              "materializedRows": 0,
+              "providerBody": 0,
+              "receiptCompletionBuffer": 0,
+              "toolInputSnapshot": 0,
+              "transportInFlight": 0
+            }
+          },
+          "memoryAdmission": {
+            "toolResponseBody": {
+              "budgetRefusals": 0,
+              "decodedUtf8BytesMax": 1401,
+              "decodedUtf8BytesTotal": 1401,
+              "measuredTurns": 1,
+              "permitBytesPeak": 1401,
+              "progressAdmissions": 1,
+              "queuedTurns": 0,
+              "turns": 1,
+              "unpricedAdmissions": 0
+            }
+          },
+          "phases": {
+            "bodyRead": {
+              "buckets": [
+                [
+                  2,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 3,
+              "maxMs": 3,
+              "p50Ms": 3,
+              "p90Ms": 3,
+              "p99Ms": 3,
+              "totalMs": 3
+            },
+            "deliveryPublishWait": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "deliveryResolve": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "deliveryWrap": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "dispatchQueueWait": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "eventLoopLag": {
+              "buckets": [
+                [
+                  1,
+                  2
+                ]
+              ],
+              "count": 2,
+              "ewmaMs": 1,
+              "maxMs": 1,
+              "p50Ms": 1,
+              "p90Ms": 1,
+              "p99Ms": 1,
+              "totalMs": 2
+            },
+            "externalExecution": {
+              "buckets": [
+                [
+                  0,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "fetchToHeaders": {
+              "buckets": [
+                [
+                  9,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 402,
+              "maxMs": 402,
+              "p50Ms": 384,
+              "p90Ms": 402,
+              "p99Ms": 402,
+              "totalMs": 402
+            },
+            "fixtureDelay": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "flightDecode": {
+              "buckets": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "count": 6,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "flightSerialize": {
+              "buckets": [
+                [
+                  0,
+                  6
+                ]
+              ],
+              "count": 6,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "flightTransport": {
+              "buckets": [
+                [
+                  6,
+                  2
+                ],
+                [
+                  7,
+                  4
+                ]
+              ],
+              "count": 6,
+              "ewmaMs": 62.480000000000004,
+              "maxMs": 74,
+              "p50Ms": 74,
+              "p90Ms": 74,
+              "p99Ms": 74,
+              "totalMs": 386
+            },
+            "gatewayAuthLaunch": {
+              "buckets": [
+                [
+                  0,
+                  9
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayAuthVerify": {
+              "buckets": [
+                [
+                  0,
+                  9
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayBodyInflate": {
+              "buckets": [
+                [
+                  0,
+                  8
+                ],
+                [
+                  1,
+                  1
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0.12800000000000003,
+              "maxMs": 1,
+              "p50Ms": 0.5625,
+              "p90Ms": 1,
+              "p99Ms": 1,
+              "totalMs": 1
+            },
+            "gatewayBodyParse": {
+              "buckets": [
+                [
+                  0,
+                  8
+                ],
+                [
+                  1,
+                  1
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0.12800000000000003,
+              "maxMs": 1,
+              "p50Ms": 0.5625,
+              "p90Ms": 1,
+              "p99Ms": 1,
+              "totalMs": 1
+            },
+            "gatewayCallback": {
+              "buckets": [
+                [
+                  3,
+                  5
+                ],
+                [
+                  4,
+                  2
+                ],
+                [
+                  5,
+                  2
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 9.690869760000002,
+              "maxMs": 22,
+              "p50Ms": 7.6,
+              "p90Ms": 22,
+              "p99Ms": 22,
+              "totalMs": 91
+            },
+            "gatewayPoolWait": {
+              "buckets": [
+                [
+                  0,
+                  9
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayReceiptValuePersist": {
+              "buckets": [
+                [
+                  0,
+                  9
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayRequestPack": {
+              "buckets": [
+                [
+                  0,
+                  5
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  5,
+                  1
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 1.7788518400000006,
+              "maxMs": 19,
+              "p50Ms": 0.9,
+              "p90Ms": 17.599999999999994,
+              "p99Ms": 19,
+              "totalMs": 22
+            },
+            "gatewayRequestSerialize": {
+              "buckets": [
+                [
+                  0,
+                  9
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            },
+            "gatewayRoundTrip": {
+              "buckets": [
+                [
+                  5,
+                  3
+                ],
+                [
+                  6,
+                  5
+                ],
+                [
+                  8,
+                  1
+                ]
+              ],
+              "count": 9,
+              "ewmaMs": 59.92257536000001,
+              "maxMs": 164,
+              "p50Ms": 41.6,
+              "p90Ms": 140.79999999999995,
+              "p99Ms": 164,
+              "totalMs": 468
+            },
+            "providerAdmission": {
+              "buckets": [
+                [
+                  6,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 44,
+              "maxMs": 44,
+              "p50Ms": 44,
+              "p90Ms": 44,
+              "p99Ms": 44,
+              "totalMs": 44
+            },
+            "providerResidence": {
+              "buckets": [
+                [
+                  9,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 407,
+              "maxMs": 407,
+              "p50Ms": 384,
+              "p90Ms": 407,
+              "p99Ms": 407,
+              "totalMs": 407
+            },
+            "receiptClaim": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "receiptCompletionFlight": {
+              "buckets": [
+                [
+                  6,
+                  2
+                ],
+                [
+                  7,
+                  4
+                ]
+              ],
+              "count": 6,
+              "ewmaMs": 62.480000000000004,
+              "maxMs": 74,
+              "p50Ms": 74,
+              "p90Ms": 74,
+              "p99Ms": 74,
+              "totalMs": 386
+            },
+            "receiptCompletionQueue": {
+              "buckets": [
+                [
+                  4,
+                  6
+                ]
+              ],
+              "count": 6,
+              "ewmaMs": 11,
+              "maxMs": 11,
+              "p50Ms": 11,
+              "p90Ms": 11,
+              "p99Ms": 11,
+              "totalMs": 66
+            },
+            "receiptCompletionReadBack": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "receiptHydrationGateWait": {
+              "buckets": [
+                [
+                  0,
+                  4
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ]
+              ],
+              "count": 7,
+              "ewmaMs": 0.8842880000000004,
+              "maxMs": 2,
+              "p50Ms": 0.875,
+              "p90Ms": 2,
+              "p99Ms": 2,
+              "totalMs": 4
+            },
+            "receiptSettlement": {
+              "buckets": [
+                [
+                  6,
+                  1
+                ],
+                [
+                  7,
+                  2
+                ]
+              ],
+              "count": 3,
+              "ewmaMs": 56.400000000000006,
+              "maxMs": 74,
+              "p50Ms": 74,
+              "p90Ms": 74,
+              "p99Ms": 74,
+              "totalMs": 193
+            },
+            "resultDelivery": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "rowAdmission": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "rowPersistence": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "rowResolverGap": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "toolCallLogicalWall": {
+              "buckets": [],
+              "count": 0,
+              "ewmaMs": null,
+              "maxMs": null,
+              "p50Ms": null,
+              "p90Ms": null,
+              "p99Ms": null,
+              "totalMs": 0
+            },
+            "transportSlotWait": {
+              "buckets": [
+                [
+                  0,
+                  1
+                ]
+              ],
+              "count": 1,
+              "ewmaMs": 0,
+              "maxMs": 0,
+              "p50Ms": 0,
+              "p90Ms": 0,
+              "p99Ms": 0,
+              "totalMs": 0
+            }
+          },
+          "process": {
+            "cpuSystemMs": 30,
+            "cpuUserMs": 1140,
+            "externalBytes": 3741574,
+            "heapUsedBytes": 20598280,
+            "maxRssBytes": 149917696,
+            "rssBytes": 139071488
+          },
+          "processCpuWindow": {
+            "cpuSystemMs": 0,
+            "cpuUserMs": 520,
+            "elapsedMs": 1663.956373,
+            "sampledAtEpochMs": 1795082816465,
+            "scope": "process_during_governor_lifetime",
+            "startedAtEpochMs": 1795082814801
+          },
+          "providerAttribution": {
+            "leadmagic": {
+              "admission": {
+                "count": 1,
+                "ewmaMs": 44,
+                "maxMs": 44,
+                "totalMs": 44
+              },
+              "bodyRead": {
+                "count": 1,
+                "ewmaMs": 3,
+                "maxMs": 3,
+                "totalMs": 3
+              },
+              "controller": {
+                "inFlightAtPermit": {
+                  "count": 1,
+                  "ewma": 1,
+                  "max": 1,
+                  "total": 1
+                },
+                "minimumRttMsEwma": 371,
+                "permits": 1,
+                "runInFlightAtDispatch": {
+                  "count": 1,
+                  "ewma": 0,
+                  "max": 0,
+                  "total": 0
+                },
+                "targetRequestsPerSecondEwma": 100
+              },
+              "fetchToHeaders": {
+                "count": 1,
+                "ewmaMs": 402,
+                "maxMs": 402,
+                "totalMs": 402
+              },
+              "fixtureDelay": {
+                "count": 0,
+                "ewmaMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              },
+              "gateMs": 1,
+              "latencyMsEwma": 407,
+              "provider429Count": 0,
+              "residence": {
+                "count": 1,
+                "ewmaMs": 407,
+                "maxMs": 407,
+                "totalMs": 407
+              },
+              "retryAfterMsEwma": null,
+              "transportSlotWait": {
+                "count": 1,
+                "ewmaMs": 0,
+                "maxMs": 0,
+                "totalMs": 0
+              }
+            }
+          },
+          "providers": {
+            "leadmagic": {
+              "admission": {
+                "count": 1,
+                "ewmaMs": 44,
+                "maxMs": 44,
+                "totalMs": 44
+              },
+              "fetchToHeaders": {
+                "count": 0,
+                "ewmaMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              },
+              "latencyMsEwma": null,
+              "provider429Count": 0,
+              "residence": {
+                "count": 0,
+                "ewmaMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              },
+              "retryAfterMsEwma": null
+            },
+            "tool:leadmagic_search_companies": {
+              "admission": {
+                "count": 0,
+                "ewmaMs": null,
+                "maxMs": null,
+                "totalMs": 0
+              },
+              "fetchToHeaders": {
+                "count": 1,
+                "ewmaMs": 402,
+                "maxMs": 402,
+                "totalMs": 402
+              },
+              "latencyMsEwma": 407,
+              "provider429Count": 0,
+              "residence": {
+                "count": 1,
+                "ewmaMs": 407,
+                "maxMs": 407,
+                "totalMs": 407
+              },
+              "retryAfterMsEwma": null
+            }
+          },
+          "resultEgress": {
+            "batches": 3,
+            "bytes": 104982,
+            "existingWinners": 0,
+            "legacyAcknowledgements": 0,
+            "livePublicationResults": 6,
+            "liveResultReuses": 0,
+            "maxBatchBytes": 39912,
+            "missingAcknowledgements": 0,
+            "nonterminalAcknowledgements": 0,
+            "readBackMissing": 0,
+            "readBackRecovered": 0,
+            "readBacks": 0,
+            "receipts": 6,
+            "writerPeakBufferedBytes": 39912,
+            "writerPeakBufferedItems": 2,
+            "writerPeakInFlightBatches": 1,
+            "writerPeakQueued": 2
+          },
+          "rows": {
+            "acquired": 0,
+            "admissionWaitMsEwma": null,
+            "estimatedBytes": 0
+          },
+          "sheetFlush": {
+            "acquired": 0,
+            "bytes": 0,
+            "latencyMsEwma": null
+          },
+          "tools": {
+            "acquired": 1,
+            "admissionWaitMsEwma": null
+          }
+        },
+        "runtimeWorkCounterSegment": {
+          "invocationSeq": 1,
+          "segmentId": "204495b7-4739-4392-bc29-ab94f634df15"
+        },
+        "runtimeWorkCounters": {
+          "logicalCalls": 1,
+          "provider429s": 0,
+          "providerRequests": 1,
+          "reusableResultCalls": 3
+        },
+        "sandboxProvider": "modal"
+      },
+      "status": "failed",
+      "steps": [],
+      "tableNamespace": null,
+      "totalRows": 0,
+      "workCompletedAtMs": 1795082816466
+    },
+    "resultView": {
+      "scalars": [
+        {
+          "key": "totalRows",
+          "value": 0
+        },
+        {
+          "key": "inserted",
+          "value": 0
+        },
+        {
+          "key": "skipped",
+          "value": 0
+        }
+      ],
+      "byStep": [],
+      "tables": [],
+      "topLevelOutputTable": {
+        "sqlSchemaName": "storage",
+        "sqlTableName": "_deepline_step_receipts",
+        "sqlQualifiedTableName": "\"storage\".\"_deepline_step_receipts\"",
+        "sqlQuery": "select convert_from(k, 'UTF8') as receipt_key, case status when 0 then 'pending' when 1 then 'running' when 2 then 'completed' when 3 then 'failed' when 4 then 'skipped' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = 'play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e' and NOT (starts_with(convert_from(k, 'UTF8'), 'ctxv2:') AND (starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-sheet-write-intent%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-begin%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-page%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-seal%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-run-guard%22%2C'))) order by updated_at asc, receipt_key asc limit 20",
+        "queryCommand": "deepline db query --sql 'select convert_from(k, '\\''UTF8'\\'') as receipt_key, case status when 0 then '\\''pending'\\'' when 1 then '\\''running'\\'' when 2 then '\\''completed'\\'' when 3 then '\\''failed'\\'' when 4 then '\\''skipped'\\'' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = '\\''play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e'\\'' and NOT (starts_with(convert_from(k, '\\''UTF8'\\''), '\\''ctxv2:'\\'') AND (starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-sheet-write-intent%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-begin%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-page%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-seal%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-run-guard%22%2C'\\''))) order by updated_at asc, receipt_key asc limit 20' --max-rows 20",
+        "cliCommand": "deepline db query --sql 'select convert_from(k, '\\''UTF8'\\'') as receipt_key, case status when 0 then '\\''pending'\\'' when 1 then '\\''running'\\'' when 2 then '\\''completed'\\'' when 3 then '\\''failed'\\'' when 4 then '\\''skipped'\\'' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = '\\''play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e'\\'' and NOT (starts_with(convert_from(k, '\\''UTF8'\\''), '\\''ctxv2:'\\'') AND (starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-sheet-write-intent%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-begin%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-page%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-seal%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-run-guard%22%2C'\\''))) order by updated_at asc, receipt_key asc limit 20' --max-rows 20",
+        "api": {
+          "method": "POST",
+          "path": "/api/v2/db/query",
+          "body": {
+            "sql": "select convert_from(k, 'UTF8') as receipt_key, case status when 0 then 'pending' when 1 then 'running' when 2 then 'completed' when 3 then 'failed' when 4 then 'skipped' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = 'play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e' and NOT (starts_with(convert_from(k, 'UTF8'), 'ctxv2:') AND (starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-sheet-write-intent%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-begin%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-page%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-seal%22%2C') OR starts_with(split_part(convert_from(k, 'UTF8'), ':', 4), '%5B%22runtime-array-input-run-guard%22%2C'))) order by updated_at asc, receipt_key asc limit 20",
+            "max_rows": 20
+          }
+        },
+        "note": "This debug table stores top-level ctx.step / ctx.tools.execute outputs for the run. Prefer `deepline runs get --full`; query this table only for deep debugging."
+      },
+      "datasetAccess": null,
+      "render": {
+        "sections": [
+          {
+            "title": "execution statistics",
+            "lines": [
+              "totalRows=0  inserted=0  skipped=0",
+              "top-level outputs: deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --full"
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "label": "inspect top-level outputs",
+            "command": "deepline db query --sql 'select convert_from(k, '\\''UTF8'\\'') as receipt_key, case status when 0 then '\\''pending'\\'' when 1 then '\\''running'\\'' when 2 then '\\''completed'\\'' when 3 then '\\''failed'\\'' when 4 then '\\''skipped'\\'' else status::text end as status, output, error, updated_at from \"storage\".\"_deepline_step_receipts\" where run_id = '\\''play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e'\\'' and NOT (starts_with(convert_from(k, '\\''UTF8'\\''), '\\''ctxv2:'\\'') AND (starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-sheet-write-intent%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-begin%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-page%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-seal%22%2C'\\'') OR starts_with(split_part(convert_from(k, '\\''UTF8'\\''), '\\'':'\\'', 4), '\\''%5B%22runtime-array-input-run-guard%22%2C'\\''))) order by updated_at asc, receipt_key asc limit 20' --max-rows 20"
+          },
+          {
+            "label": "status JSON",
+            "command": "deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e"
+          },
+          {
+            "label": "full debug JSON",
+            "command": "deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --full"
+          }
+        ]
+      }
+    },
+    "contract": {
+      "staticPipeline": {
+        "inputFields": [],
+        "hasInlineData": true,
+        "fields": [],
+        "returnFields": [
+          {
+            "name": "rows",
+            "isDataset": false
+          }
+        ],
+        "stages": [
+          {
+            "type": "run_javascript",
+            "alias": "lines_147_152",
+            "description": "Lines 147-152",
+            "sourceRange": {
+              "sourcePath": "champion-tracker.play.ts",
+              "startLine": 147,
+              "startColumn": 3,
+              "endLine": 152,
+              "endColumn": 19
+            },
+            "callDepth": 0,
+            "callPath": [
+              "champion-tracker"
+            ]
+          },
+          {
+            "type": "control_flow",
+            "kind": "loop",
+            "field": "loop_154_181",
+            "steps": [
+              {
+                "type": "control_flow",
+                "kind": "conditional",
+                "field": "conditional_163_166",
+                "steps": [
+                  {
+                    "type": "tool",
+                    "toolId": "leadmagic_search_companies",
+                    "field": "company",
+                    "paramsSource": "{ company_domain: domain }",
+                    "sourceText": "deepline.tools.execute({\n    id: 'company',\n    tool: 'leadmagic_search_companies',\n    input: { company_domain: domain },\n    description: 'Look up one company by domain.',\n    staleAfterSeconds: 604800,\n  })",
+                    "inLoop": false,
+                    "description": "Look up one company by domain.",
+                    "sourceRange": {
+                      "sourcePath": "champion-tracker.play.ts",
+                      "startLine": 120,
+                      "endLine": 126,
+                      "startColumn": 25,
+                      "endColumn": 5
+                    },
+                    "callSiteRange": {
+                      "sourcePath": "champion-tracker.play.ts",
+                      "startLine": 164,
+                      "endLine": 164,
+                      "startColumn": 23,
+                      "endColumn": 67
+                    },
+                    "callDepth": 0,
+                    "callPath": [
+                      "champion-tracker"
+                    ]
+                  }
+                ],
+                "condition": "decision.reason === 'company_not_found'",
+                "branches": [
+                  {
+                    "label": "if",
+                    "condition": "decision.reason === 'company_not_found'",
+                    "steps": [
+                      {
+                        "type": "tool",
+                        "toolId": "leadmagic_search_companies",
+                        "field": "company",
+                        "paramsSource": "{ company_domain: domain }",
+                        "sourceText": "deepline.tools.execute({\n    id: 'company',\n    tool: 'leadmagic_search_companies',\n    input: { company_domain: domain },\n    description: 'Look up one company by domain.',\n    staleAfterSeconds: 604800,\n  })",
+                        "inLoop": false,
+                        "description": "Look up one company by domain.",
+                        "sourceRange": {
+                          "sourcePath": "champion-tracker.play.ts",
+                          "startLine": 120,
+                          "endLine": 126,
+                          "startColumn": 25,
+                          "endColumn": 5
+                        },
+                        "callSiteRange": {
+                          "sourcePath": "champion-tracker.play.ts",
+                          "startLine": 164,
+                          "endLine": 164,
+                          "startColumn": 23,
+                          "endColumn": 67
+                        },
+                        "callDepth": 0,
+                        "callPath": [
+                          "champion-tracker"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label": "else",
+                    "steps": []
+                  }
+                ],
+                "description": "Conditional code",
+                "sourceRange": {
+                  "sourcePath": "champion-tracker.play.ts",
+                  "startLine": 163,
+                  "endLine": 166,
+                  "startColumn": 5,
+                  "endColumn": 6
+                },
+                "callDepth": 0,
+                "callPath": [
+                  "champion-tracker"
+                ]
+              }
+            ],
+            "condition": "event of input.events",
+            "description": "Looped code",
+            "sourceRange": {
+              "sourcePath": "champion-tracker.play.ts",
+              "startLine": 154,
+              "endLine": 181,
+              "startColumn": 3,
+              "endColumn": 4
+            },
+            "callDepth": 0,
+            "callPath": [
+              "champion-tracker"
+            ]
+          }
+        ],
+        "substeps": [],
+        "sheetContractErrors": [],
+        "sheetContract": null
+      }
+    },
+    "billing": {
+      "runId": "play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+      "totalCalls": 0,
+      "totalCredits": 0,
+      "totalDeeplineCostUsd": 0,
+      "providerEvents": 0,
+      "computeEvents": 0,
+      "breakdown": {
+        "providers": [],
+        "runtime": {
+          "provider": "compute",
+          "totalCalls": 0,
+          "totalCredits": 0,
+          "totalDeeplineCostUsd": 0
+        },
+        "eventsSource": {
+          "kind": "deepline_usage_events",
+          "totalCalls": 0,
+          "api": {
+            "method": "GET",
+            "path": "/api/v2/usage/events?run_id=play%2Fchampion-tracker%2Frun%2F20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e&limit=500"
+          }
+        }
+      }
+    },
+    "wait": null,
+    "activity": null,
+    "run": {
+      "runId": "play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e",
+      "name": "champion-tracker",
+      "playName": "champion-tracker",
+      "status": "failed",
+      "acceptedAt": 1795082811492,
+      "updatedAt": 1795082816757,
+      "updateTime": "2026-11-19T10:06:56.757Z",
+      "startedAt": 1795082812732,
+      "startTime": "2026-11-19T10:06:52.732Z",
+      "completedAt": 1795082816719,
+      "finishedAt": 1795082816719,
+      "closeTime": "2026-11-19T10:06:56.719Z",
+      "durationMs": 3987
+    },
+    "timeline": [],
+    "childRuns": [],
+    "childRunProjection": {
+      "kind": "async_child_runs",
+      "returnedCount": 0,
+      "complete": true,
+      "counts": {
+        "total": 0,
+        "queued": 0,
+        "active": 0,
+        "waiting": 0,
+        "succeeded": 0,
+        "failed": 0,
+        "cancelled": 0,
+        "unknown": 0
+      },
+      "launches": []
+    },
+    "outputs": {},
+    "dashboardUrl": "https://code.deepline.com/dashboard/plays/champion-tracker",
+    "rerunCommand": "deepline plays run 'plays\\champion-tracker.play.ts' --input '{\"email_mode\":\"mock\",\"events\":[{\"person_id\":\"c01\",\"full_name\":\"Avery Testcase\",\"was_champion\":true,\"old_company\":\"Northwind Example\",\"old_title\":\"Head of Revenue Operations\",\"new_company\":\"Asana\",\"new_domain\":\"asana.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c01@asana.com\",\"email_status\":\"found\",\"case_id\":\"c01\"},{\"person_id\":\"c02\",\"full_name\":\"Blake Testcase\",\"was_champion\":true,\"old_company\":\"Contoso Example\",\"old_title\":\"Director of Sales\",\"new_company\":\"Shopify\",\"new_domain\":\"shopify.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"CA\",\"email\":\"synthetic.c02@shopify.com\",\"email_status\":\"found\",\"case_id\":\"c02\"},{\"person_id\":\"c03\",\"full_name\":\"Casey Testcase\",\"was_champion\":true,\"old_company\":\"Fabrikam Example\",\"old_title\":\"Head of Sales\",\"new_company\":\"HubSpot\",\"new_domain\":\"hubspot.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c03@hubspot.com\",\"email_status\":\"found\",\"case_id\":\"c03\"},{\"person_id\":\"c04\",\"full_name\":\"Drew Testcase\",\"was_champion\":true,\"old_company\":\"Adventure Works Example\",\"old_title\":\"VP Marketing\",\"new_company\":\"Figma\",\"new_domain\":\"figma.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c04@figma.com\",\"email_status\":\"found\",\"case_id\":\"c04\"},{\"person_id\":\"c05\",\"full_name\":\"Emery Testcase\",\"was_champion\":true,\"old_company\":\"Litware Example\",\"old_title\":\"Head of Marketing\",\"new_company\":\"Twilio\",\"new_domain\":\"twilio.com\",\"new_title\":\"VP Sales\",\"start_date\":\"2026-11-01\",\"event_date\":\"2026-11-15\",\"country_hint\":\"US\",\"email\":\"synthetic.c05@twilio.com\",\"email_status\":\"found\",\"case_id\":\"c05\"}]}' --max-credits 0.01 --full --json"
+  },
+  "command_context": {
+    "active_organization": null,
+    "auth_scope": "folder",
+    "metadata_source": "folder_env"
+  },
+  "notices": [
+    "[play activity] play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e Active: run_javascript:lines_147_152. The command will keep watching; if no new evidence arrives, check again in ~5 minutes with 'deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --full'.",
+    "[play activity] play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e Active: champion-tracker. The command will keep watching; if no new evidence arrives, check again in ~5 minutes with 'deepline runs get play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e --full'."
+  ]
+}

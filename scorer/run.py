@@ -1,6 +1,6 @@
 """Run the champion-tracker rules offline, or the real Play on Deepline.
 
-Both functions return rows, mode, and credits_spent. The scorer joins
+A finished run returns rows, mode, and credits_spent. The scorer joins
 on case_id and reads credits_spent. It does not grow a second path for
 "where did these rows come from".
 
@@ -9,6 +9,10 @@ Live credits_spent is run.spent_credits from `deepline billing usage`.
 If that number is missing, the value is "unknown". It is never 0 by guess.
 Live also returns run_id, from the run-id file or from run.id. That id
 is how the comment names the run. It is not a credit number.
+
+A run the credit cap refuses has no rows. run_live then returns
+status refused_by_cap, the cap, and credits_spent. The scorer prints
+that and does not score the missing rows.
 """
 
 import json
@@ -26,6 +30,10 @@ from scorer.fixtures import load_fixtures
 
 ROOT = Path(__file__).resolve().parent.parent
 PLAY_FILE = "plays/champion-tracker.play.ts"
+
+# docs/cap/run_output.json. The overview lists this on errorDetails.reported
+# when --max-credits refuses the tool call. result.rows is absent then.
+CAP_REFUSAL_CODE = "RUN_BILLING_CAP_EXCEEDED"
 
 # Spec 5.A. These are the Play inputs. The company snapshot is an offline
 # stand-in for the lookup, so it is not sent. The live Play looks that up.
@@ -104,10 +112,21 @@ def run_live(fixtures_or_input_path, max_credits):
             "--run-id-file",
             str(run_id_path),
         ]
-        completed = _run(command)
+        # A refused run is run.status failed. The CLI can exit non-zero and
+        # still print the overview on stdout. Read that JSON before treating
+        # the exit code as a crash, or the refusal is thrown away.
+        completed = _capture(command)
         output = _parse_json(completed.stdout, command)
-        rows = rows_from_run_output(output)
         run_id = _read_run_id(run_id_path, output)
+        if is_cap_refusal(output):
+            return {
+                "status": "refused_by_cap",
+                "cap": max_credits,
+                "credits_spent": _credits_for_run(run_id),
+            }
+        if completed.returncode != 0:
+            _raise_failed(command, completed)
+        rows = rows_from_run_output(output)
         credits = _credits_for_run(run_id)
 
     return {
@@ -133,6 +152,28 @@ def play_input_from_fixtures(fixtures_path):
     rows = load_fixtures(fixtures_path)
     events = [_event_from_row(row) for row in rows]
     return {"email_mode": "mock", "events": events}
+
+
+def is_cap_refusal(payload):
+    """True when the run overview says the credit cap refused the call.
+
+    The code sits on errorDetails.reported. The same text is copied onto
+    run.error and diagnostics.errors. There is no result.rows on that run:
+    resultState is not_returned. Scoring the gap would count every case
+    as a miss, which is a rules result this run never produced.
+    """
+    if not isinstance(payload, dict):
+        return False
+    details = payload.get("errorDetails")
+    if not isinstance(details, dict):
+        return False
+    reported = details.get("reported")
+    if not isinstance(reported, list):
+        return False
+    for item in reported:
+        if isinstance(item, dict) and item.get("code") == CAP_REFUSAL_CODE:
+            return True
+    return False
 
 
 def rows_from_run_output(payload):
@@ -233,15 +274,15 @@ def _program(name):
     return found
 
 
-def _run(command):
-    """Run a command from a list. A shell string would re-parse the paths.
+def _capture(command):
+    """Run a command from a list and return it, whatever the exit code was.
 
     A fixture path or an @input path can contain spaces. Passed as one list
     item, it stays one argument. shell is left off so those characters are
-    not commands.
+    not commands. A shell string would re-parse the paths.
     """
     try:
-        completed = subprocess.run(
+        return subprocess.run(
             command,
             cwd=ROOT,
             capture_output=True,
@@ -253,14 +294,23 @@ def _run(command):
     except OSError as exc:
         shown = " ".join(command)
         raise RuntimeError(f"could not start {shown}: {exc}") from exc
+
+
+def _raise_failed(command, completed):
+    detail = (completed.stderr or "").strip()
+    if detail == "":
+        detail = (completed.stdout or "").strip()
+    shown = " ".join(command)
+    raise RuntimeError(
+        f"{shown} failed with exit code {completed.returncode}.\n{detail}"
+    )
+
+
+def _run(command):
+    """Run a command and raise when it exits non-zero."""
+    completed = _capture(command)
     if completed.returncode != 0:
-        detail = (completed.stderr or "").strip()
-        if detail == "":
-            detail = (completed.stdout or "").strip()
-        shown = " ".join(command)
-        raise RuntimeError(
-            f"{shown} failed with exit code {completed.returncode}.\n{detail}"
-        )
+        _raise_failed(command, completed)
     return completed
 
 
