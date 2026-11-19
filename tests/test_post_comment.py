@@ -7,7 +7,11 @@ it later belongs to a person and must be left alone.
 
 import pytest
 
-from scripts.post_comment import comments_from_pages, find_marked_comment
+from scripts.post_comment import (
+    comments_from_pages,
+    find_marked_comment,
+    keep_live_section,
+)
 
 
 MARKER = "<!-- gtm-ci -->"
@@ -91,6 +95,36 @@ def test_empty_pages_are_no_comments():
     assert comments_from_pages([]) == []
     assert comments_from_pages([[]]) == []
     assert find_marked_comment(comments_from_pages([[]])) is None
+
+
+def test_an_update_keeps_the_live_run_section():
+    old = (
+        MARKER + "\nPassed: no metric got worse\n\n"
+        "## Live run\n\n"
+        "- run id: run-123\n"
+        "- credits: unknown\n"
+        "- drift: 2\n"
+    )
+    new = MARKER + "\nBlocked: false alerts went 0 -> 1\n"
+    kept = keep_live_section(new, old)
+    assert kept.startswith(MARKER + "\nBlocked: false alerts went 0 -> 1\n")
+    assert "\n## Live run\n" in kept
+    assert "- run id: run-123\n" in kept
+    assert "- credits: unknown\n" in kept
+    assert kept.endswith("- drift: 2\n")
+
+
+def test_a_comment_without_a_live_section_is_unchanged():
+    new = MARKER + "\nPassed: no metric got worse\n"
+    assert keep_live_section(new, MARKER + "\nPassed: no metric got worse\n") == new
+    assert keep_live_section(new, None) == new
+    assert keep_live_section(new, "see ## Live run in the docs") == new
+
+
+def test_a_new_live_section_is_not_duplicated():
+    old = MARKER + "\n\n## Live run\n\n- run id: old-run\n"
+    new = MARKER + "\nPassed: no metric got worse\n\n## Live run\n\n- run id: new-run\n"
+    assert keep_live_section(new, old) == new
 
 
 def test_a_bad_page_shape_is_rejected():
