@@ -11,6 +11,13 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from scorer.drift import (
+    count_drift,
+    is_live_companies_file,
+    live_section,
+    load_live_companies,
+    write_live_result,
+)
 from scorer.fixtures import load_fixtures
 from scorer.report import write_report
 from scorer.run import ROOT, run_live, run_offline
@@ -26,6 +33,12 @@ def main(argv=None):
         print(problem)
         return 1
 
+    # The live company file has real domains. The golden loader rejects
+    # those on purpose. Offline mode must not be pointed at it.
+    if args.mode == "offline" and is_live_companies_file(args.fixtures):
+        print("this file is the live company list, so it only runs in live mode")
+        return 1
+
     if args.mode == "live":
         print(f"planned max credits: {_format_number(args.max_credits)}")
         if not args.yes and not confirm_live():
@@ -37,6 +50,12 @@ def main(argv=None):
         ran = run_offline(args.plays, args.fixtures)
     else:
         ran = run_live(args.fixtures, args.max_credits)
+
+    # Five real companies have no expected_alert. Drift is the check.
+    # An alert mismatch does not fail this command. The workflow fails
+    # the job later, and only when the bill is over the cap.
+    if args.mode == "live" and is_live_companies_file(args.fixtures):
+        return _finish_live_companies(args, ran)
 
     fixtures = load_fixtures(args.fixtures)
     scored = score(ran["rows"], fixtures, ran["credits_spent"])
@@ -57,7 +76,11 @@ def parse_args(argv=None):
         description="Score the champion tracker and write a results file."
     )
     parser.add_argument("--mode", choices=("offline", "live"), required=True)
-    parser.add_argument("--label", required=True)
+    parser.add_argument(
+        "--label",
+        default="live",
+        help="Result file name. The live job omits this and writes results/live.json.",
+    )
     parser.add_argument("--plays", default="plays")
     parser.add_argument("--fixtures", default="fixtures/events.jsonl")
     parser.add_argument("--max-credits", type=_credits_arg, default=None)
@@ -107,6 +130,33 @@ def git_sha():
     if sha == "":
         return None
     return sha
+
+
+def _finish_live_companies(args, ran):
+    """Write results/<label>.json and print the Live run section.
+
+    Exit 0 even when credits are over the cap or some fields drifted.
+    The workflow appends this section to the comment, then exits 1 only
+    for a bill over the cap. A failed Deepline command never gets here.
+    """
+    companies = load_live_companies(args.fixtures)
+    drift_count = count_drift(ran["rows"], companies)
+    run_id = ran.get("run_id")
+    if not isinstance(run_id, str) or run_id.strip() == "":
+        run_id = None
+    document = {
+        "label": args.label,
+        "mode": "live",
+        "plays_dir": args.plays,
+        "git_sha": git_sha(),
+        "date": date.today().isoformat(),
+        "run_id": run_id,
+        "credits_spent": ran["credits_spent"],
+        "drift_count": drift_count,
+    }
+    write_live_result(args.label, document, RESULTS_DIR)
+    print(live_section(run_id, ran["credits_spent"], drift_count), end="")
+    return 0
 
 
 def _reject_early(args):
