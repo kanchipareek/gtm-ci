@@ -204,6 +204,8 @@ def _finish_live_companies(args, ran):
     run_id = ran.get("run_id")
     if not isinstance(run_id, str) or run_id.strip() == "":
         run_id = None
+    # rows stay on the result so a later drift command can name each
+    # changed field. The comment only needs the count.
     document = {
         "label": args.label,
         "mode": "live",
@@ -213,6 +215,7 @@ def _finish_live_companies(args, ran):
         "run_id": run_id,
         "credits_spent": ran["credits_spent"],
         "drift_count": drift_count,
+        "rows": ran["rows"],
     }
     write_live_result(args.label, document, RESULTS_DIR)
     print(live_section(run_id, ran["credits_spent"], drift_count), end="")

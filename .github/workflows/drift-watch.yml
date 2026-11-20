@@ -1,0 +1,66 @@
+# Drift is a Monday check, not a pull request gate. It runs the live Play
+# on the five saved companies and opens one issue when a field moved.
+# An empty no_result lookup is not a change. Drift does not fail the job.
+# The job fails when the run fails or the bill is over the cap.
+
+name: drift-watch
+
+on:
+  schedule:
+    # Monday 03:30 UTC. GitHub schedules are UTC.
+    - cron: "30 3 * * 1"
+  workflow_dispatch:
+
+# contents: read is enough to check out the repo.
+# issues: write lets this job's GITHUB_TOKEN open, edit, and close the
+# one drift issue. A personal token is not used.
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift-watch:
+    name: drift-watch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Same pin as the pull request workflow. The scorer shells out to this CLI.
+      - name: Install the pinned Deepline CLI
+        run: npm install --global deepline@0.3.535
+
+      - name: Install the scorer
+        run: pip install -e .
+
+      # --yes skips the keyboard question. There is no person on the runner.
+      # The command exits 0 when the run finished, including when some
+      # company fields drifted. A failed run exits here. A run the cap
+      # refuses also exits here, before an issue is opened or closed.
+      - name: Run the live Play
+        env:
+          DEEPLINE_API_KEY: ${{ secrets.DEEPLINE_API_KEY }}
+          DEEPLINE_HOST_URL: https://code.deepline.com
+        run: python -m scorer --mode live --yes --fixtures fixtures/live_companies.json --max-credits 2
+
+      # Compare the live rows with the snapshot in the fixture. A changed
+      # field opens or updates the issue titled "company data drift".
+      # No changes closes that issue. This step exits 0 either way.
+      - name: Open or close the drift issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m scorer.drift results/live.json --fixtures fixtures/live_companies.json --sync-issue
+
+      # Greater than 2. Equal to 2 still passes. "unknown" does not fail the job.
+      - name: Fail if credits are over the cap
+        run: python -m scorer.drift results/live.json --cap 2 --check-cap
