@@ -1,0 +1,151 @@
+{
+  "label": "real_run",
+  "mode": "live",
+  "plays_dir": "plays",
+  "git_sha": "762a28020b3ca83590f0940d8e33dc1f41df012b",
+  "date": "2026-11-20",
+  "score": {
+    "correct_alerts": 5,
+    "false_alerts": 0,
+    "missed_alerts": 0,
+    "correct_no_alerts": 5,
+    "wrong_reason": 0,
+    "emails_found": 5,
+    "total_events": 10,
+    "false_alerts_by_trap": {},
+    "false_alert_case_ids": [],
+    "missed_alert_case_ids": [],
+    "credits_spent": 1.2,
+    "cases": {
+      "r01": "pass",
+      "r02": "pass",
+      "r03": "pass",
+      "r04": "pass",
+      "r05": "pass",
+      "r06": "pass",
+      "r07": "pass",
+      "r08": "pass",
+      "r09": "pass",
+      "r10": "pass"
+    },
+    "join_errors": {
+      "missing": 0,
+      "duplicate": 0,
+      "extra": 0,
+      "missing_case_ids": [],
+      "duplicate_case_ids": [],
+      "extra_case_ids": []
+    },
+    "by_split": {
+      "development": {
+        "correct_alerts": 5,
+        "false_alerts": 0,
+        "missed_alerts": 0,
+        "correct_no_alerts": 5,
+        "wrong_reason": 0,
+        "emails_found": 5,
+        "total_events": 10,
+        "false_alerts_by_trap": {},
+        "false_alert_case_ids": [],
+        "missed_alert_case_ids": []
+      },
+      "holdout": {
+        "correct_alerts": 0,
+        "false_alerts": 0,
+        "missed_alerts": 0,
+        "correct_no_alerts": 0,
+        "wrong_reason": 0,
+        "emails_found": 0,
+        "total_events": 0,
+        "false_alerts_by_trap": {},
+        "false_alert_case_ids": [],
+        "missed_alert_case_ids": []
+      },
+      "all": {
+        "correct_alerts": 5,
+        "false_alerts": 0,
+        "missed_alerts": 0,
+        "correct_no_alerts": 5,
+        "wrong_reason": 0,
+        "emails_found": 5,
+        "total_events": 10,
+        "false_alerts_by_trap": {},
+        "false_alert_case_ids": [],
+        "missed_alert_case_ids": []
+      }
+    }
+  },
+  "run_id": "play/champion-tracker/run/20261120t134154-056-fa345bd1-caller-7d749c8cae455b7f77261b7c49d4bc64a0f9f41bd9d6157aa6e448d29bb70705",
+  "leadmagic": [
+    {
+      "case_id": "r01",
+      "employees": 727,
+      "country": "US",
+      "reason": "icp_fit",
+      "expected_reason": "icp_fit"
+    },
+    {
+      "case_id": "r02",
+      "employees": 766,
+      "country": "US",
+      "reason": "icp_fit",
+      "expected_reason": "icp_fit"
+    },
+    {
+      "case_id": "r03",
+      "employees": 597,
+      "country": "US",
+      "reason": "icp_fit",
+      "expected_reason": "icp_fit"
+    },
+    {
+      "case_id": "r04",
+      "employees": 239,
+      "country": "US",
+      "reason": "icp_fit",
+      "expected_reason": "icp_fit"
+    },
+    {
+      "case_id": "r05",
+      "employees": 305,
+      "country": "US",
+      "reason": "icp_fit",
+      "expected_reason": "icp_fit"
+    },
+    {
+      "case_id": "r06",
+      "employees": 22,
+      "country": "US",
+      "reason": "company_too_small",
+      "expected_reason": "company_too_small"
+    },
+    {
+      "case_id": "r07",
+      "employees": 453,
+      "country": "IL",
+      "reason": "wrong_country",
+      "expected_reason": "wrong_country"
+    },
+    {
+      "case_id": "r08",
+      "employees": 697862,
+      "country": "IE",
+      "reason": "company_too_big",
+      "expected_reason": "company_too_big"
+    },
+    {
+      "case_id": "r09",
+      "employees": null,
+      "country": null,
+      "reason": "ambiguous_title",
+      "expected_reason": "ambiguous_title"
+    },
+    {
+      "case_id": "r10",
+      "employees": null,
+      "country": null,
+      "reason": "same_company",
+      "expected_reason": "same_company"
+    }
+  ]
+}

@@ -155,6 +155,125 @@ def load_fixtures(path, for_runner=False):
     return loaded
 
 
+# fixtures/real_events.json is a different file from fixtures/events.jsonl.
+# check_synthetic still rejects a real domain on the golden JSONL. This
+# loader is the only path that allows one, and only for that file name.
+REAL_EVENT_NAME = "real_events.json"
+
+# The Play input. old_domain, the answer key, and the stand-in stay here.
+REAL_PLAY_FIELDS = (
+    "person_id",
+    "full_name",
+    "was_champion",
+    "old_company",
+    "old_title",
+    "new_company",
+    "new_domain",
+    "new_title",
+    "start_date",
+    "event_date",
+    "country_hint",
+)
+
+
+def is_real_events_file(path):
+    """True when the path is the real-events fixture, not the golden JSONL.
+
+    The name is the switch. A golden file keeps going through load_fixtures
+    and check_synthetic, even if someone copies a real domain into it.
+    """
+    return Path(path).name == REAL_EVENT_NAME
+
+
+def load_real_events(path, for_runner=False):
+    """Load fixtures/real_events.json. Real company domains are allowed.
+
+    There is no CSV mirror. for_runner=True returns the Play events only.
+    expected_*, split, trap, old_domain, and the stand-in fields are left
+    out of that copy. The scorer still sees them when for_runner is false.
+    """
+    path = Path(path)
+    data = _read_real_events_file(path)
+    if data.get("email_mode") != "mock":
+        raise ValueError(f"{path} email_mode must be mock")
+    events = data.get("events")
+    if not isinstance(events, list) or len(events) == 0:
+        raise ValueError(f"{path} events must be a non-empty list")
+
+    seen_case_ids = set()
+    loaded = []
+    for index, row in enumerate(events, start=1):
+        try:
+            _validate_real_event(row, seen_case_ids)
+        except ValueError as exc:
+            raise ValueError(f"{path} event {index}: {exc}") from exc
+        loaded.append(row)
+
+    if for_runner:
+        return [real_event_for_play(row) for row in loaded]
+    return loaded
+
+
+def real_event_for_play(row):
+    """Copy one real event down to the Play input.
+
+    The stand-in count is not copied. Live mode looks the company up.
+    The answer key is not copied, so the Play cannot read the label.
+    """
+    event = {"case_id": row["case_id"]}
+    for name in REAL_PLAY_FIELDS:
+        event[name] = row[name]
+    event["email"] = row["email"]
+    event["email_status"] = row["email_status"]
+    for key in event:
+        if key.startswith("expected_") or key.startswith("stand_in") or key in (
+            "old_domain",
+            "split",
+            "trap",
+            "grading_notes",
+            "notes",
+        ):
+            raise RuntimeError(f"play input includes {key}")
+    return event
+
+
+def real_event_offline_row(row):
+    """Map one real event onto the offline runner's input_* row.
+
+    A stand-in count is the company snapshot for this offline pass.
+    A row with stand_in false sends a null company. The answer key is
+    not on this row.
+    """
+    if row.get("stand_in") is True:
+        employees = row["stand_in_employees"]
+        country = row["stand_in_country"]
+    else:
+        employees = None
+        country = None
+    offline = {
+        "case_id": row["case_id"],
+        "input_person_id": row["person_id"],
+        "input_full_name": row["full_name"],
+        "input_was_champion": row["was_champion"],
+        "input_old_company": row["old_company"],
+        "input_old_title": row["old_title"],
+        "input_new_company": row["new_company"],
+        "input_new_domain": row["new_domain"],
+        "input_new_title": row["new_title"],
+        "input_start_date": row["start_date"],
+        "input_event_date": row["event_date"],
+        "input_country_hint": row["country_hint"],
+        "input_company_employees": employees,
+        "input_company_country": country,
+        "input_mock_email": row["email"],
+        "input_mock_email_status": row["email_status"],
+    }
+    for key in offline:
+        if key.startswith("expected_") or key.startswith("stand_in"):
+            raise RuntimeError(f"offline row includes {key}")
+    return offline
+
+
 def check_csv_mirror(rows, csv_path):
     """Raise ValueError if the CSV does not carry the same labels as the JSONL.
 
@@ -197,6 +316,73 @@ def check_csv_mirror(rows, csv_path):
                 f"{csv_path} case_id {case_id!r} expected_reason is "
                 f"{json_reason!r} in JSONL and {csv_reason!r} in CSV"
             )
+
+
+def _read_real_events_file(path):
+    if not path.is_file():
+        raise ValueError(f"{path} does not exist")
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"{path} is not JSON ({exc.msg})") from exc
+    if not isinstance(data, dict):
+        raise ValueError(f"{path} must be a JSON object")
+    return data
+
+
+def _validate_real_event(row, seen_case_ids):
+    if not isinstance(row, dict):
+        raise ValueError("an event must be a JSON object")
+    case_id = _require_case_id(row, seen_case_ids)
+    for field in REAL_PLAY_FIELDS:
+        if field not in row:
+            raise ValueError(f"{field} is missing")
+        if row[field] is None:
+            raise ValueError(f"{field} is null")
+    if row["was_champion"] is not True:
+        raise ValueError("was_champion must be true")
+    if "old_domain" not in row or not isinstance(row["old_domain"], str) or row["old_domain"].strip() == "":
+        raise ValueError("old_domain is missing")
+    if not isinstance(row["new_domain"], str) or row["new_domain"].strip() == "":
+        raise ValueError("new_domain is missing")
+
+    name = row["full_name"]
+    if not isinstance(name, str) or not name.endswith("Testcase"):
+        raise ValueError(
+            f"full_name must end with 'Testcase', got {name!r} "
+            f"(case_id {case_id!r})"
+        )
+    email = row.get("email")
+    local = email.split("@", 1)[0] if isinstance(email, str) else ""
+    if not local.startswith("synthetic."):
+        raise ValueError(
+            "email local part must start with 'synthetic.', "
+            f"got {email!r} (case_id {case_id!r})"
+        )
+    if "email_status" not in row or not isinstance(row["email_status"], str) or row["email_status"].strip() == "":
+        raise ValueError("email_status is missing")
+
+    _require_expected(row)
+    _require_split(row)
+    trap = row.get("trap")
+    if not isinstance(trap, str) or trap.strip() == "":
+        raise ValueError("trap is missing")
+
+    stand_in = row.get("stand_in")
+    if not isinstance(stand_in, bool):
+        raise ValueError(f"stand_in must be a bool, got {stand_in!r}")
+    if stand_in:
+        employees = row.get("stand_in_employees")
+        country = row.get("stand_in_country")
+        if isinstance(employees, bool) or not isinstance(employees, int):
+            raise ValueError(
+                f"stand_in_employees must be an int, got {employees!r}"
+            )
+        if not isinstance(country, str) or country.strip() == "":
+            raise ValueError("stand_in_country is missing")
+    else:
+        if "stand_in_employees" in row or "stand_in_country" in row:
+            raise ValueError("a stand-in count is set without stand_in true")
 
 
 def _require_case_id(row, seen_case_ids):
