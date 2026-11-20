@@ -1,0 +1,110 @@
+{
+  "label": "demo_head",
+  "mode": "offline",
+  "plays_dir": "plays",
+  "git_sha": "fe9ae5f61d06f751420dc90adf440a6058fde0e4",
+  "date": "2026-11-19",
+  "score": {
+    "correct_alerts": 12,
+    "false_alerts": 1,
+    "missed_alerts": 0,
+    "correct_no_alerts": 17,
+    "wrong_reason": 0,
+    "emails_found": 11,
+    "total_events": 30,
+    "false_alerts_by_trap": {
+      "too_small_49": 1
+    },
+    "false_alert_case_ids": [
+      "e13"
+    ],
+    "missed_alert_case_ids": [],
+    "credits_spent": 0,
+    "cases": {
+      "e01": "pass",
+      "e02": "pass",
+      "e03": "pass",
+      "e04": "pass",
+      "e05": "pass",
+      "e06": "pass",
+      "e07": "pass",
+      "e08": "pass",
+      "e09": "pass",
+      "e10": "pass",
+      "e11": "pass",
+      "e12": "pass",
+      "e13": "fail",
+      "e14": "pass",
+      "e15": "pass",
+      "e16": "pass",
+      "e17": "pass",
+      "e18": "pass",
+      "e19": "pass",
+      "e20": "pass",
+      "e21": "pass",
+      "e22": "pass",
+      "e23": "pass",
+      "e24": "pass",
+      "e25": "pass",
+      "e26": "pass",
+      "e27": "pass",
+      "e28": "pass",
+      "e29": "pass",
+      "e30": "pass"
+    },
+    "join_errors": {
+      "missing": 0,
+      "duplicate": 0,
+      "extra": 0,
+      "missing_case_ids": [],
+      "duplicate_case_ids": [],
+      "extra_case_ids": []
+    },
+    "by_split": {
+      "development": {
+        "correct_alerts": 8,
+        "false_alerts": 0,
+        "missed_alerts": 0,
+        "correct_no_alerts": 12,
+        "wrong_reason": 0,
+        "emails_found": 6,
+        "total_events": 20,
+        "false_alerts_by_trap": {},
+        "false_alert_case_ids": [],
+        "missed_alert_case_ids": []
+      },
+      "holdout": {
+        "correct_alerts": 4,
+        "false_alerts": 1,
+        "missed_alerts": 0,
+        "correct_no_alerts": 5,
+        "wrong_reason": 0,
+        "emails_found": 5,
+        "total_events": 10,
+        "false_alerts_by_trap": {
+          "too_small_49": 1
+        },
+        "false_alert_case_ids": [
+          "e13"
+        ],
+        "missed_alert_case_ids": []
+      },
+      "all": {
+        "correct_alerts": 12,
+        "false_alerts": 1,
+        "missed_alerts": 0,
+        "correct_no_alerts": 17,
+        "wrong_reason": 0,
+        "emails_found": 11,
+        "total_events": 30,
+        "false_alerts_by_trap": {
+          "too_small_49": 1
+        },
+        "false_alert_case_ids": [
+          "e13"
+        ],
+        "missed_alert_case_ids": []
+      }
+    }
+  }
+}
