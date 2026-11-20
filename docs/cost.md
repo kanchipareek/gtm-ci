@@ -20,7 +20,7 @@ The cache worked for a successful answer. An unpublished local file counts as th
 
 Each billing file has one LeadMagic line, `status` `no_result`, `outcome` `miss`, `charge_state` `free`, credits 0. That line is the Figma lookup. The run logs show the other four lookups as `execution_source` `cache` and `sends` 0, and run 2 reused the same four receipt keys as run 1. Those logs are in `docs/cache/run1_run_output.json` and `docs/cache/run2_run_output.json`.
 
-Two of the reused answers are about 46.3 hours old on run 1 (`resultAgeMs` 166836173 and 166833456). That matches the 17 Nov Asana and Shopify lookups in `docs/spend.md`. The other two are about 3.6 hours old (`resultAgeMs` 13139299 and 13141211). This spend log has no run at that time. The 17 Nov billing file shows balance 24.7 and month spent 0.3. Run 1's billing file shows balance 24.4 and month spent 0.6. The 0.3 in between is not a line here, and there is no run id for it in this repo.
+Two of the reused answers are about 46.3 hours old on run 1 (`resultAgeMs` 166836173 and 166833456). That matches the 17 Nov Asana and Shopify lookups in `docs/spend.md`. The other two are about 3.6 hours old (`resultAgeMs` 13139299 and 13141211). That age lines up with the GitHub Actions live run in `docs/spend.md`. `deepline runs list` shows it started at 2026-11-19T05:41:36.665Z. The 17 Nov billing file shows balance 24.7 and month spent 0.3. Run 1's billing file shows balance 24.4 and month spent 0.6. The 0.3 in between is that Actions run. `deepline billing usage --run-id` for `play/champion-tracker/run/20261119t054133-501-e3431d39-caller-8c1a12447d2410d4837cfb885dd4fa8fa16c6d548142c5269a0c7256b027fd2c` says `run.spent_credits` 0.3.
 
 Figma was called live on both runs. The row came back with null employees and a null country, and an empty answer is not reused. The live retry is still 0 credits in the billing file. Compute on both runs is `charge_state` `free`.
 
@@ -53,7 +53,7 @@ Compute time is not shown. The compute line on this run is `charge_state` `free`
 
 This run id is already in `docs/spend.md` (cache test run 2, 0 credits). It is not entered again. A second line would count one run twice.
 
-The spend lines add up to 0.3 credits. The account started with 25 free credits. 0.3 of those 25 are written in the log. This run's billing file shows balance 24.4 and month spent 0.6. The 0.3 between the log and that month total is the gap already described in the cache section. It has no run id here, so it is not added as a line.
+The spend lines add up to 0.6 credits. The account started with 25 free credits. 0.6 of those 25 are written in the log. This run's billing file shows balance 24.4 and month spent 0.6. 25 minus 0.6 is 24.4, which matches that balance. The 0.3 that used to sit between the log and the month total is the GitHub Actions run now in `docs/spend.md`.
 
 Rough sum, not a quote: 1,000 contacts at this run's 0 credits per company is 0 credits. That repeats this bill. Four lookups were cache hits, and the live Figma call is 0 credits on the bill. It is not the price of 1,000 fresh lookups.
 
