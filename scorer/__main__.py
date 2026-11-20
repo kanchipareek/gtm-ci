@@ -6,6 +6,7 @@ the keyboard answer is the word yes, unless --yes was already passed.
 """
 
 import argparse
+import json
 import subprocess
 import sys
 from datetime import date
@@ -18,7 +19,7 @@ from scorer.drift import (
     load_live_companies,
     write_live_result,
 )
-from scorer.fixtures import load_fixtures
+from scorer.fixtures import is_real_events_file, load_fixtures, load_real_events
 from scorer.report import write_report
 from scorer.run import ROOT, run_live, run_offline
 from scorer.score import score
@@ -54,6 +55,10 @@ def main(argv=None):
     # A refused call has no rows. A score of those missing rows would
     # look like a finished run that alerted on nobody.
     if ran.get("status") == "refused_by_cap":
+        # No rows, so this is not a score. The real-events files still
+        # record the refusal and the bill. A zero-alert score would be a lie.
+        if is_real_events_file(args.fixtures):
+            _write_refused_real(args, ran)
         print("Live run refused by the credit cap")
         return 1
 
@@ -63,7 +68,7 @@ def main(argv=None):
     if args.mode == "live" and is_live_companies_file(args.fixtures):
         return _finish_live_companies(args, ran)
 
-    fixtures = load_fixtures(args.fixtures)
+    fixtures = _load_for_score(args.fixtures)
     scored = score(ran["rows"], fixtures, ran["credits_spent"])
     meta = {
         "label": args.label,
@@ -73,8 +78,57 @@ def main(argv=None):
         "date": date.today().isoformat(),
     }
     markdown = write_report(args.label, scored, meta, RESULTS_DIR)
+    if args.mode == "live" and is_real_events_file(args.fixtures):
+        markdown = _note_leadmagic(args.label, ran, fixtures, RESULTS_DIR, markdown)
     print(markdown, end="")
     return 0
+
+
+def _write_refused_real(args, ran):
+    """Write the real-events result when the cap refuses the call.
+
+    The files say the run was refused. They do not contain alert counts.
+    """
+    folder = RESULTS_DIR
+    folder.mkdir(parents=True, exist_ok=True)
+    run_id = ran.get("run_id")
+    if not isinstance(run_id, str) or run_id.strip() == "":
+        run_id = None
+    document = {
+        "label": args.label,
+        "mode": "live",
+        "status": "refused_by_cap",
+        "plays_dir": args.plays,
+        "git_sha": git_sha(),
+        "date": date.today().isoformat(),
+        "cap": ran.get("cap"),
+        "credits_spent": ran.get("credits_spent"),
+        "run_id": run_id,
+    }
+    (folder / f"{args.label}.json").write_text(
+        json.dumps(document, indent=2) + "\n", encoding="utf-8", newline="\n"
+    )
+    run_text = run_id if run_id else "unavailable"
+    credits = ran.get("credits_spent")
+    text = (
+        f"# {args.label}\n\n"
+        "Live run refused by the credit cap. It was not scored.\n\n"
+        f"- cap: {ran.get('cap')}\n"
+        f"- credits: {credits}\n"
+        f"- run id: {run_text}\n"
+    )
+    (folder / f"{args.label}.md").write_text(text, encoding="utf-8", newline="\n")
+
+
+def _load_for_score(path):
+    """Load the answer key for the file this command was given.
+
+    The golden JSONL still goes through check_synthetic. The real-events
+    file is the other loader, so a real company domain is allowed there.
+    """
+    if is_real_events_file(path):
+        return load_real_events(path)
+    return load_fixtures(path)
 
 
 def parse_args(argv=None):
@@ -163,6 +217,94 @@ def _finish_live_companies(args, ran):
     write_live_result(args.label, document, RESULTS_DIR)
     print(live_section(run_id, ran["credits_spent"], drift_count), end="")
     return 0
+
+
+def _note_leadmagic(label, ran, fixtures, results_dir, markdown):
+    """Append the live company snapshot to the real-events report.
+
+    The score counts stay as score() wrote them. This section only records
+    what LeadMagic returned. A mismatch is written down. The rules are not
+    edited from it.
+    """
+    by_id = {}
+    for row in ran["rows"]:
+        case_id = row.get("case_id")
+        if isinstance(case_id, str):
+            by_id[case_id] = row
+
+    snapshots = []
+    mismatches = []
+    for item in fixtures:
+        case_id = item["case_id"]
+        row = by_id.get(case_id, {})
+        company = row.get("company") if isinstance(row.get("company"), dict) else {}
+        employees = company.get("employees") if isinstance(company, dict) else None
+        country = company.get("country") if isinstance(company, dict) else None
+        reason = row.get("reason")
+        expected = item["expected_reason"]
+        snapshots.append(
+            {
+                "case_id": case_id,
+                "employees": employees,
+                "country": country,
+                "reason": reason,
+                "expected_reason": expected,
+            }
+        )
+        if reason != expected:
+            mismatches.append(snapshots[-1])
+
+    folder = Path(results_dir)
+    json_path = folder / f"{label}.json"
+    document = json.loads(json_path.read_text(encoding="utf-8"))
+    run_id = ran.get("run_id")
+    document["run_id"] = run_id if isinstance(run_id, str) and run_id.strip() else None
+    document["leadmagic"] = snapshots
+    json_path.write_text(
+        json.dumps(document, indent=2) + "\n", encoding="utf-8", newline="\n"
+    )
+
+    lines = [
+        "",
+        "LeadMagic snapshots. Stand-ins were not sent. Rules were not changed.",
+        "",
+        "| case_id | employees | country | reason | expected reason |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for snap in snapshots:
+        employees = snap["employees"]
+        country = snap["country"]
+        emp = "" if employees is None else str(employees)
+        cou = "" if not isinstance(country, str) else country
+        got = "" if snap["reason"] is None else str(snap["reason"])
+        lines.append(
+            f"| {snap['case_id']} | {emp} | {cou} | {got} | {snap['expected_reason']} |"
+        )
+    if not mismatches:
+        lines.append("")
+        lines.append("Disagreeing snapshots: none")
+    else:
+        lines.append("")
+        lines.append("Disagreeing snapshots:")
+        for snap in mismatches:
+            employees = snap["employees"]
+            country = snap["country"]
+            emp = "none" if employees is None else str(employees)
+            cou = "none" if not isinstance(country, str) or country.strip() == "" else country
+            lines.append(
+                f"- {snap['case_id']}: employees {emp}, country {cou}, "
+                f"reason {snap['reason']}, expected {snap['expected_reason']}"
+            )
+    run_text = document["run_id"] if document["run_id"] else "unavailable"
+    lines.append("")
+    lines.append(f"run id: {run_text}")
+    lines.append("")
+    section = "\n".join(lines)
+    if not markdown.endswith("\n"):
+        markdown += "\n"
+    updated = markdown + section
+    (folder / f"{label}.md").write_text(updated, encoding="utf-8", newline="\n")
+    return updated
 
 
 def _reject_early(args):

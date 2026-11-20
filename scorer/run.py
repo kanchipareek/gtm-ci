@@ -26,7 +26,12 @@ from scorer.drift import (
     load_live_companies,
     play_events_from_companies,
 )
-from scorer.fixtures import load_fixtures
+from scorer.fixtures import (
+    is_real_events_file,
+    load_fixtures,
+    load_real_events,
+    real_event_offline_row,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 PLAY_FILE = "plays/champion-tracker.play.ts"
@@ -64,6 +69,21 @@ def run_offline(plays_dir, fixtures_path):
     """
     plays_dir = Path(plays_dir).resolve()
     fixtures_path = Path(fixtures_path).resolve()
+    # The TypeScript runner reads input_* JSONL. Real events are JSON, and
+    # their stand-in counts are copied into that shape for this pass only.
+    # The temp file has no answer key. Live mode never reads it.
+    if is_real_events_file(fixtures_path):
+        with tempfile.TemporaryDirectory(prefix="gtm-ci-real-") as tmp:
+            runner_path = Path(tmp) / "events.jsonl"
+            rows = load_real_events(fixtures_path)
+            lines = [json.dumps(real_event_offline_row(row)) for row in rows]
+            runner_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            return _run_offline_command(plays_dir, runner_path)
+    return _run_offline_command(plays_dir, fixtures_path)
+
+
+def _run_offline_command(plays_dir, fixtures_path):
+    """Run scripts/offline_run.ts on one JSONL file. Spends nothing."""
     command = [
         _program("npx"),
         "tsx",
@@ -123,6 +143,7 @@ def run_live(fixtures_or_input_path, max_credits):
                 "status": "refused_by_cap",
                 "cap": max_credits,
                 "credits_spent": _credits_for_run(run_id),
+                "run_id": run_id if isinstance(run_id, str) and run_id.strip() else None,
             }
         if completed.returncode != 0:
             _raise_failed(command, completed)
@@ -149,6 +170,11 @@ def play_input_from_fixtures(fixtures_path):
     if is_live_companies_file(fixtures_path):
         companies = load_live_companies(fixtures_path)
         return {"email_mode": "mock", "events": play_events_from_companies(companies)}
+    if is_real_events_file(fixtures_path):
+        # for_runner drops the answer key and the stand-in. The Play then
+        # looks the company up, the same path as any other live event.
+        events = load_real_events(fixtures_path, for_runner=True)
+        return {"email_mode": "mock", "events": events}
     rows = load_fixtures(fixtures_path)
     events = [_event_from_row(row) for row in rows]
     return {"email_mode": "mock", "events": events}

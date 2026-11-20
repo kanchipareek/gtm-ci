@@ -8,3 +8,4 @@ Each live Deepline run gets one line: date, run id, credits from `deepline billi
 2026-11-19 | play/champion-tracker/run/20261119t092034-618-2317c80b-caller-6bed33326b8c1bb75802b8c87a2ca8f6883e54ea6787758d6e434d287a9b0759 | 0 | cache test run 1, five companies, no refresh-cache
 2026-11-19 | play/champion-tracker/run/20261119t092809-247-9b8e1402-caller-34a7e53d73eb1a75a116767bc27df45dc9f37e8f1044e084c8884c5f7df5942d | 0 | cache test run 2, same file a few minutes later, no refresh-cache; recorded as results/live_2026-11-19
 2026-11-19 | play/champion-tracker/run/20261119t100646-806-3d0ffe24-caller-1c164779dbf631ea1e84e5df6b745c50b093f2f3a29156d75909337d77f8830e | 0 | credit cap test, max-credits 0.01, the lookup was refused
+2026-11-20 | play/champion-tracker/run/20261120t134154-056-fa345bd1-caller-7d749c8cae455b7f77261b7c49d4bc64a0f9f41bd9d6157aa6e448d29bb70705 | 1.2 | real job-change fixtures, ten events, eight company lookups
