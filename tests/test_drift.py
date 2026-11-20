@@ -11,12 +11,16 @@ from pathlib import Path
 import pytest
 
 from scorer.drift import (
+    ISSUE_TITLE,
     append_live_section,
     count_drift,
     credits_over_cap,
+    drift_changes,
+    issue_body,
     live_section,
     load_live_companies,
     main,
+    plan_drift_issue,
 )
 from scorer.run import ROOT, play_input_from_fixtures
 
@@ -68,6 +72,103 @@ def test_a_missing_live_row_counts_both_fields():
     assert count_drift([], companies) == 2
 
 
+def test_no_result_empty_answer_is_not_drift():
+    # Figma comes back with both fields empty. That is no_result, not a
+    # headcount that moved. One field still present is a real answer.
+    companies = [snapshot("c04", 1886, "US")]
+    empty = {
+        "case_id": "c04",
+        "reason": "company_not_found",
+        "company": {"employees": None, "country": None},
+    }
+    assert count_drift([empty], companies) == 0
+    partial = {"case_id": "c04", "company": {"employees": None, "country": "US"}}
+    assert count_drift([partial], companies) == 1
+
+
+def test_issue_body_lists_company_field_old_new_and_source():
+    companies = load_live_companies(LIVE_FILE)
+    hubspot = next(item for item in companies if item["domain"] == "hubspot.com")
+    rows = []
+    for company in companies:
+        saved = company["snapshot"]
+        if company["case_id"] == "c04":
+            rows.append({
+                "case_id": "c04",
+                "company": {"employees": None, "country": None},
+            })
+            continue
+        employees = 1 if company["case_id"] == "c03" else saved["employees"]
+        rows.append(live_row(company["case_id"], employees, saved["country"]))
+    body = issue_body(drift_changes(rows, companies))
+    assert body == (
+        "Fields that differ from the saved snapshot.\n"
+        "\n"
+        "| company | field | old value | new value | snapshot source |\n"
+        "| --- | --- | --- | --- | --- |\n"
+        "| hubspot.com | employees | 9016 | 1 | "
+        + hubspot["snapshot_source"]
+        + " |\n"
+    )
+    assert "figma.com" not in body
+
+
+def test_plan_reuses_one_drift_issue():
+    change = {
+        "company": "asana.com",
+        "field": "employees",
+        "old": 4400,
+        "new": 4500,
+        "source": "notes",
+    }
+    closed = [{"number": 7, "title": ISSUE_TITLE, "state": "closed"}]
+    steps = plan_drift_issue([change], closed)
+    assert steps[0]["action"] == "update"
+    assert steps[0]["number"] == 7
+    assert "asana.com" in steps[0]["body"]
+    assert "4400" in steps[0]["body"]
+    assert "4500" in steps[0]["body"]
+    assert "notes" in steps[0]["body"]
+
+    opened = [{"number": 7, "title": ISSUE_TITLE, "state": "open"}]
+    assert plan_drift_issue([], opened) == [{"action": "close", "number": 7}]
+    assert plan_drift_issue([], closed) == []
+    assert plan_drift_issue([change], [])[0]["action"] == "create"
+    pull = [{"number": 3, "title": ISSUE_TITLE, "state": "open", "pull_request": {}}]
+    assert plan_drift_issue([change], pull)[0]["action"] == "create"
+
+
+def test_sync_issue_exits_zero_when_a_field_changed(tmp_path, monkeypatch):
+    raw = json.loads(LIVE_FILE.read_text(encoding="utf-8"))
+    path = tmp_path / "live_companies.json"
+    path.write_text(json.dumps(raw), encoding="utf-8")
+    companies = load_live_companies(path)
+    rows = []
+    for company in companies:
+        saved = company["snapshot"]
+        if company["case_id"] == "c04":
+            rows.append({
+                "case_id": "c04",
+                "company": {"employees": None, "country": None},
+            })
+            continue
+        employees = saved["employees"] + 1 if company["case_id"] == "c01" else saved["employees"]
+        rows.append(live_row(company["case_id"], employees, saved["country"]))
+    result = tmp_path / "live.json"
+    result.write_text(
+        json.dumps({"credits_spent": 1, "drift_count": 1, "rows": rows}),
+        encoding="utf-8",
+    )
+    seen = {}
+
+    def fake_sync(changes):
+        seen["changes"] = changes
+
+    monkeypatch.setattr("scorer.drift.sync_drift_issue", fake_sync)
+    assert main([str(result), "--fixtures", str(path), "--sync-issue"]) == 0
+    assert [item["company"] for item in seen["changes"]] == ["asana.com"]
+
+
 def test_unknown_credits_are_not_over_the_cap():
     assert credits_over_cap("unknown", 10) is False
     assert credits_over_cap(None, 10) is False
@@ -116,6 +217,7 @@ def test_live_file_is_five_synthetic_people():
     by_domain = {item["domain"]: item["snapshot"] for item in companies}
     assert by_domain["asana.com"] == {"employees": 4400, "country": "US"}
     assert by_domain["shopify.com"] == {"employees": 29663, "country": "CA"}
+    assert companies[0]["snapshot_source"].startswith("docs/spike/NOTES.md")
 
     for item in companies:
         event = item["event"]

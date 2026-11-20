@@ -2,8 +2,11 @@
 
 Drift is how many employee counts and country codes are not the saved
 values. A company that did not come back counts as two, because neither
-field is there to match. The count is for the comment. It is not a
-test failure: headcount and country change in the world, and the offline
+field is there to match. A lookup that comes back no_result writes an
+empty company. That empty answer is not a changed field.
+
+The count is for the comment and the weekly issue. It is not a test
+failure: headcount and country change in the world, and the offline
 gate is what judges the rules.
 
 The credit number in the comment is credits_spent on the live result.
@@ -12,7 +15,10 @@ That value was copied from billing usage. "unknown" stays "unknown".
 
 import argparse
 import json
+import os
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 from scorer.fixtures import FREE_MAIL_DOMAINS, RESERVED_EXACT_DOMAINS
@@ -25,28 +31,56 @@ MARKER = "<!-- gtm-ci -->"
 # Spec 5.A. These are the two company fields the rules read.
 DRIFT_FIELDS = ("employees", "country")
 
+# The weekly job keeps one issue. The title is how a later run finds it,
+# so a second issue is not opened for the same drift.
+ISSUE_TITLE = "company data drift"
+
 
 def count_drift(rows, companies):
     """Return how many snapshot fields differ from the live rows.
 
     Joined by case_id, not by row order. employees and country are the
-    only fields. A missing live row differs on both.
+    only fields. A missing live row differs on both. An empty no_result
+    lookup differs on neither.
     """
     return len(drift_changes(rows, companies))
 
 
 def drift_changes(rows, companies):
-    """Return {case_id, field} for each snapshot field that differs."""
+    """Return one record per snapshot field that differs.
+
+    A missing live row differs on both fields. A row that came back with
+    no employees and no country is a no_result lookup, so it is left out.
+    """
     live_by_id = _rows_by_id(rows)
     changes = []
     seen = set()
     for company in companies:
         case_id, snapshot = _snapshot(company, seen)
-        live = _company_fields(live_by_id.get(case_id))
+        row = live_by_id.get(case_id)
+        if _empty_answer(row):
+            continue
+        live = _company_fields(row)
         if not _same_employees(live["employees"], snapshot.get("employees")):
-            changes.append({"case_id": case_id, "field": "employees"})
+            changes.append(
+                _change_record(
+                    company,
+                    case_id,
+                    "employees",
+                    snapshot.get("employees"),
+                    live["employees"],
+                )
+            )
         if not _same_country(live["country"], snapshot.get("country")):
-            changes.append({"case_id": case_id, "field": "country"})
+            changes.append(
+                _change_record(
+                    company,
+                    case_id,
+                    "country",
+                    snapshot.get("country"),
+                    live["country"],
+                )
+            )
     return changes
 
 
@@ -93,6 +127,84 @@ def append_live_section(comment, section):
     if not body.endswith("\n\n"):
         body += "\n"
     return body + section
+
+
+def issue_body(changes):
+    """The markdown body for the one drift issue.
+
+    One row per changed field: the company domain, the field, the saved
+    value, the live value, and the snapshot source from the fixture.
+    """
+    lines = [
+        "Fields that differ from the saved snapshot.",
+        "",
+        "| company | field | old value | new value | snapshot source |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for change in changes:
+        lines.append(
+            "| {company} | {field} | {old} | {new} | {source} |".format(
+                company=_cell(change.get("company")),
+                field=_cell(change.get("field")),
+                old=_cell(change.get("old")),
+                new=_cell(change.get("new")),
+                source=_cell(change.get("source")),
+            )
+        )
+    return "\n".join(lines) + "\n"
+
+
+def plan_drift_issue(changes, issues):
+    """Decide how to keep a single issue titled company data drift.
+
+    Changes open that issue or update the oldest match. No changes close
+    every open match. A pull request is ignored, even with the same title.
+    """
+    titled = _drift_issues(issues)
+    if changes:
+        body = issue_body(changes)
+        if not titled:
+            return [{"action": "create", "body": body}]
+        steps = [{"action": "update", "number": titled[0]["number"], "body": body}]
+        for extra in titled[1:]:
+            if extra.get("state") == "open":
+                steps.append({"action": "close", "number": extra["number"]})
+        return steps
+    return [
+        {"action": "close", "number": issue["number"]}
+        for issue in titled
+        if issue.get("state") == "open"
+    ]
+
+
+def sync_drift_issue(changes):
+    """Open, update, or close the drift issue.
+
+    GITHUB_TOKEN stays in the environment. It is not printed. Drift itself
+    does not raise: a changed field is an update, not a failure.
+    """
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if repo.count("/") != 1:
+        raise ValueError("GITHUB_REPOSITORY is required")
+    if "GITHUB_TOKEN" not in os.environ and "GH_TOKEN" not in os.environ:
+        raise ValueError("GITHUB_TOKEN is required")
+    steps = plan_drift_issue(changes, _list_issues(repo))
+    if not steps:
+        print("no drift, and no open issue to close")
+        return
+    for step in steps:
+        action = step["action"]
+        if action == "create":
+            number = _create_issue(repo, step["body"])
+            print(f"opened issue {number}")
+        elif action == "update":
+            _update_issue(repo, step["number"], step["body"])
+            print(f"updated issue {step['number']}")
+        elif action == "close":
+            _close_issue(repo, step["number"])
+            print(f"closed issue {step['number']}")
+        else:
+            raise ValueError(f"unknown issue action {action!r}")
 
 
 def is_live_companies_file(path):
@@ -182,17 +294,29 @@ def write_live_result(label, document, results_dir):
 
 
 def main(argv=None):
-    """Append the Live run section, or exit 1 when credits are over the cap.
+    """Append the Live run section, sync the drift issue, or check the cap.
 
     Drift never changes the exit code. A missing comment file is reported
-    and is not a failure: the job fails only when the run failed or the
-    bill is over the cap, and the run failure happens before this command.
+    and is not a failure. This command fails when the result cannot be
+    read, the issue call fails, or --check-cap sees a bill over the cap.
+    A failed Deepline run never gets here: the scorer exits first.
     """
     args = parse_args(argv)
     try:
         document = _load_result(args.result)
         if args.comment:
             _append_comment(args.comment, document)
+        if args.sync_issue:
+            if not args.fixtures:
+                print("--sync-issue needs --fixtures")
+                return 1
+            rows = document.get("rows")
+            if not isinstance(rows, list):
+                print("live result has no rows to compare")
+                return 1
+            companies = load_live_companies(args.fixtures)
+            # Changed fields update the issue and still exit 0 below.
+            sync_drift_issue(drift_changes(rows, companies))
         if args.check_cap:
             if args.cap is None:
                 print("--check-cap needs --cap")
@@ -202,7 +326,7 @@ def main(argv=None):
                 print(f"credits {_credit_text(credits)} are over the cap {_credit_text(args.cap)}")
                 return 1
             print(f"credits {_credit_text(credits)} are within the cap {_credit_text(args.cap)}")
-    except ValueError as exc:
+    except (ValueError, RuntimeError) as exc:
         print(str(exc))
         return 1
     return 0
@@ -210,13 +334,23 @@ def main(argv=None):
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
-        description="Append the Live run section, or check the credit cap."
+        description="Append the Live run section, sync the drift issue, or check the credit cap."
     )
     parser.add_argument("result", help="Live result JSON from python -m scorer.")
     parser.add_argument(
         "--comment",
         default=None,
         help="Gate comment file. The Live run section is appended to it.",
+    )
+    parser.add_argument(
+        "--fixtures",
+        default=None,
+        help="fixtures/live_companies.json. The snapshot the issue is compared with.",
+    )
+    parser.add_argument(
+        "--sync-issue",
+        action="store_true",
+        help="Open, update, or close the one drift issue. Drift does not fail the command.",
     )
     parser.add_argument("--cap", type=float, default=None, help="live_max_credits.")
     parser.add_argument(
@@ -303,6 +437,188 @@ def _company_fields(row):
     }
 
 
+def _empty_answer(row):
+    """True when this row is a lookup that came back with nothing.
+
+    The Play writes null employees and a null country when LeadMagic
+    returns no_result (Figma). That empty answer is not a new headcount.
+    A missing row is not this case: there is no company object to read,
+    and both fields still count.
+    """
+    if not isinstance(row, dict):
+        return False
+    company = row.get("company")
+    if not isinstance(company, dict):
+        return False
+    return _blank(company.get("employees")) and _blank(company.get("country"))
+
+
+def _blank(value):
+    if value is None:
+        return True
+    if isinstance(value, str) and value.strip() == "":
+        return True
+    return False
+
+
+def _change_record(company, case_id, field, old, new):
+    domain = company.get("domain") if isinstance(company, dict) else None
+    if not isinstance(domain, str) or domain.strip() == "":
+        domain = case_id
+    source = company.get("snapshot_source") if isinstance(company, dict) else None
+    if not isinstance(source, str):
+        source = ""
+    return {
+        "case_id": case_id,
+        "company": domain,
+        "field": field,
+        "old": old,
+        "new": new,
+        "source": source,
+    }
+
+
+def _cell(value):
+    """One markdown table cell. A pipe or a newline would break the row."""
+    if value is None:
+        text = "null"
+    elif isinstance(value, bool):
+        text = "true" if value else "false"
+    elif isinstance(value, float) and value.is_integer():
+        text = str(int(value))
+    else:
+        text = str(value)
+    return text.replace("|", "\\|").replace("\r", " ").replace("\n", " ")
+
+
+def _drift_issues(issues):
+    if not isinstance(issues, list):
+        raise ValueError("issue list was not a JSON array")
+    found = []
+    for issue in issues:
+        if not isinstance(issue, dict):
+            continue
+        # The issues API also returns pull requests. Those are not this issue.
+        if "pull_request" in issue:
+            continue
+        if issue.get("title") != ISSUE_TITLE:
+            continue
+        number = issue.get("number")
+        if isinstance(number, bool) or not isinstance(number, int):
+            continue
+        found.append(issue)
+    found.sort(key=lambda item: item["number"])
+    return found
+
+
+def _list_issues(repo):
+    output = _run_gh([
+        "--paginate",
+        "--slurp",
+        "--method",
+        "GET",
+        f"repos/{repo}/issues?state=all&per_page=100",
+    ])
+    try:
+        payload = json.loads(output) if output.strip() else []
+    except json.JSONDecodeError as exc:
+        raise ValueError("gh api did not return a JSON issue list") from exc
+    return _objects_from_pages(payload, "issue")
+
+
+def _objects_from_pages(payload, label):
+    if not isinstance(payload, list):
+        raise ValueError(f"{label} list was not a JSON array")
+    if not payload:
+        return []
+    if isinstance(payload[0], dict):
+        return payload
+    items = []
+    for page in payload:
+        if not isinstance(page, list):
+            raise ValueError(f"a {label} page was not a JSON array")
+        items.extend(page)
+    return items
+
+
+def _create_issue(repo, body):
+    payload = _json_file({"title": ISSUE_TITLE, "body": body})
+    try:
+        output = _run_gh([
+            "--method",
+            "POST",
+            "--input",
+            str(payload),
+            f"repos/{repo}/issues",
+        ])
+    finally:
+        payload.unlink(missing_ok=True)
+    try:
+        data = json.loads(output) if output.strip() else {}
+    except json.JSONDecodeError as exc:
+        raise ValueError("gh api did not return the new issue") from exc
+    if not isinstance(data, dict):
+        raise ValueError("gh api did not return the new issue")
+    number = data.get("number")
+    if isinstance(number, bool) or not isinstance(number, int):
+        raise ValueError("the new issue has no number")
+    return number
+
+
+def _update_issue(repo, number, body):
+    payload = _json_file({"title": ISSUE_TITLE, "body": body, "state": "open"})
+    try:
+        _run_gh([
+            "--method",
+            "PATCH",
+            "--input",
+            str(payload),
+            f"repos/{repo}/issues/{number}",
+        ])
+    finally:
+        payload.unlink(missing_ok=True)
+
+
+def _close_issue(repo, number):
+    payload = _json_file({"state": "closed"})
+    try:
+        _run_gh([
+            "--method",
+            "PATCH",
+            "--input",
+            str(payload),
+            f"repos/{repo}/issues/{number}",
+        ])
+    finally:
+        payload.unlink(missing_ok=True)
+
+
+def _json_file(document):
+    handle = tempfile.NamedTemporaryFile(
+        mode="w",
+        encoding="utf-8",
+        suffix=".json",
+        delete=False,
+    )
+    with handle:
+        json.dump(document, handle)
+    return Path(handle.name)
+
+
+def _run_gh(args):
+    """Run gh api. A non-zero exit becomes an error. The token is not printed."""
+    completed = subprocess.run(
+        ["gh", "api", *args],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        detail = (completed.stderr or "").strip() or (completed.stdout or "").strip() or "gh api failed"
+        raise RuntimeError(detail)
+    return completed.stdout
+
+
 def _same_employees(live, saved):
     # A bool is an int in Python. True must not match a headcount of 1.
     if isinstance(live, bool) or isinstance(saved, bool):
@@ -348,6 +664,9 @@ def _one_company(item, index, seen_ids, seen_domains):
     country = snapshot.get("country")
     if not isinstance(country, str) or country.strip() == "":
         raise ValueError(f"case_id {case_id!r} snapshot country is empty")
+    source = item.get("snapshot_source")
+    if not isinstance(source, str) or source.strip() == "":
+        raise ValueError(f"case_id {case_id!r} snapshot_source is empty")
 
     event = item.get("event")
     if not isinstance(event, dict):
@@ -358,6 +677,7 @@ def _one_company(item, index, seen_ids, seen_domains):
         "case_id": case_id,
         "domain": domain,
         "snapshot": {"employees": employees, "country": country.strip().upper()},
+        "snapshot_source": source.strip(),
         "event": event,
     }
 
