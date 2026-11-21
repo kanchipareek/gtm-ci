@@ -126,6 +126,24 @@ jobs:
         working-directory: head
         run: python -m scorer.compare results/base.json results/head.json --out results/comment.md
 
+      # Test the test set. The head rules are broken on purpose, one edit
+      # at a time from ci/mutations.json, and scored on the base test set
+      # and on the head test set. Only the fixtures differ, so a lower head
+      # score means this pull request's test set change lets more rule
+      # breaks through. The test-set-change label approves a change to the
+      # answers. This section shows the reviewer what that change costs.
+      # Shown, not gated: continue-on-error, so it never fails the job.
+      # --allow-stale because a pull request may change a line a mutation
+      # edits. Those are listed as not applied. 0 credits.
+      - name: Score the test set strength
+        if: ${{ (success() || failure()) && hashFiles('head/results/comment.md') != '' }}
+        continue-on-error: true
+        working-directory: head
+        run: |
+          python -m scorer.mutate --allow-stale --fixtures ../base/fixtures/events.jsonl --out results/mutation_base > /dev/null
+          python -m scorer.mutate --allow-stale --out results/mutation_head > /dev/null
+          python -m scorer.mutate --section results/mutation_base.json results/mutation_head.json --comment results/comment.md
+
       # Keep the score files and the comment. always() so a failing guard
       # or compare still uploads them. The folder is head/results because
       # that is the scorer package root, not the runner's top directory.
