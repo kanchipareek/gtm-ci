@@ -148,3 +148,38 @@ def _checkout(folder, events="e01\n", thresholds="{}\n", extra=None, rules=None)
         rules_path = folder / "plays" / "rules.ts"
         rules_path.parent.mkdir(parents=True, exist_ok=True)
         rules_path.write_bytes(rules.encode("utf-8"))
+
+
+def test_add_to_comment_puts_blocked_line_under_marker():
+    from scorer.guard import add_to_comment
+
+    comment = "<!-- gtm-ci -->\nPassed: no metric got worse\n\n| metric |\n"
+    line = "Warning: test set changed (fixtures/events.jsonl) without the test-set-change label."
+    out = add_to_comment(comment, line, blocked=True)
+    assert out.splitlines()[0] == "<!-- gtm-ci -->"
+    assert out.splitlines()[1] == "Blocked by the test set guard. " + line
+    assert out.splitlines()[2] == "Passed: no metric got worse"
+
+
+def test_add_to_comment_labelled_change_is_a_plain_warning_and_no_change_is_untouched():
+    from scorer.guard import add_to_comment
+
+    comment = "<!-- gtm-ci -->\nPassed: no metric got worse\n"
+    line = "Warning: test set changed (ci/thresholds.json). The test-set-change label is present."
+    assert add_to_comment(comment, line, blocked=False).splitlines()[1] == line
+    assert add_to_comment(comment, None, blocked=False) == comment
+
+
+def test_comment_mode_exits_zero_and_writes_the_file(tmp_path):
+    from scorer.guard import main
+
+    base = tmp_path / "base"
+    head = tmp_path / "head"
+    for root, text in ((base, "a"), (head, "b")):
+        (root / "fixtures").mkdir(parents=True)
+        (root / "fixtures" / "events.jsonl").write_text(text, encoding="utf-8")
+    comment = tmp_path / "comment.md"
+    comment.write_text("<!-- gtm-ci -->\nPassed: no metric got worse\n", encoding="utf-8")
+    assert main([str(base), str(head), "--comment", str(comment)]) == 0
+    assert "Blocked by the test set guard." in comment.read_text(encoding="utf-8")
+    assert main([str(base), str(head)]) == 1

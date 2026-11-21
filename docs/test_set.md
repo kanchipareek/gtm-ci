@@ -1,6 +1,6 @@
 # Test set
 
-The accepted golden set is `fixtures/events.jsonl`. `fixtures/events.csv` is the same 30 rows in Sheet shape. The owner reviewed `data/fixtures_draft.jsonl` on 18 Nov 2026 and accepted every `expected_alert`, `expected_reason`, `trap`, and the 20/10 split. Those labels were written by reading spec section 5.B. They were not produced by running `plays/rules.ts`, and the offline runner was not run on this file when it was copied in.
+The accepted golden set is `fixtures/events.jsonl`. `fixtures/events.csv` is the same rows in Sheet shape. e01 to e30 were accepted on 18 Nov 2026. e31 to e36 were added on 21 Nov 2026 after mutation testing found holes, see [`docs/mutation.md`](mutation.md). The owner reviewed `data/fixtures_draft.jsonl` on 18 Nov 2026 and accepted every `expected_alert`, `expected_reason`, `trap`, and the 20/10 split. Those labels were written by reading spec section 5.B. They were not produced by running `plays/rules.ts`, and the offline runner was not run on this file when it was copied in.
 
 The `DRAFT.` prefix is gone from `notes`, because spec 5.C says that prefix lasts only until the set is accepted. The answers themselves are the draft answers.
 
@@ -49,6 +49,19 @@ This is a small hand-made set. It shows the method. It does not prove the tracke
 | e29 | development | not_a_champion | Never a champion. Everything else would fit | false | not_champion |
 | e30 | holdout | word_match_trap_internal | "Head of Internal Sales". "Internal" is not "intern" | true | icp_fit |
 
+### Added 21 Nov 2026 after mutation testing
+
+Each case closes one discovery mutation that the 30-case set let through. The mutation id is in `notes`.
+
+| case_id | split | trap | what it tests | expected_alert | expected_reason |
+| --- | --- | --- | --- | --- | --- |
+| e31 | development | boundary_5001 | 5001 people, one over the max (m04) | false | company_too_big |
+| e32 | holdout | wrong_country_india | Head of Sales, 600 people, India HQ (m07) | false | wrong_country |
+| e33 | development | junior_title_with_senior_words | "Intern, Office of the Chief Revenue Officer" (m13) | false | junior_title |
+| e34 | development | trainee_with_senior_words | "Sales Director Trainee" (m14) | false | junior_title |
+| e35 | holdout | apprentice_with_senior_words | "Apprentice to the Head of Growth" (m15) | false | junior_title |
+| e36 | development | free_mail_proton | proton.me domain, caught by the paid lookup count (m21, m22) | false | missing_domain |
+
 ## Counts by reason
 
 The order is the check order in spec 5.B. `icp_fit` is the alert that remains when every check passes.
@@ -56,27 +69,27 @@ The order is the check order in spec 5.B. `icp_fit` is the alert that remains wh
 | reason | count | development | holdout | case_ids |
 | --- | --- | --- | --- | --- |
 | not_champion | 1 | 1 | 0 | e29 |
-| missing_domain | 2 | 1 | 1 | e23, e24 |
+| missing_domain | 3 | 2 | 1 | e23, e24, e36 |
 | same_company | 1 | 1 | 0 | e25 |
 | duplicate_person | 1 | 1 | 0 | e12 |
 | stale_event | 2 | 1 | 1 | e27, e28 |
-| junior_title | 2 | 1 | 1 | e21, e22 |
+| junior_title | 5 | 3 | 2 | e21, e22, e33, e34, e35 |
 | ambiguous_title | 4 | 2 | 2 | e18, e19, e20, e26 |
 | company_not_found | 1 | 1 | 0 | e17 |
 | company_too_small | 1 | 0 | 1 | e13 |
-| company_too_big | 1 | 1 | 0 | e14 |
-| wrong_country | 2 | 2 | 0 | e15, e16 |
+| company_too_big | 2 | 2 | 0 | e14, e31 |
+| wrong_country | 3 | 2 | 1 | e15, e16, e32 |
 | icp_fit | 12 | 8 | 4 | e01, e02, e03, e04, e05, e06, e07, e08, e09, e10, e11, e30 |
-| total | 30 | 20 | 10 | e01 to e30 |
+| total | 36 | 24 | 12 | e01 to e36 |
 
 ## Counts by split
 
-The runner scores all 30 in one pass. `split` is for reporting, and later for tuning on development and accepting on holdout.
+The runner scores all 36 in one pass. `split` is for reporting, and later for tuning on development and accepting on holdout.
 
 | split | cases | should alert | should not alert |
 | --- | --- | --- | --- |
-| development | 20 | 8 | 12 |
-| holdout | 10 | 4 | 6 |
-| all | 30 | 12 | 18 |
+| development | 24 | 8 | 16 |
+| holdout | 12 | 4 | 8 |
+| all | 36 | 12 | 24 |
 
-Holdout is e02, e04, e08, e13, e19, e22, e24, e26, e28, e30. Development is the other 20, including the e11 and e12 pair.
+Holdout is e02, e04, e08, e13, e19, e22, e24, e26, e28, e30, e32, e35. Development is the other 24, including the e11 and e12 pair.

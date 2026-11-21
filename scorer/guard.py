@@ -24,6 +24,9 @@ TEST_SET_LABEL = "test-set-change"
 FIXTURES_DIR = "fixtures"
 THRESHOLDS_FILE = "ci/thresholds.json"
 
+# The first line of the one pull request comment (scorer/compare.py).
+MARKER = "<!-- gtm-ci -->"
+
 
 def changed_test_files(base_dir, head_dir):
     """Return fixture and threshold paths whose file hash differs.
@@ -68,8 +71,28 @@ def warning_line(changed, labels):
     )
 
 
+def add_to_comment(comment, line, blocked):
+    """Put the guard line right under the marker, above the score verdict.
+
+    The compare verdict only judges the scores. Without this line a pull
+    request can show "Passed: no metric got worse" next to a red check.
+    """
+    if line is None:
+        return comment
+    text = f"Blocked by the test set guard. {line}" if blocked else line
+    first, sep, rest = comment.partition("\n")
+    if first.strip() == MARKER:
+        return f"{first}\n{text}\n{rest}"
+    return f"{text}\n{comment}"
+
+
 def main(argv=None):
-    """Print the warning line and return 1 when the label is missing."""
+    """Print the warning line and return 1 when the label is missing.
+
+    With --comment, write the line into that comment file instead and
+    return 0. The workflow runs the check once to set the exit code and
+    once more to annotate the comment.
+    """
     args = parse_args(argv)
     try:
         changed = changed_test_files(args.base, args.head)
@@ -78,9 +101,17 @@ def main(argv=None):
         return 1
     labels = parse_labels(args.labels)
     line = warning_line(changed, labels)
+    blocked = bool(changed) and TEST_SET_LABEL not in labels
+    if args.comment:
+        path = Path(args.comment)
+        if not path.is_file():
+            return 0
+        updated = add_to_comment(path.read_text(encoding="utf-8"), line, blocked)
+        path.write_text(updated, encoding="utf-8", newline="\n")
+        return 0
     if line is not None:
         print(line)
-    if changed and TEST_SET_LABEL not in labels:
+    if blocked:
         return 1
     return 0
 
@@ -95,6 +126,10 @@ def parse_args(argv=None):
         "--labels",
         default="",
         help="Comma-separated pull request labels.",
+    )
+    parser.add_argument(
+        "--comment",
+        help="Write the warning into this comment file under the marker, and exit 0.",
     )
     return parser.parse_args(argv)
 

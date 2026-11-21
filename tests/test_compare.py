@@ -22,6 +22,7 @@ EXPECTED_THRESHOLDS = (
     '  "missed_alerts_max_increase": 0,\n'
     '  "false_alerts_max_increase_per_trap": 0,\n'
     '  "pass_to_fail_max": 0,\n'
+    '  "paid_lookups_max_increase": 0,\n'
     '  "live_max_credits": 10\n'
     "}\n"
 )
@@ -423,3 +424,38 @@ def _loose_path(tmp_path, name, **changes):
     path = Path(tmp_path) / name
     path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
     return path
+
+
+def test_more_paid_lookups_blocks_even_when_alerts_are_right():
+    base = blank_score(paid_lookups=3, paid_lookup_case_ids=["e01", "e04", "e05"])
+    head = blank_score(paid_lookups=4, paid_lookup_case_ids=["e01", "e02", "e04", "e05"])
+    result = compare(base, head, defaults())
+    assert result["exit_code"] == 1
+    assert result["verdict"] == "Blocked: paid company lookups went 3 -> 4"
+    assert result["new_paid_lookup_case_ids"] == ["e02"]
+    assert "| paid company lookups | 3 | 4 | +1 |" in result["comment"]
+    assert "New paid company lookups: e02" in result["comment"]
+
+
+def test_fewer_paid_lookups_pass():
+    base = blank_score(paid_lookups=4, paid_lookup_case_ids=["e01", "e02", "e04", "e05"])
+    head = blank_score(paid_lookups=3, paid_lookup_case_ids=["e01", "e04", "e05"])
+    assert compare(base, head, defaults())["exit_code"] == 0
+
+
+def test_unknown_paid_lookups_are_not_gated():
+    base = blank_score(paid_lookups="unknown", paid_lookup_case_ids=[])
+    head = blank_score(paid_lookups=9, paid_lookup_case_ids=["e01"])
+    assert compare(base, head, defaults())["exit_code"] == 0
+
+
+def test_lookup_rule_is_optional_in_thresholds():
+    limits = {
+        "false_alerts_max_increase": 0,
+        "missed_alerts_max_increase": 0,
+        "false_alerts_max_increase_per_trap": 0,
+        "pass_to_fail_max": 0,
+    }
+    base = blank_score(paid_lookups=1, paid_lookup_case_ids=["e01"])
+    head = blank_score(paid_lookups=5, paid_lookup_case_ids=["e01"])
+    assert compare(base, head, limits)["exit_code"] == 0
