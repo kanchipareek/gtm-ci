@@ -12,6 +12,7 @@ Offline only. It never calls Deepline and spends 0 credits.
     python -m scorer.mutate
     python -m scorer.mutate --split holdout
     python -m scorer.mutate --fixtures fixtures/events.jsonl --out results/mutation
+    python -m scorer.mutate --section base.json head.json --comment results/comment.md
 
 Exit code is 0 unless a mutation could not be applied (its find text is
 not in the file), because a stale mutation list would quietly score as
@@ -163,8 +164,65 @@ def to_markdown(results, summary, fixtures_label):
     return "\n".join(lines) + "\n"
 
 
+def strength_section(base_doc, head_doc):
+    """Markdown for the pull request comment: mutation score on base vs head fixtures.
+
+    Both runs use the head rules and the head mutation list. Only the
+    fixtures differ, so a drop means the pull request's test set change
+    lets more rule breaks through. Shown, not gated.
+    """
+    base = {r["id"]: r for r in base_doc["results"]}
+    head = {r["id"]: r for r in head_doc["results"]}
+    lost = [i for i, r in head.items() if r["outcome"] == "survived" and base.get(i, {}).get("outcome") == "caught"]
+    gained = [i for i, r in head.items() if r["outcome"] == "caught" and base.get(i, {}).get("outcome") == "survived"]
+    stale = [i for i, r in head.items() if r["outcome"] == "not_applied"]
+    lines = [
+        "",
+        "### Test set strength (shown, not gated)",
+        "",
+        "Small breaks of `plays/rules.ts` from `ci/mutations.json`, run on the base and head test sets. "
+        "Caught means this gate would block that break.",
+        "",
+        "| test set | discovery | holdout | all |",
+        "| --- | --- | --- | --- |",
+    ]
+    for label, doc in (("base", base_doc), ("head", head_doc)):
+        summary = doc["summary"]
+        cells = [f"{summary[k]['caught']} / {summary[k]['applied']}" for k in ("discovery", "holdout", "all")]
+        lines.append(f"| {label} | " + " | ".join(cells) + " |")
+    lines.append("")
+    if lost:
+        lines.append("**Warning: this test set change stops catching:** " + _named(lost, head))
+    else:
+        lines.append("No rule break that base caught gets through on head.")
+    if gained:
+        lines.append("Newly caught: " + _named(gained, head))
+    if stale:
+        lines.append("Not applied, this pull request changed the line they edit: " + ", ".join(stale))
+    lines.append("")
+    return "\n".join(lines)
+
+
+def _named(ids, results):
+    return ", ".join(f"{i} ({results[i]['why']})" for i in sorted(ids))
+
+
 def main(argv=None):
     args = parse_args(argv)
+    if args.section:
+        base_path, head_path = args.section
+        try:
+            base_doc = json.loads(Path(base_path).read_text(encoding="utf-8"))
+            head_doc = json.loads(Path(head_path).read_text(encoding="utf-8"))
+            text = strength_section(base_doc, head_doc)
+        except (OSError, ValueError, KeyError) as exc:
+            print(f"could not build the test set strength section: {exc}")
+            return 1
+        if args.comment:
+            with open(args.comment, "a", encoding="utf-8", newline="\n") as handle:
+                handle.write(text)
+        print(text, end="")
+        return 0
     try:
         rules_file, mutations = load_mutations(args.mutations)
         if args.split != "all":
@@ -189,7 +247,7 @@ def main(argv=None):
     print(markdown, end="")
 
     stale = [r["id"] for r in results if r["outcome"] == "not_applied"]
-    if stale:
+    if stale and not args.allow_stale:
         print(f"not applied (find text missing or not unique): {', '.join(stale)}")
         return 1
     return 0
@@ -203,6 +261,18 @@ def parse_args(argv=None):
     parser.add_argument("--thresholds", default=str(DEFAULT_THRESHOLDS))
     parser.add_argument("--split", choices=("discovery", "holdout", "all"), default="all")
     parser.add_argument("--out", default=str(DEFAULT_OUT), help="path without extension")
+    parser.add_argument(
+        "--allow-stale",
+        action="store_true",
+        help="exit 0 when a mutation does not apply (CI: the pull request may change those lines)",
+    )
+    parser.add_argument(
+        "--section",
+        nargs=2,
+        metavar=("BASE_JSON", "HEAD_JSON"),
+        help="print the pull request comment section for two mutation result files",
+    )
+    parser.add_argument("--comment", help="with --section: append the section to this file")
     return parser.parse_args(argv)
 
 

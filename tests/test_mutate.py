@@ -55,3 +55,29 @@ def test_summarize_counts_per_split_and_skips_not_applied():
     assert summary["discovery"] == {"caught": 1, "applied": 2, "not_applied": 0, "survivors": ["m2"]}
     assert summary["holdout"] == {"caught": 1, "applied": 1, "not_applied": 1, "survivors": []}
     assert summary["all"]["caught"] == 2
+
+
+def _doc(outcomes):
+    results = [{"id": i, "split": "discovery", "why": f"why {i}", "outcome": o} for i, o in outcomes.items()]
+    return {"summary": summarize(results), "results": results}
+
+
+def test_section_warns_when_head_test_set_lets_a_break_through():
+    from scorer.mutate import strength_section
+
+    base = _doc({"m1": "caught", "m2": "caught", "m3": "survived"})
+    head = _doc({"m1": "caught", "m2": "survived", "m3": "caught"})
+    text = strength_section(base, head)
+    assert "| base | 2 / 3 | 0 / 0 | 2 / 3 |" in text
+    assert "**Warning: this test set change stops catching:** m2 (why m2)" in text
+    assert "Newly caught: m3 (why m3)" in text
+
+
+def test_section_lists_stale_mutations_and_no_warning_when_equal():
+    from scorer.mutate import strength_section
+
+    base = _doc({"m1": "caught", "m2": "not_applied"})
+    head = _doc({"m1": "caught", "m2": "not_applied"})
+    text = strength_section(base, head)
+    assert "No rule break that base caught gets through on head." in text
+    assert "Not applied, this pull request changed the line they edit: m2" in text
