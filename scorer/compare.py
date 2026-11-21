@@ -27,6 +27,13 @@ GATE_KEYS = (
     "pass_to_fail_max",
 )
 
+# Optional cost rule. A change that sends more rows to the paid LeadMagic
+# lookup spends more credits even when every alert is still right, for
+# example a free-mail domain dropped from the list: the row is still
+# rejected, just after a paid call. Gated only when the thresholds file
+# names it and both sides have a number.
+LOOKUP_KEY = "paid_lookups_max_increase"
+
 # The counts score.py publishes, in that order. credits_spent is
 # attached after the counts. The trap map becomes one row per name.
 METRICS = (
@@ -79,6 +86,14 @@ def compare(base, head, thresholds):
         broken.append("trap")
     if len(flips) > limits["pass_to_fail_max"]:
         broken.append("pass_to_fail")
+    lookup_limit = limits.get(LOOKUP_KEY)
+    base_lookups = base_score.get("paid_lookups")
+    head_lookups = head_score.get("paid_lookups")
+    new_lookups = []
+    if lookup_limit is not None and _is_number(base_lookups) and _is_number(head_lookups):
+        new_lookups = _new_ids(base_score, head_score, "paid_lookup_case_ids")
+        if head_lookups - base_lookups > lookup_limit:
+            broken.append("paid_lookups")
 
     verdict = _verdict(base_score, head_score, broken, broken_traps, flips)
     comment = _comment(
@@ -88,6 +103,7 @@ def compare(base, head, thresholds):
         new_missed,
         traps_up,
         flips,
+        new_lookups,
     )
     return {
         "exit_code": 1 if broken else 0,
@@ -100,6 +116,7 @@ def compare(base, head, thresholds):
             for name, base_count, head_count in traps_up
         ],
         "pass_to_fail": flips,
+        "new_paid_lookup_case_ids": new_lookups,
     }
 
 
@@ -179,11 +196,16 @@ def _verdict(base, head, broken, broken_traps, flips):
             for name, base_count, head_count in broken_traps
         ]
         return "Blocked: false alerts for " + ", ".join(parts)
-    noun = "case" if len(flips) == 1 else "cases"
-    return f"Blocked: {len(flips)} {noun} flipped from pass to fail"
+    if first == "pass_to_fail":
+        noun = "case" if len(flips) == 1 else "cases"
+        return f"Blocked: {len(flips)} {noun} flipped from pass to fail"
+    return (
+        "Blocked: paid company lookups went "
+        f"{_show(base['paid_lookups'])} -> {_show(head['paid_lookups'])}"
+    )
 
 
-def _comment(verdict, rows, new_false, new_missed, traps_up, flips):
+def _comment(verdict, rows, new_false, new_missed, traps_up, flips, new_lookups=()):
     lines = [
         "<!-- gtm-ci -->",
         verdict,
@@ -198,6 +220,8 @@ def _comment(verdict, rows, new_false, new_missed, traps_up, flips):
     lines.append(_id_line("New missed alerts", new_missed))
     lines.append(_trap_line(traps_up))
     lines.append(_id_line("Flipped from pass to fail", flips))
+    if new_lookups:
+        lines.append(_id_line("New paid company lookups", list(new_lookups)))
     lines.append("")
     return "\n".join(lines)
 
@@ -209,6 +233,15 @@ def _table_rows(base, head):
         head_value = _metric(head, key)
         rows.append(
             (label, _show(base_value), _show(head_value), _change(base_value, head_value))
+        )
+    if "paid_lookups" in base and "paid_lookups" in head:
+        rows.append(
+            (
+                "paid company lookups",
+                _show(base["paid_lookups"]),
+                _show(head["paid_lookups"]),
+                _change(base["paid_lookups"], head["paid_lookups"]),
+            )
         )
     for name in _trap_names(base, head):
         base_count = _trap_map(base).get(name, 0)
@@ -282,6 +315,8 @@ def _limits(thresholds):
     limits = {}
     for key in GATE_KEYS:
         limits[key] = _threshold_number(thresholds, key)
+    if LOOKUP_KEY in thresholds:
+        limits[LOOKUP_KEY] = _threshold_number(thresholds, LOOKUP_KEY)
     return limits
 
 

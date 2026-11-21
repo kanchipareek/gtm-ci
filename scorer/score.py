@@ -68,7 +68,25 @@ def score(rows, fixtures, credits_spent):
         "extra_case_ids": extra_ids,
     }
     result["by_split"] = published
+    result["paid_lookups"], result["paid_lookup_case_ids"] = _paid_lookups(pairs)
     return result
+
+
+def _paid_lookups(pairs):
+    """Count joined rows that would pay for the company lookup.
+
+    The offline runner marks would_lookup with the Play's own two-call
+    flow. A live row has no such field, and an older runner did not write
+    it, so the count is "unknown" then, never 0 by guess.
+    """
+    ids = []
+    for item, row in pairs:
+        flag = row.get("would_lookup")
+        if not isinstance(flag, bool):
+            return "unknown", []
+        if flag:
+            ids.append(item["case_id"])
+    return len(ids), sorted(ids)
 
 
 def _count_pair(item, row, by_split, cases):
