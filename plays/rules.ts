@@ -1,7 +1,7 @@
 // The Play and scripts/offline_run.ts both import this file.
 // It does not import Deepline, so the offline gate can load it with tsx and spend nothing.
 
-export const MIN_EMPLOYEES = 50;
+export const MIN_EMPLOYEES = 1;
 export const MAX_EMPLOYEES = 5000;
 export const ALLOWED_COUNTRIES = ["US", "CA", "GB"];
 // Days from start_date to event_date. 120 is still fresh. 121 is stale.
