@@ -1,0 +1,455 @@
+{
+  "fixtures": "fixtures/events.jsonl",
+  "summary": {
+    "discovery": {
+      "caught": 18,
+      "applied": 25,
+      "not_applied": 0,
+      "survivors": [
+        "m04",
+        "m07",
+        "m13",
+        "m14",
+        "m15",
+        "m21",
+        "m22"
+      ]
+    },
+    "holdout": {
+      "caught": 0,
+      "applied": 0,
+      "not_applied": 0,
+      "survivors": []
+    },
+    "all": {
+      "caught": 18,
+      "applied": 25,
+      "not_applied": 0,
+      "survivors": [
+        "m04",
+        "m07",
+        "m13",
+        "m14",
+        "m15",
+        "m21",
+        "m22"
+      ]
+    }
+  },
+  "results": [
+    {
+      "id": "m01",
+      "split": "discovery",
+      "why": "min employees loosened to 1",
+      "outcome": "caught",
+      "changed_cases": {
+        "e13": [
+          "no alert (company_too_small)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e13",
+        "pass to fail: e13"
+      ]
+    },
+    {
+      "id": "m02",
+      "split": "discovery",
+      "why": "min employees off by one, looser",
+      "outcome": "caught",
+      "changed_cases": {
+        "e13": [
+          "no alert (company_too_small)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e13",
+        "pass to fail: e13"
+      ]
+    },
+    {
+      "id": "m03",
+      "split": "discovery",
+      "why": "min employees off by one, stricter",
+      "outcome": "caught",
+      "changed_cases": {
+        "e03": [
+          "alert (icp_fit)",
+          "no alert (company_too_small)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e03",
+        "pass to fail: e03"
+      ]
+    },
+    {
+      "id": "m04",
+      "split": "discovery",
+      "why": "max employees off by one, looser",
+      "outcome": "survived",
+      "changed_cases": {},
+      "reasons": []
+    },
+    {
+      "id": "m05",
+      "split": "discovery",
+      "why": "max employees off by one, stricter",
+      "outcome": "caught",
+      "changed_cases": {
+        "e04": [
+          "alert (icp_fit)",
+          "no alert (company_too_big)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e04",
+        "pass to fail: e04"
+      ]
+    },
+    {
+      "id": "m06",
+      "split": "discovery",
+      "why": "max employees removed in practice",
+      "outcome": "caught",
+      "changed_cases": {
+        "e14": [
+          "no alert (company_too_big)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e14",
+        "pass to fail: e14"
+      ]
+    },
+    {
+      "id": "m07",
+      "split": "discovery",
+      "why": "India added to allowed countries",
+      "outcome": "survived",
+      "changed_cases": {},
+      "reasons": []
+    },
+    {
+      "id": "m08",
+      "split": "discovery",
+      "why": "Germany added to allowed countries",
+      "outcome": "caught",
+      "changed_cases": {
+        "e15": [
+          "no alert (wrong_country)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e15",
+        "pass to fail: e15"
+      ]
+    },
+    {
+      "id": "m09",
+      "split": "discovery",
+      "why": "GB dropped from allowed countries",
+      "outcome": "caught",
+      "changed_cases": {
+        "e04": [
+          "alert (icp_fit)",
+          "no alert (wrong_country)"
+        ],
+        "e07": [
+          "alert (icp_fit)",
+          "no alert (wrong_country)"
+        ],
+        "e30": [
+          "alert (icp_fit)",
+          "no alert (wrong_country)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e04, e07, e30",
+        "pass to fail: e04, e07, e30"
+      ]
+    },
+    {
+      "id": "m10",
+      "split": "discovery",
+      "why": "event age off by one, looser",
+      "outcome": "caught",
+      "changed_cases": {
+        "e28": [
+          "no alert (stale_event)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e28",
+        "pass to fail: e28"
+      ]
+    },
+    {
+      "id": "m11",
+      "split": "discovery",
+      "why": "event age off by one, stricter",
+      "outcome": "caught",
+      "changed_cases": {
+        "e08": [
+          "alert (icp_fit)",
+          "no alert (stale_event)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e08",
+        "pass to fail: e08"
+      ]
+    },
+    {
+      "id": "m12",
+      "split": "discovery",
+      "why": "event age window a year",
+      "outcome": "caught",
+      "changed_cases": {
+        "e27": [
+          "no alert (stale_event)",
+          "alert (icp_fit)"
+        ],
+        "e28": [
+          "no alert (stale_event)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e27, e28",
+        "pass to fail: e27, e28"
+      ]
+    },
+    {
+      "id": "m13",
+      "split": "discovery",
+      "why": "intern dropped from junior words",
+      "outcome": "survived",
+      "changed_cases": {
+        "e21": [
+          "no alert (junior_title)",
+          "no alert (ambiguous_title)"
+        ]
+      },
+      "reasons": []
+    },
+    {
+      "id": "m14",
+      "split": "discovery",
+      "why": "trainee dropped from junior words",
+      "outcome": "survived",
+      "changed_cases": {},
+      "reasons": []
+    },
+    {
+      "id": "m15",
+      "split": "discovery",
+      "why": "apprentice dropped from junior words",
+      "outcome": "survived",
+      "changed_cases": {},
+      "reasons": []
+    },
+    {
+      "id": "m16",
+      "split": "discovery",
+      "why": "director dropped from senior words",
+      "outcome": "caught",
+      "changed_cases": {
+        "e03": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e06": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e09": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e16": [
+          "no alert (wrong_country)",
+          "no alert (ambiguous_title)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e03, e06, e09",
+        "pass to fail: e03, e06, e09"
+      ]
+    },
+    {
+      "id": "m17",
+      "split": "discovery",
+      "why": "chief dropped from senior words",
+      "outcome": "caught",
+      "changed_cases": {
+        "e05": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e05",
+        "pass to fail: e05"
+      ]
+    },
+    {
+      "id": "m18",
+      "split": "discovery",
+      "why": "vp dropped from senior words",
+      "outcome": "caught",
+      "changed_cases": {
+        "e01": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e04": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e08": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e11": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e12": [
+          "no alert (duplicate_person)",
+          "no alert (ambiguous_title)"
+        ],
+        "e13": [
+          "no alert (company_too_small)",
+          "no alert (ambiguous_title)"
+        ],
+        "e14": [
+          "no alert (company_too_big)",
+          "no alert (ambiguous_title)"
+        ],
+        "e17": [
+          "no alert (company_not_found)",
+          "no alert (ambiguous_title)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e01, e04, e08, e11",
+        "pass to fail: e01, e04, e08, e11"
+      ]
+    },
+    {
+      "id": "m19",
+      "split": "discovery",
+      "why": "marketing dropped from function words",
+      "outcome": "caught",
+      "changed_cases": {
+        "e04": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e10": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ],
+        "e16": [
+          "no alert (wrong_country)",
+          "no alert (ambiguous_title)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e04, e10",
+        "pass to fail: e04, e10"
+      ]
+    },
+    {
+      "id": "m20",
+      "split": "discovery",
+      "why": "revenue dropped from function words",
+      "outcome": "caught",
+      "changed_cases": {
+        "e05": [
+          "alert (icp_fit)",
+          "no alert (ambiguous_title)"
+        ]
+      },
+      "reasons": [
+        "missed alert: e05",
+        "pass to fail: e05"
+      ]
+    },
+    {
+      "id": "m21",
+      "split": "discovery",
+      "why": "gmail dropped from free-mail domains",
+      "outcome": "survived",
+      "changed_cases": {
+        "e24": [
+          "no alert (missing_domain)",
+          "no alert (company_not_found)"
+        ]
+      },
+      "reasons": []
+    },
+    {
+      "id": "m22",
+      "split": "discovery",
+      "why": "proton.me dropped from free-mail domains",
+      "outcome": "survived",
+      "changed_cases": {},
+      "reasons": []
+    },
+    {
+      "id": "m23",
+      "split": "discovery",
+      "why": "seniority word alone counts as senior",
+      "outcome": "caught",
+      "changed_cases": {
+        "e20": [
+          "no alert (ambiguous_title)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e20",
+        "pass to fail: e20"
+      ]
+    },
+    {
+      "id": "m24",
+      "split": "discovery",
+      "why": "duplicate check never remembers anyone",
+      "outcome": "caught",
+      "changed_cases": {
+        "e12": [
+          "no alert (duplicate_person)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e12",
+        "pass to fail: e12"
+      ]
+    },
+    {
+      "id": "m25",
+      "split": "discovery",
+      "why": "champion check skipped",
+      "outcome": "caught",
+      "changed_cases": {
+        "e29": [
+          "no alert (not_champion)",
+          "alert (icp_fit)"
+        ]
+      },
+      "reasons": [
+        "false alert: e29",
+        "pass to fail: e29"
+      ]
+    }
+  ]
+}
