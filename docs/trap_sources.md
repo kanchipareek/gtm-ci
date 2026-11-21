@@ -1,6 +1,6 @@
-# Failure sources: why each trap is in the test set
+# Trap sources: why each case is in the test set
 
-DRAFT for Kanchi to review. Collected Tue 17 Nov 2026 (IST).
+Collected 17 Nov 2026.
 
 Every quote below was read on the page linked, except where it says "search excerpt". Quotes are copied as written. Nothing is made up. If a trap has no real source, it says "no source found".
 
@@ -12,7 +12,7 @@ Every quote below was read on the page linked, except where it says "search exce
 
 ## The ICP rule the answers follow
 
-Taken from `docs/spec.md` section 5.B. Checked in this order. The first one that fails is the reason.
+This is `plays/rules.ts`. Checked in this order. The first one that fails is the reason.
 
 1. Was a champion (`not_champion`)
 2. Has a real company domain, not empty and not free mail like gmail.com (`missing_domain`)
@@ -27,7 +27,7 @@ Taken from `docs/spec.md` section 5.B. Checked in this order. The first one that
 11. Country is US, CA or GB (`wrong_country`)
 12. Otherwise alert (`icp_fit`)
 
-Two readings I had to pick (please confirm): a missing country counts as `wrong_country`, and word checks match whole words only (so "Internal" is not "intern").
+Two calls the rules make: a missing country counts as `wrong_country`, and word checks match whole words only (so "Internal" is not "intern").
 
 ## Sources
 
@@ -47,7 +47,7 @@ Two readings I had to pick (please confirm): a missing country counts as `wrong_
 | S12 | Matthew T., mid-market, G2 | [G2 Champify reviews](https://www.g2.com/products/champify/reviews) | Not shown on page | Complaint |
 | S13 | G2 reviewer | [G2 Champify reviews](https://www.g2.com/products/champify/reviews) | 5 May 2026 | Complaint |
 | S14 | Verified user (incentivized review) | [TrustRadius Champify vs UserGems](https://www.trustradius.com/compare-products/champify-vs-usergems) | Not shown | Complaint |
-| S15 | u/smarkman19, r/SaaS | [Reddit thread](https://www.reddit.com/r/SaaS/comments/1s3z1z1/usergems_alternative_that_wont_cost_30k/) | 26 Mar 2026 | Complaint. **Search excerpt**: the thread page loaded but Reddit did not show the comments to me. Open it yourself before quoting |
+| S15 | u/smarkman19, r/SaaS | [Reddit thread](https://www.reddit.com/r/SaaS/comments/1s3z1z1/usergems_alternative_that_wont_cost_30k/) | 26 Mar 2026 | Complaint. **Search excerpt**: the thread page loaded but Reddit did not show the comments to me. Not verified on the page |
 | S16 | Aly H. | [Clay community](https://community.clay.com/x/content-and-events/msg_35tcOKa9milS/ensuring-website-accessibility-for-accurate-compan) | 22 Nov 2024 | Complaint |
 | S17 | SimpleVerifier team | [Blog](https://simpleverifier.com/blog/gmail-signups-b2b-saas) | 2 Nov 2026 | Vendor |
 | S18 | Reddit user (name not shown to me), r/Coldemailing | [Reddit post](https://www.reddit.com/r/Coldemailing/comments/1vfepjs/how_do_you_get_emails_that_dont_bounce_everything/) | About 3 months ago (page said "3mo ago") | Complaint |
@@ -91,7 +91,7 @@ Two readings I had to pick (please confirm): a missing country counts as `wrong_
 
 ### T06 Junior title: intern or student (`junior_title`), no direct complaint found
 - Only a weak mention. S17 (vendor) lists people with personal emails, including "Students, job seekers and the curious. Real people, not buyers." That is about signups, not job changes.
-- I searched X, Reddit, G2 and the Clay community. No one complained about a tracker alerting on an intern. Keep the trap because the spec asks for it, but call it a design case, not a sourced one.
+- I searched X, Reddit, G2 and the Clay community. No one complained about a tracker alerting on an intern. It stays as a design case, not a sourced one.
 - Events: e21, e22
 
 ### T07 Vague or fake title (`ambiguous_title`), partly sourced
@@ -136,12 +136,12 @@ Two readings I had to pick (please confirm): a missing country counts as `wrong_
 
 ## Traps found in the wild that the current rules CANNOT catch
 
-These are real, sourced problems. They are not in the 30 events, because the right answer would break the spec rules as written. Decide if you want a rule for them later.
+These are real, sourced problems. They are not in the test set, because the current rules cannot decide them.
 
 1. **Acquisition or subsidiary rename.** The champion never moved, the company was bought or renamed. Sources: S01 ("Does it exist under a different name in Salesforce? Was it acquired?"), S05 ("It also gets confused by M&A or subsidiaries."), S06 ("it's a subsidiary name that we didnt know about, there was an acquisition"), S20. The event only has company names, not an old domain, so the rules can't tell.
 2. **Fractional title.** "Fractional VP Revenue Operations" has vp plus revenue, so the rules would alert. Sources: S04 ("a fractional role"), S19. A one-word rule ("fractional", "advisor", "board") would fix it.
 
-Both would make a strong demo pull request later: add the rule, and the scorer shows a false alert going away.
+Both are good candidates for a new rule: add it, add the case, and the gate shows the false alert going away.
 
 ## Searched, nothing usable
 

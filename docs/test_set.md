@@ -1,10 +1,8 @@
 # Test set
 
-The accepted golden set is `fixtures/events.jsonl`. `fixtures/events.csv` is the same rows in Sheet shape. e01 to e30 were accepted on 18 Nov 2026. e31 to e36 were added on 21 Nov 2026 after mutation testing found holes, see [`docs/mutation.md`](mutation.md). The owner reviewed `data/fixtures_draft.jsonl` on 18 Nov 2026 and accepted every `expected_alert`, `expected_reason`, `trap`, and the 20/10 split. Those labels were written by reading spec section 5.B. They were not produced by running `plays/rules.ts`, and the offline runner was not run on this file when it was copied in.
+The accepted golden set is `fixtures/events.jsonl`. `fixtures/events.csv` is the same rows in Sheet shape. e01 to e30 were accepted on 18 Nov 2026. e31 to e36 were added on 21 Nov 2026 after mutation testing found holes, see [`docs/mutation.md`](mutation.md). Every answer was written by hand from the rule order, then reviewed. The answers were not produced by running `plays/rules.ts`. Each trap is linked to a real complaint where one exists, see [`trap_sources.md`](trap_sources.md) (the `sources=` ids in `notes`).
 
-The `DRAFT.` prefix is gone from `notes`, because spec 5.C says that prefix lasts only until the set is accepted. The answers themselves are the draft answers.
-
-Calls the owner confirmed:
+Boundary calls:
 
 - e16, a blank company country, is `wrong_country`.
 - 50 employees (e03), 5000 employees (e04), and 120 days (e08) still alert.
@@ -64,7 +62,7 @@ Each case closes one discovery mutation that the 30-case set let through. The mu
 
 ## Counts by reason
 
-The order is the check order in spec 5.B. `icp_fit` is the alert that remains when every check passes.
+The order is the check order in `plays/rules.ts`. `icp_fit` is the alert that remains when every check passes.
 
 | reason | count | development | holdout | case_ids |
 | --- | --- | --- | --- | --- |

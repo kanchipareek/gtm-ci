@@ -15,7 +15,7 @@ export const config = {
 // Written out in this file on purpose. plays check builds the input schema from
 // this annotation, and an imported type was dropped, so case_id and the rest
 // never became allowed fields. The shape matches JobChangeEvent.
-// Spec 5.A also copies the golden mock email on as email and email_status.
+// The scorer also copies the golden mock email on as email and email_status.
 // mock_email is that same copy when the caller used that name instead.
 type PlayEvent = {
   case_id: string;
@@ -141,11 +141,10 @@ async function lookupCompany(domain: string): Promise<CompanySnapshot | null> {
 }
 
 export default async function (input: PlayInput) {
-  // Live mode would send a person to an email tool. That is task 4.5, and it is
-  // cut. Throw before any lookup so this request spends nothing.
-  // Synthetic people never reach an email tool.
+  // Live email is not enabled. Throw before any lookup so this request
+  // spends nothing. Synthetic people never reach an email tool.
   if (input.email_mode !== 'mock') {
-    throw new Error('live email is only allowed in task 4.5');
+    throw new Error('live email is not enabled; use email_mode "mock"');
   }
 
   const seenPersonIds = new Set<string>();

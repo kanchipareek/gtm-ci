@@ -1,6 +1,6 @@
 """Hand checks for the offline rules runner.
 
-The three results below are written out from spec 5.B. This test does not
+The three results below are written out from the rule order in rules.ts. This test does not
 read expected_*, grading_notes, notes, trap, or split from the fixture.
 """
 

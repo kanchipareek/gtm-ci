@@ -1,6 +1,7 @@
 """Load and check golden fixture rows.
 
-Column names come from spec 5.C. Reason strings come from spec 5.B.
+Column names follow Deepline's golden-dataset columns. Reason strings are
+the ones plays/rules.ts returns.
 This module is the one Python copy of those reason strings. Later scoring
 code should import REASONS from here, not type the list again.
 """
@@ -9,7 +10,7 @@ import csv
 import json
 from pathlib import Path
 
-# The first failing check in spec 5.B, then icp_fit when every check passes.
+# The first failing check in plays/rules.ts, then icp_fit when every check passes.
 # One tuple so the validator and the scorer cannot drift apart.
 REASONS = (
     "not_champion",
@@ -59,7 +60,7 @@ INPUT_FIELDS = (
     "input_mock_email_status",
 )
 
-# Spec 5.C: no company snapshot, or no email found.
+# No company snapshot, or no email found.
 NULLABLE_INPUTS = (
     "input_company_employees",
     "input_company_country",
@@ -429,7 +430,7 @@ def _require_expected(row):
     reason = row["expected_reason"]
     if reason not in REASONS:
         raise ValueError(
-            "expected_reason must be one of the reason strings in spec 5.B, "
+            "expected_reason must be one of the reason strings in rules.ts, "
             f"got {reason!r}"
         )
 

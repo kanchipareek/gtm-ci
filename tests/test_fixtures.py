@@ -1,6 +1,6 @@
 """Checks for the golden-row loader.
 
-Rows here are small and inline. They use the spec 5.C column names.
+Rows here are small and inline. They use the golden-dataset column names.
 A good row passes. Each kind of bad row raises ValueError.
 """
 
@@ -77,7 +77,7 @@ def test_good_row_passes():
 
 
 def test_null_company_and_email_pass():
-    # Spec 5.C: no snapshot, and no email when the status is not_found.
+    # No snapshot, and no email when the status is not_found.
     # An empty domain is the missing-domain case. It is present, not null.
     row = good_row(
         input_new_domain="",
@@ -134,7 +134,7 @@ def test_expected_alert_must_be_bool():
 
 
 def test_bad_reason_fails():
-    with pytest.raises(ValueError, match="spec 5.B"):
+    with pytest.raises(ValueError, match="rules.ts"):
         validate_fixture(good_row(expected_reason="looks_good"))
 
 
@@ -250,7 +250,7 @@ def test_runner_path_still_validates_labels(tmp_path):
     # Dropping the answer key happens after the check, so a bad label still fails.
     path = tmp_path / "events.jsonl"
     write_jsonl(path, [good_row(expected_reason="looks_good")])
-    with pytest.raises(ValueError, match="spec 5.B"):
+    with pytest.raises(ValueError, match="rules.ts"):
         load_fixtures(path, for_runner=True)
 
 
