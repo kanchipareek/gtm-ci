@@ -126,6 +126,17 @@ jobs:
         working-directory: head
         run: python -m scorer.compare results/base.json results/head.json --out results/comment.md
 
+      # The compare verdict only judges the scores. Put the guard's line
+      # at the top of the comment too, so a red guard never sits next to
+      # "Passed" with no reason given. Exits 0. The guard step above
+      # already set the job result.
+      - name: Add the guard line to the comment
+        if: ${{ (success() || failure()) && hashFiles('head/results/comment.md') != '' }}
+        working-directory: head
+        env:
+          PR_LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: python -m scorer.guard ../base . --labels "$PR_LABELS" --comment results/comment.md
+
       # Test the test set. The head rules are broken on purpose, one edit
       # at a time from ci/mutations.json, and scored on the base test set
       # and on the head test set. Only the fixtures differ, so a lower head
