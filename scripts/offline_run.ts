@@ -10,7 +10,7 @@ import type { CompanySnapshot, EmailSnapshot, JobChangeEvent } from "../plays/ru
 // let this file copy the label instead of deciding. The scorer joins on case_id later.
 //
 // The second argument is the plays folder whose rules.ts to import.
-// Day 3 scores base/plays and head/plays with this same script. Without the
+// The gate scores base/plays and head/plays with this same script. Without the
 // folder, both sides would load whichever rules.ts sits next to the script,
 // and the diff would always be empty. When the argument is omitted, that
 // nearby folder is used, so the older one-argument command still works.

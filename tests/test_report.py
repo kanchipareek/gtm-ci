@@ -308,8 +308,8 @@ def test_live_without_a_cap_does_not_call_deepline(monkeypatch, capsys):
 
 def test_results_folder_is_ignored_except_the_readme():
     readme = (ROOT / "results" / "README.md").read_text(encoding="utf-8")
-    assert "4.3" in readme
-    assert "5.1" in readme
+    assert "live_<date>" in readme
+    assert "demo_comment.md" in readme
 
     ignored = subprocess.run(
         ["git", "check-ignore", "-q", "results/head.json"],

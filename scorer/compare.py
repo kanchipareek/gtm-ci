@@ -5,7 +5,7 @@ not have to reach a fixed score. It fails when it gets worse than base
 by more than ci/thresholds.json allows.
 
 The counts are the full set. score.py puts that on the top level, and
-spec 5.D says the gate reads the full set, not one split.
+the gate reads the full set, not one split.
 """
 
 import argparse
@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_THRESHOLDS = ROOT / "ci" / "thresholds.json"
 
-# Spec 5.D. live_max_credits is in the same file for the live job.
+# live_max_credits is in the same file for the live job.
 # This gate does not read it. A credit cap is not an alert rule.
 GATE_KEYS = (
     "false_alerts_max_increase",
@@ -51,7 +51,7 @@ METRICS = (
 def compare(base, head, thresholds):
     """Return the comment and the exit code for these two scores.
 
-    exit_code is 1 when a spec 5.D rule is broken, and 0 otherwise.
+    exit_code is 1 when a gate rule is broken, and 0 otherwise.
     The comment starts with the hidden marker the CI job uses to find
     the one pull request comment.
 
@@ -171,7 +171,7 @@ def parse_args(argv=None):
 
 
 def _verdict(base, head, broken, broken_traps, flips):
-    """One line. The first broken rule in spec order supplies the sentence.
+    """One line. The first broken rule, in gate order, supplies the sentence.
 
     The lines under the table still name every case and every trap.
     """

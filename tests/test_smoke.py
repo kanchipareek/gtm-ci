@@ -1,4 +1,4 @@
-"""Smoke tests for the starter kit.
+"""Smoke tests for the repo setup.
 
 They check the setup, not any project logic. They make no network calls
 and no Deepline calls.
@@ -14,10 +14,10 @@ def test_python_is_3_11_or_newer():
     assert sys.version_info >= (3, 11)
 
 
-def test_spec_and_tasks_exist():
-    assert (ROOT / "docs" / "spec.md").is_file()
-    assert (ROOT / "TASKS.md").is_file()
-    assert (ROOT / ".cursor" / "rules" / "project.mdc").is_file()
+def test_gate_files_exist():
+    assert (ROOT / "plays" / "rules.ts").is_file()
+    assert (ROOT / "ci" / "thresholds.json").is_file()
+    assert (ROOT / "ci" / "mutations.json").is_file()
 
 
 def test_secret_files_are_gitignored():

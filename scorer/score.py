@@ -225,7 +225,7 @@ def _reasons_match(expected, actual):
     if not isinstance(actual, str):
         return False
     label = actual.strip()
-    # REASONS is the spec 5.B list. An unknown label is not a match.
+    # REASONS is the rules.ts reason list. An unknown label is not a match.
     if label not in REASONS:
         return False
     return label == expected
@@ -269,7 +269,7 @@ def _expected_reason(item, case_id):
     if reason not in REASONS:
         raise ValueError(
             f"case_id {case_id!r} expected_reason must be one of the "
-            f"reason strings in spec 5.B, got {reason!r}"
+            f"reason strings in rules.ts, got {reason!r}"
         )
     return reason
 

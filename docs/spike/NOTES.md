@@ -2,7 +2,7 @@
 
 Written from the JSON files in this folder. The workspace display name in `command_context.active_organization.org_name` was replaced with `removed` before commit. Run ids are unchanged.
 
-The installed CLI was `deepline` 0.3.537 (`deepline --version`). Spec section 3 was checked against 0.3.535.
+The installed CLI was `deepline` 0.3.537 (`deepline --version`). CI pins 0.3.535.
 
 ## Where the run id is
 
@@ -48,7 +48,7 @@ From `docs/spike/billing_usage.json`, `run.spent_credits` is 0, `run.rough_usd_s
 
 `diagnostics.billing` inside the run overview says `totalCredits` 0 and `computeEvents` 0. That event count does not match the one billing event above. The spend line uses `billing usage` `run.spent_credits`.
 
-## Q1
+## Output paths
 
 `deepline plays run --json --full` wrote one JSON object. `kind` is `run_overview` and `schemaVersion` is 1.
 
@@ -56,9 +56,9 @@ From `docs/spike/billing_usage.json`, `run.spent_credits` is 0, `run.rough_usd_s
 - Status: `run.status`
 - Returned object: `result`
 
-The CLI help text does not name `result`. `--full` includes it. Spec Q1 should record these three paths. It should not treat `steps[0].status` or the notice text as the run status, and it should not treat `diagnostics.result` as the returned object.
+The CLI help text does not name `result`. `--full` includes it. Use these three paths. Do not treat `steps[0].status` or the notice text as the run status, and do not treat `diagnostics.result` as the returned object.
 
-## Q2
+## Running on Windows
 
 `deepline plays check`, `deepline plays run --dry-run`, and the real `deepline plays run` all finished in Windows PowerShell with exit code 0.
 
@@ -66,15 +66,14 @@ The CLI help text does not name `result`. `--full` includes it. Spec Q1 should r
 
 PowerShell `>` on this laptop writes UTF-16 LE. `docs/spike/run_output.json` started with the bytes `FF FE`. Fix: read that file as Unicode and write it back as UTF-8 with no byte-order mark. The later `runs get` and `billing usage` files were written the same way, with .NET `UTF8Encoding` and no mark, instead of `>`.
 
-This task did not reinstall the CLI, so it does not answer whether a fresh install needs `--allow-scripts=esbuild`.
+This run did not reinstall the CLI, so it does not answer whether a fresh install needs `--allow-scripts=esbuild`.
 
-## What the spec should change
+## Differences from the CLI docs
 
-- F5 says `plays check --json` includes `outputSchema`. On 0.3.537 that key was absent. The payload had `valid`, `inputSchema`, and `recognized.outputs` (`ok` and `echo`, with no nested fields). The help text still lists `outputSchema`.
-- Q1 should record `run.id`, `run.status`, and `result`, from the files above.
-- The spec's checked CLI version is 0.3.535. This run used 0.3.537.
+- The help text says `plays check --json` includes `outputSchema`. On 0.3.537 that key was absent. The payload had `valid`, `inputSchema`, and `recognized.outputs` (`ok` and `echo`, with no nested fields). The help text still lists `outputSchema`.
+- CI pins 0.3.535. This run used 0.3.537.
 
-## Task 1.5 — champion-tracker on two companies
+## champion-tracker on two companies
 
 Written from `docs/spike/play_run_output.json`, `docs/spike/play_billing_usage.json`, and `docs/spike/play_receipts.json`. The workspace display name in `command_context.active_organization.org_name` was replaced with `removed` before commit. Run ids are unchanged.
 

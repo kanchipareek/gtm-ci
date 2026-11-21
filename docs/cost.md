@@ -49,7 +49,7 @@ Credits per company is the whole-run bill divided by the 5 companies in `fixture
 
 Drift is 4 fields. The scorer compared `result.rows` with the saved snapshots: c03 employees, c04 employees, c04 country, c05 employees. c01 and c02 match. c04 came back with a null employee count and a null country, so both fields differ.
 
-Compute time is not shown. The compute line on this run is `charge_state` `free`, credits 0, and `provider_units` 6. That line has no duration field. Question Q8 asked about a 30-event run. This recorded run is the 5-company run kept by the 17 Nov budget cut.
+Compute time is not shown. The compute line on this run is `charge_state` `free`, credits 0, and `provider_units` 6. That line has no duration field. This recorded run is the 5-company live set.
 
 This run id is already in `docs/spend.md` (cache test run 2, 0 credits). It is not entered again. A second line would count one run twice.
 
@@ -57,4 +57,4 @@ The spend lines add up to 0.6 credits. The account started with 25 free credits.
 
 Rough sum, not a quote: 1,000 contacts at this run's 0 credits per company is 0 credits. That repeats this bill. Four lookups were cache hits, and the live Figma call is 0 credits on the bill. It is not the price of 1,000 fresh lookups.
 
-A second rough sum, not a quote, uses the described price in `docs/tools.md`: 0.15 credits per result. 1,000 × 0.15 = 150 credits. At $0.10 per credit (spec F15) that is $15. This run did not pay 0.15 per company. The sum leaves out cache, misses, email, and compute.
+A second rough sum, not a quote, uses the described price in `docs/tools.md`: 0.15 credits per result. 1,000 × 0.15 = 150 credits. At $0.10 per credit (`plan.usd_per_credit` 0.1, [`tools.md`](tools.md)) that is $15. This run did not pay 0.15 per company. The sum leaves out cache, misses, email, and compute.

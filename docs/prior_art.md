@@ -1,4 +1,4 @@
-# Prior art check for gtm-ci
+# Prior art
 
 Checked on 17 Nov 2026 (IST). Sources: GitHub repo search and code search, Deepline docs and skills pages, n8n docs, Clay blog, X search, general web search.
 Star counts and dates are from the GitHub API on that day. Most repos below have 0 to 3 stars, so none of them is famous. That matters: the idea is out there, but no widely used public project owns this exact shape yet.
@@ -7,7 +7,7 @@ Star counts and dates are from the GitHub API on that day. Most repos below have
 
 Nobody has built exactly this: a Deepline Play, gated on every pull request, against a public labelled set of job-change traps, with a before and after table and a 0 credit offline gate.
 
-But the general idea is NOT new, and the README and post must not pretend it is:
+The general idea is not new:
 
 1. "Golden set plus a CI gate that fails when a sales or GTM task gets worse" already exists in at least 4 small public repos (gtm-evals, prospectr, gtm-agent-testing, ai-workflow-regression-gate).
 2. Deepline itself already documents the method. Its own `deepline-plays-improve` / `deepline-plays-review` skill describes golden datasets, frozen evaluation, deterministic graders and "regressions relative to the current accepted run". What it does not have is an automatic pull request gate. It runs live (spends credits), uses Google Sheets for review, is agent-supervised, and says its eval tabs are a "planned extension".
@@ -63,11 +63,11 @@ I found no public labelled set of job-change decision traps (advisor seat, promo
 - GitHub code search only covers default branches of public repos. Private company repos (where this might already exist internally) can't be checked.
 - The GitHub connector returned only the first result per query, so I used the public search API for lists. A few searches hit rate limits and were not retried.
 
-## Positioning so it stays non-generic
+## How gtm-ci differs
 
-1. Do not say "nobody tests GTM automations" or "first CI for GTM". It is false (see above) and a founder will know.
-2. Say this instead: "Deepline's docs already describe golden-set evals for Plays. They run by hand, live, in a Sheet. I made that same method automatic in pull request CI: every pull request is scored on a labelled set of job-change traps, offline for 0 credits, and blocked if false alerts go up, if false alerts go up for any trap type, or if any single case flips from pass to fail."
-3. The fixtures now use Deepline's own golden-set columns: `case_id`, `split` (development / holdout), `input_*`, `expected_*`, `grading_notes`, `notes`, plus a scorer-only `trap` field. That reads as the missing CI half of their own loop, not a rival tool.
-4. Make the trap set the headline asset. A public labelled set of job-change decision traps, each linked to a real complaint, is the part I could not find already published.
-5. Gate on a pass-to-fail flip for any single case and on per-trap false alerts, not just the total. That is a detail the other public repos above do not do.
-6. Credit `mhimed-crustdata/champion-job-change-tracker` in the README for the advisor-seat rule idea. Honest credit makes the rest more believable.
+- It automates the golden-set method Deepline's review skill describes by hand, in pull request CI, using the same columns: `case_id`, `split`, `input_*`, `expected_*`, `grading_notes`, `notes`, plus a scorer-only `trap` field.
+- The gate is offline and costs 0 credits per pull request. The live Play runs only with a label.
+- It gates on per-trap false alerts, any single pass-to-fail flip, and paid lookups, not just a total score.
+- It scores its own test set with mutation testing, split into discovery and holdout mutations ([`mutation.md`](mutation.md)).
+- Each trap is linked to a real complaint ([`trap_sources.md`](trap_sources.md)). I could not find a published labelled set of job-change decision traps.
+- The advisor-seat and same-company ideas overlap with `mhimed-crustdata/champion-job-change-tracker` (row 6).

@@ -1,6 +1,6 @@
 # Tools
 
-Checked on **Tue 17 Nov 2026** with `deepline` **0.3.537** (`deepline --version`). Spec section 3 was checked earlier the same day on 0.3.535.
+Checked on **Tue 17 Nov 2026** with `deepline` **0.3.537** (`deepline --version`). CI pins 0.3.535.
 
 No tool was run. The commands were `deepline search`, `deepline describe`, and `deepline billing usage`. Prices and field names below are copied from `describe` output.
 
@@ -16,7 +16,7 @@ No tool was run. The commands were `deepline search`, `deepline describe`, and `
 | temporary holds | 0 | 0 |
 | recent events | 1 | 1 |
 
-The one recent event is still the task 1.1 compute event, 0 credits. Search and describe added no event and spent no credits. `plan.usd_per_credit` was 0.1, the same as fact F15.
+The one recent event is still the hello-world spike's compute event, 0 credits. Search and describe added no event and spent no credits. `plan.usd_per_credit` was 0.1.
 
 ## Search
 
@@ -111,17 +111,15 @@ The Play reads the execute result at `fields.companies.values`, then those two f
 
 One described domain lookup returns one company row, so this estimate uses one result per company. Describe does not say what a miss costs. A miss is not counted as 0.
 
-The task prompt says 10 live companies times about 5 runs. Spec section 5.C and the 17 Nov cut say 5 live companies. The estimate follows the spec:
+The live set is 5 companies, run about 5 times:
 
 0.15 × 5 companies × 5 runs = 3.75 credits.
 
 At $0.10 per credit that is $0.375.
 
-The prompt's formula, shown and not used: 0.15 × 10 × 5 = 7.5 credits ($0.75).
-
 This is company lookups only. It does not include email, Play compute, or a second call after a cache miss. One live run of 5 companies is 0.15 × 5 = 0.75 credits of lookups, under the cap of 10.
 
-## Email finder, for task 4.5 only
+## Email finder (not enabled)
 
 Not called.
 
@@ -134,4 +132,4 @@ The cheapest name-plus-domain finder on that list was described:
 - Inputs: `first_name`, `last_name`, and `company_url`, or else `linkedin_url`. None is marked required. The LinkedIn input says to provide that URL, or company URL plus first and last name.
 - Output field for the address: `email`, read at `result.fields.email.value`.
 
-Task 4.5 is already cut. This id is written down so that task does not have to search again. Synthetic people are never sent to it.
+Live email is not enabled in this repo. The id is recorded for when it is. Synthetic people are never sent to it.
