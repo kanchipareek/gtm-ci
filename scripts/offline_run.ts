@@ -116,13 +116,22 @@ async function main(): Promise<void> {
     const event = eventFromRow(row);
     const company = companyFromRow(row);
     const email = emailFromRow(row);
-    const decision = rules.decide(event, company, email, seenPersonIds);
+    // Same two calls as the Play. The first call has no company. Only a
+    // company_not_found reason pays for the LeadMagic lookup, then decide
+    // runs again with the snapshot. would_lookup is that paid call, so the
+    // gate can see a change that makes the Play spend more.
+    let decision = rules.decide(event, null, email, seenPersonIds);
+    const wouldLookup = decision.reason === "company_not_found";
+    if (wouldLookup) {
+      decision = rules.decide(event, company, email, seenPersonIds);
+    }
 
     results.push({
       case_id: event.case_id,
       alert: decision.alert,
       status: decision.status,
       reason: decision.reason,
+      would_lookup: wouldLookup,
       email: email.email,
       email_status: email.email_status,
       company: {
