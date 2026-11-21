@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 
-# Spec section 2. One spelling, so the check and the comment match.
+# One spelling, so the check and the comment match.
 TEST_SET_LABEL = "test-set-change"
 
 # The answer key is the whole fixtures folder, including a file added

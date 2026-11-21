@@ -24,7 +24,7 @@ TABLE_ROWS = (
     ("emails_found", "emails found"),
 )
 
-# Spec 5.D. The words are the point. The 0 is not a measured live cost.
+# The words are the point. The 0 is not a measured live cost.
 OFFLINE_CREDITS = "0 (offline, no Deepline calls)"
 
 SPLIT_ORDER = ("development", "holdout", "all")
@@ -132,7 +132,7 @@ def _sha_text(git_sha):
 def _split_lines(score):
     """Headline counts again, once per split.
 
-    Task 2.4 asked for this breakout in the report. The CI gate reads
+    The report breaks the counts out by split. The CI gate reads
     the top-level counts, which match the all row, not one split.
     """
     by_split = score.get("by_split")

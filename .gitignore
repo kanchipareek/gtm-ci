@@ -19,11 +19,11 @@ node_modules/
 .inline.play.ts
 *.submission.json
 
-# scorer output (commit a result file only on purpose, see TASKS.md 2.5)
+# scorer output (commit a result file only on purpose, see results/README.md)
 results/*
 !results/README.md
 
-# local-only files with real personal details (task 4.5)
+# local-only files with real personal details
 local/
 
 # editors and os

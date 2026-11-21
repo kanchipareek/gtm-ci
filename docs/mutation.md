@@ -56,7 +56,7 @@ Left open on purpose. Patching them now would turn the holdout into a second dis
 | h11 yahoo dropped | no yahoo.com case, so the cost gate has nothing to count |
 | h12 "cro" no longer senior alone | e05 spells out "Chief Revenue Officer". No title says just "CRO" |
 | h17 country read from `country_hint` instead of the company | **every case has `country_hint` equal to the company country.** The rule comment says it uses the snapshot, not the hint, and nothing tests that. This is the one that matters most: under this mutation a German company with a GB `country_hint` would alert, and the gate would stay green |
-| h19 null employees not treated as not found | e17 moves from `company_not_found` to `company_too_small`, still no alert. Reasons are shown but not gated, by design (spec 5.D) |
+| h19 null employees not treated as not found | e17 moves from `company_not_found` to `company_too_small`, still no alert. Reasons are shown but not gated, by design |
 
 ## Limits
 

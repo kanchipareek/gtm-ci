@@ -126,4 +126,4 @@ No sending email, no CRM writes, no publishing or deploying the Play, no monitor
 
 ## More
 
-[`docs/spec.md`](docs/spec.md) (the build spec), [`docs/test_set.md`](docs/test_set.md), [`docs/mutation.md`](docs/mutation.md), [`docs/cost.md`](docs/cost.md), [`docs/spend.md`](docs/spend.md), [`docs/prior_art.md`](docs/prior_art.md).
+[`docs/test_set.md`](docs/test_set.md), [`docs/trap_sources.md`](docs/trap_sources.md) (the real complaint behind each trap), [`docs/mutation.md`](docs/mutation.md), [`docs/cost.md`](docs/cost.md), [`docs/spend.md`](docs/spend.md), [`docs/prior_art.md`](docs/prior_art.md).

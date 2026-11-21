@@ -40,7 +40,7 @@ PLAY_FILE = "plays/champion-tracker.play.ts"
 # when --max-credits refuses the tool call. result.rows is absent then.
 CAP_REFUSAL_CODE = "RUN_BILLING_CAP_EXCEEDED"
 
-# Spec 5.A. These are the Play inputs. The company snapshot is an offline
+# These are the Play inputs. The company snapshot is an offline
 # stand-in for the lookup, so it is not sent. The live Play looks that up.
 EVENT_FIELDS = (
     "person_id",
@@ -64,7 +64,7 @@ HIDDEN_FIELDS = ("grading_notes", "notes", "trap", "split")
 def run_offline(plays_dir, fixtures_path):
     """Run rules.ts from plays_dir on a golden jsonl file. Spends nothing.
 
-    plays_dir is which copy of the rules to import. Day 3 passes base/plays
+    plays_dir is which copy of the rules to import. The gate passes base/plays
     and head/plays through the same script.
     """
     plays_dir = Path(plays_dir).resolve()
@@ -112,7 +112,7 @@ def run_live(fixtures_or_input_path, max_credits):
 
     payload = play_input_from_fixtures(fixtures_or_input_path)
     # The run-id file must not exist yet. The CLI creates it when the
-    # server accepts the run (spec F8). A dropped connection still leaves an id.
+    # server accepts the run. A dropped connection still leaves an id.
     with tempfile.TemporaryDirectory(prefix="gtm-ci-live-") as tmp:
         tmp_dir = Path(tmp)
         input_path = tmp_dir / "input.json"

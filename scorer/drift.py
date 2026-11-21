@@ -28,7 +28,7 @@ from scorer.fixtures import FREE_MAIL_DOMAINS, RESERVED_EXACT_DOMAINS
 # pull request comment by it, so the live section has to keep it.
 MARKER = "<!-- gtm-ci -->"
 
-# Spec 5.A. These are the two company fields the rules read.
+# These are the two company fields the rules read.
 DRIFT_FIELDS = ("employees", "country")
 
 # The weekly job keeps one issue. The title is how a later run finds it,
