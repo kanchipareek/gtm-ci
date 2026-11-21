@@ -65,6 +65,8 @@ def to_markdown(score, meta):
     for key, label in TABLE_ROWS:
         lines.append(f"| {label} | {score[key]} |")
     lines.append(f"| credits | {_credits_cell(score, meta)} |")
+    if "paid_lookups" in score:
+        lines.append(f"| paid company lookups | {score['paid_lookups']} |")
     lines.append("")
     lines.extend(_split_lines(score))
     lines.append(

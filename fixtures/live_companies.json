@@ -53,10 +53,10 @@
       "case_id": "c03",
       "domain": "hubspot.com",
       "snapshot": {
-        "employees": 9016,
+        "employees": 13083,
         "country": "US"
       },
-      "snapshot_source": "Fortune company profile, headcount as of 30 Jun 2026, headquarters United States. Filing headcount, not a LeadMagic linkedin_employee_count.",
+      "snapshot_source": "LeadMagic linkedin_employee_count and hq_country_code, docs/cache/run2_run_output.json, 19 Nov 2026. Replaced on 21 Nov 2026: the first snapshot was a Fortune filing headcount (9016), which issue 4 flagged as drift. A filing count is not a LinkedIn count.",
       "event": {
         "person_id": "c03",
         "full_name": "Casey Testcase",
@@ -101,10 +101,10 @@
       "case_id": "c05",
       "domain": "twilio.com",
       "snapshot": {
-        "employees": 5625,
+        "employees": 7816,
         "country": "US"
       },
-      "snapshot_source": "Twilio Q3 2026 earnings exhibit, employees as of 30 Sep 2026, headquarters San Francisco, United States. Filing headcount, not a LeadMagic linkedin_employee_count.",
+      "snapshot_source": "LeadMagic linkedin_employee_count and hq_country_code, docs/cache/run2_run_output.json, 19 Nov 2026. Replaced on 21 Nov 2026: the first snapshot was a Q3 2026 earnings headcount (5625), which issue 4 flagged as drift. A filing count is not a LinkedIn count.",
       "event": {
         "person_id": "c05",
         "full_name": "Emery Testcase",
