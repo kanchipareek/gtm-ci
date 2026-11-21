@@ -14,7 +14,7 @@ GTM teams now keep their automations in git. Deepline stores each workflow as a 
 | golden set | 36 synthetic job changes with written answers, each built around one trap (49 employees, "Head of Vibes", "Internal" vs "intern", 121 days old...) | [`docs/test_set.md`](docs/test_set.md) |
 | offline gate | every pull request, 0 credits. Scores base and head rules, posts one comment, fails on regressions | [`.github/workflows/gtm-ci.yml`](.github/workflows/gtm-ci.yml) |
 | cost gate | fails a pull request that sends more rows to the paid lookup, even if every alert is still right | [`docs/mutation.md`](docs/mutation.md#the-cost-gate) |
-| mutation score | breaks the rules on purpose, 44 ways, to find cases the test set is missing | [`docs/mutation.md`](docs/mutation.md) |
+| mutation score | breaks the rules on purpose, 44 ways, to find cases the test set is missing. Runs on every pull request and warns when a test set change lets a rule break through | [`docs/mutation.md`](docs/mutation.md) |
 | live eval | the real Play on Deepline, only with the `live-eval` label, credit cap 10 | [`ci/thresholds.json`](ci/thresholds.json) |
 | real cases | 10 real public job changes run live | [`results/real_run.md`](results/real_run.md) |
 | drift watch | every Monday, re-runs 5 saved companies live and opens an issue if their data changed | [`.github/workflows/drift-watch.yml`](.github/workflows/drift-watch.yml) |
@@ -57,6 +57,8 @@ Sources: [`results/mutation_30cases_old_gate_discovery.md`](results/mutation_30c
 
 Patching every hole I could see took discovery to 25 of 25 and moved holdout by one. The test set got better at the test I looked at, not in general. One holdout mutant cannot be caught at all ("working student" is covered by "student"), so the honest holdout score is 11 of 18. The worst open hole: every case has a `country_hint` equal to the company's country, so a change that read the hint instead of the company would pass. The 8 open holes are listed in [`docs/mutation.md`](docs/mutation.md#holes-still-open-holdout-8-of-19) and left open so the holdout still means something.
 
+**On every pull request** the comment gets a "Test set strength" section: the same 44 breaks, run on the base test set and the head test set. The `test-set-change` label lets a reviewer approve a change to the answers; this section shows what that change costs, for example "this test set change stops catching: m07 (India added to allowed countries)". Shown, not gated.
+
 Two discovery holes could not be caught by any alert test. Dropping gmail.com from the free-mail list still rejects the row, just after a paid company lookup. That is why the cost gate exists.
 
 ## Real job changes, live
@@ -73,7 +75,7 @@ The two that could have flipped did not: Ampcontrol (LinkedIn band 11 to 50) cam
 
 [`drift-watch.yml`](.github/workflows/drift-watch.yml) runs every Monday at 03:30 UTC (and by hand). It runs the Play live on 5 saved companies ([`fixtures/live_companies.json`](fixtures/live_companies.json)), cap 2 credits, and opens or updates one issue, "company data drift", listing company, field, old value, new value and where the old value came from. It closes the issue when nothing differs. An empty lookup is not counted as a change.
 
-The first run (20 Nov, 0 credits, from the 7-day cache, [`docs/spend.md`](docs/spend.md)) opened [issue 4](https://github.com/kanchipareek/gtm-ci/issues/4): HubSpot and Twilio headcounts did not match. Honest reading: that is my fixture, not the world. Those snapshots came from public filings, and the live value is a LinkedIn count. Figma, the third filing-sourced snapshot, comes back empty from the lookup, so it is not compared. The issue lists the snapshot source for exactly this reason.
+The first run (20 Nov, 0 credits, from the 7-day cache, [`docs/spend.md`](docs/spend.md)) opened [issue 4](https://github.com/kanchipareek/gtm-ci/issues/4): HubSpot and Twilio headcounts did not match. **That was my bug, not drift.** Those two snapshots came from public filings (9016 and 5625), and the live value is a LinkedIn count (13083 and 7816). The issue showed it because it lists where each saved value came from. On 21 Nov both snapshots were replaced with the LeadMagic values from the 19 Nov run ([`docs/cache/run2_run_output.json`](docs/cache/run2_run_output.json)), and the old value and the reason are kept in each `snapshot_source`. Against that run, drift is now 0, so the next issue means a company actually changed. Figma's snapshot is still a filing count, and its lookup comes back empty, so it is never compared. The issue lists the snapshot source for exactly this reason.
 
 ## Cost
 
@@ -114,9 +116,9 @@ python -m scorer --mode live --fixtures fixtures/live_companies.json --max-credi
 - **The credit cap is not an all-in ceiling.** It refuses a call whose projected charge goes over. Admitted work and compute can still bill ([`docs/cost.md`](docs/cost.md#credit-cap-19-nov-2026)).
 - **Email is mock.** Live email finding is built but not proven in this repo ([`docs/cost.md`](docs/cost.md)). "Emails found" counts mock emails.
 - **The 10 real cases are a curated sample, not an accuracy rate.** Hand-picked (5 should alert, 5 should not, each "no" failing a different rule) and hand-labelled by me. Two of them (r09, r10) are rejected before the lookup, so they never reach LeadMagic.
-- **The live company set is 5 companies, and 3 of the 5 snapshots (HubSpot, Figma, Twilio) are from public filings, not LeadMagic.** That is why the first drift issue fired. Figma's lookup comes back empty, so its fields are not compared at all.
+- **The live company set is 5 big companies.** 3 of the 5 are over 5000 people and Figma comes back empty, so the live run mostly proves the plumbing and the bill, not the size boundary. Figma's lookup comes back empty and its snapshot is a filing count, so Figma is never compared. HubSpot and Twilio started as filing counts; that mistake is what the first drift issue caught.
 - **The demo bug was planted on purpose.**
-- **The mutations are hand-written** by the same person who wrote the cases, and only cover `rules.ts`.
+- **The mutations are hand-written** by the same person who wrote the cases, and only cover `rules.ts`. The per-PR strength section is shown, not gated.
 
 ## Not in scope
 
