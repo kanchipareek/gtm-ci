@@ -10,7 +10,7 @@ export const JUNIOR_WORDS = ["intern", "student", "trainee", "apprentice", "work
 export const SENIOR_WORDS = ["vp", "vice president", "head of", "director", "chief", "cro", "revops lead"];
 // A seniority word is not enough on its own. "Head of Vibes" has "head of" and still is not senior.
 export const FUNCTION_WORDS = ["revenue", "sales", "growth", "gtm", "operations", "marketing"];
-export const FREE_MAIL_DOMAINS = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "proton.me"];
+export const FREE_MAIL_DOMAINS = ["yahoo.com", "outlook.com", "hotmail.com", "proton.me"];
 
 export type JobChangeEvent = {
   case_id: string;
