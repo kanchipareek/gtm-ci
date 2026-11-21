@@ -62,5 +62,5 @@ Left open on purpose. Patching them now would turn the holdout into a second dis
 
 - The mutations are hand-written, and by the same person who wrote the cases. A mutation tool that generates edits from the syntax tree would be less biased.
 - 44 mutations on one 223-line rules file. The score is a coverage signal for this rules file, not a general accuracy number.
-- The mutation run is a command, not a CI step. It is not yet run on every pull request.
+- On every pull request the offline gate runs the same list on the base and head test sets and adds a "Test set strength" section to the comment. It warns when a test set change stops catching a break. It is shown, not gated, so a rule change that edits a mutated line lists that mutation as not applied instead of failing.
 - All six new cases are "should not alert". The set is now 12 alerts and 24 no-alerts.
