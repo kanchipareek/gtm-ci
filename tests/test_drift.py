@@ -106,7 +106,7 @@ def test_issue_body_lists_company_field_old_new_and_source():
         "\n"
         "| company | field | old value | new value | snapshot source |\n"
         "| --- | --- | --- | --- | --- |\n"
-        "| hubspot.com | employees | 9016 | 1 | "
+        "| hubspot.com | employees | " + str(hubspot["snapshot"]["employees"]) + " | 1 | "
         + hubspot["snapshot_source"]
         + " |\n"
     )
